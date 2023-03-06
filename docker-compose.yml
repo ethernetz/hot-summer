@@ -1,0 +1,11 @@
+version: "3.8"
+name: hotsummer
+services:
+  app:
+    image: ethernetz/docker-flutter:latest
+    # volumes:
+    #   - ./app:/developer
+    ports:
+      - 6080
+    # working_dir: /home/developer
+    privileged: true
