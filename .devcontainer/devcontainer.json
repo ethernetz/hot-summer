@@ -1,12 +1,11 @@
 {
-	"name": "Hot Summer Devcontainer",
-	"dockerComposeFile": [
-		"../docker-compose.yml",
-		"docker-compose.yml"
-	],
-	"service": "app",
-	"workspaceFolder": "/workspaces",
-	"customizations": {
+  "name": "Hot Summer",
+  "dockerComposeFile": ["../docker-compose.yml", "docker-compose.yml"],
+  "forwardPorts": [6080],
+  "service": "app",
+  "workspaceFolder": "/workspaces",
+  "postStartCommand": "git config --global --add safe.directory ${containerWorkspaceFolder}",
+  "customizations": {
     "vscode": {
       "extensions": ["Dart-Code.flutter", "Dart-Code.dart-code"]
     }
