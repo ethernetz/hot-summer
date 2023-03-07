@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "144277401934",
+    "project_id": "hot-summer-9a82c",
+    "storage_bucket": "hot-summer-9a82c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:144277401934:android:0aa58cde21ff9fe05f2e1f",
+        "android_client_info": {
+          "package_name": "com.ethannetz.hotsummer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "144277401934-bdbp4telshi4rrvg7o6o7ue6sgok54nc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ethannetz.hotsummer",
+            "certificate_hash": "c5c77e03599909a03b890da1ce425cd3785ace32"
+          }
+        },
+        {
+          "client_id": "144277401934-m76c3n3qgajm5i2flq24bbo97f0hatag.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3jftW-3Nf49AhxWbDUCSIBgYb1JHbXLw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "144277401934-m76c3n3qgajm5i2flq24bbo97f0hatag.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "144277401934-lcr6bdkmd8p6uvkrecrvrvmki996af1u.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.ethannetz.hotsummer"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
