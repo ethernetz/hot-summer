@@ -95,6 +95,7 @@ end
 
 desc "Upload to TestFlight / ASC"
 lane :upload_release do
+  ENV['ITMSTRANSPORTER_FORCE_ITMS_PACKAGE_UPLOAD'] = 'true'
   pilot(
     apple_id: ENV["ASC_APP_ID"],
     app_identifier: ENV["DEVELOPER_APP_IDENTIFIER"],
