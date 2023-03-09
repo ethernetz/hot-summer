@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:crypto/crypto.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
@@ -60,25 +61,16 @@ class AuthProvider with ChangeNotifier {
         nonce: nonce,
       );
 
-      // print(1);
-
       // Create an `OAuthCredential` from the credential returned by Apple.
       final oauthCredential = OAuthProvider("apple.com").credential(
         idToken: appleCredential.identityToken,
         rawNonce: rawNonce,
       );
 
-      // print(2);
-
-      // print(oauthCredential);
-
       // Sign in the user with Firebase. If the nonce we generated earlier does
       // not match the nonce in `appleCredential.identityToken`, sign in will fail.
       final authResult =
           await _firebaseAuth.signInWithCredential(oauthCredential);
-      // print(3);
-      // print('just signed in with');
-      // print(oauthCredential);
 
       final displayName =
           '${appleCredential.givenName} ${appleCredential.familyName}';
@@ -92,9 +84,11 @@ class AuthProvider with ChangeNotifier {
       await firebaseUser.updateDisplayName(displayName);
       await firebaseUser.updateEmail(userEmail);
       return firebaseUser;
-    } catch (exception) {
+    } catch (exception, stack) {
       // print('got an exception');
       // print(exception);
+
+      FirebaseCrashlytics.instance.recordError(e, stack, fatal: true);
       return null;
     }
   }
