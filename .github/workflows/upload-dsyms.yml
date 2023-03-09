@@ -14,4 +14,8 @@ jobs:
         lane: refresh_dsyms_firebase
         subdirectory: app/ios
       env:
+        ASC_APP_ID: ${{ secrets.ASC_APP_ID }}
+        ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+        ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+        ASC_KEY: ${{ secrets.ASC_PRIVATE_KEY }}
         DEVELOPER_APP_IDENTIFIER: ${{ secrets.DEVELOPER_APP_IDENTIFIER }}

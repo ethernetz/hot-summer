@@ -119,6 +119,7 @@ end
 
 desc "Fetch and upload dSYM files to Firebase Crashlytics"
 lane :refresh_dsyms_firebase do |options|
+  load_asc_api_key
   download_dsyms(
     app_identifier: ENV["DEVELOPER_APP_IDENTIFIER"],
   )
