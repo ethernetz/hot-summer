@@ -1,0 +1,17 @@
+name: Upload dsyms to Crashlytics
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: macos-11
+    steps:
+    - uses: actions/checkout@v2
+    - name: Upload dsyms to Crashlytics via Fastlane
+      uses: maierj/fastlane-action@v1.4.0
+      with:
+        lane: refresh_dsyms_firebase
+        subdirectory: app/ios
+      env:
+        DEVELOPER_APP_IDENTIFIER: ${{ secrets.DEVELOPER_APP_IDENTIFIER }}
