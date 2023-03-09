@@ -119,12 +119,8 @@ end
 
 desc "Fetch and upload dSYM files to Firebase Crashlytics"
 lane :refresh_dsyms_firebase do |options|
-  version_number = get_version_number()
-  build_number = get_build_number
   download_dsyms(
     app_identifier: ENV["DEVELOPER_APP_IDENTIFIER"],
-    version: version_number,
-    build_number: build_number
   )
   upload_symbols_to_crashlytics(gsp_path: "./runner/GoogleService-Info.plist")
   clean_build_artifacts
