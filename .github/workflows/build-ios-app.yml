@@ -44,7 +44,6 @@ jobs:
         ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
         ASC_KEY: ${{ secrets.ASC_PRIVATE_KEY }}
         DEVELOPER_APP_IDENTIFIER: ${{ secrets.DEVELOPER_APP_IDENTIFIER }}
-        FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
         SIGNING_KEY_PASSWORD: ${{ secrets.IOS_DIST_SIGNING_KEY_PASSWORD }}
         TEAM_ID: ${{ secrets.TEAM_ID }}
         SIGNING_KEY_FILE_PATH: signing-cert.p12

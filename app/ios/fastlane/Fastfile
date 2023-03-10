@@ -92,19 +92,7 @@ lane :build_release do |options|
     export_method: "app-store"
   )
 
-  # Zip dSYMs
-  sh(
-    "zip", 
-    "/Users/runner/work/memo/memo/build/ios/archive/Runner.xcarchive/dSYMs.zip", 
-    "/Users/runner/work/memo/memo/build/ios/archive/Runner.xcarchive/dSYMs"
-  )
-
-  # Upload dSYM files to Firebae Crashlytics
-  upload_symbols_to_crashlytics(
-    app_id: ENV["FIREBASE_APP_ID"],
-    dsym_path: "/Users/runner/work/memo/memo/build/ios/archive/Runner.xcarchive/dSYMs.zip",
-    binary_path: "/Users/runner/work/memo/memo/ios/Pods/FirebaseCrashlytics/upload-symbols",
-  )
+  upload_symbols_to_crashlytics(dsym_path: ENV["DSYM_OUTPUT_PATH"])
 end
 
 desc "Upload to TestFlight / ASC"
