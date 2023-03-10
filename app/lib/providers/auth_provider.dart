@@ -85,8 +85,8 @@ class AuthProvider with ChangeNotifier {
       await firebaseUser.updateEmail(userEmail);
       return firebaseUser;
     } catch (exception, stack) {
-      // print('got an exception');
-      // print(exception);
+      print('got an exception');
+      print(exception);
 
       FirebaseCrashlytics.instance.recordError(e, stack, fatal: true);
       return null;
