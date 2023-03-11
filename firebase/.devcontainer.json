@@ -1,10 +1,12 @@
 {
   "name": "Hot Summer Firebase",
-  "dockerComposeFile": [
-    "../docker-compose.yml"
-  ],
+  "dockerComposeFile": ["../docker-compose.yml"],
   "forwardPorts": [
-    6080
+    4000, // Used for emulator UI
+    8080, // Used for firestore emulator
+    9099, // Used for auth emulator
+    5001, // Used for functions emulator
+    9005 // Used for `firebase login` authentication
   ],
   "service": "firebase",
   "workspaceFolder": "/workspace/firebase",

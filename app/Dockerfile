@@ -1,0 +1,1 @@
+FROM ethernetz/docker-flutter:latest
