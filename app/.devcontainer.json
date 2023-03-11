@@ -1,0 +1,17 @@
+{
+  "name": "Hot Summer Flutter",
+  "dockerComposeFile": ["../docker-compose.yml"],
+  "forwardPorts": [6080],
+  "service": "app",
+  "workspaceFolder": "/workspace/app",
+  "postStartCommand": "git config --global --add safe.directory /workspace",
+  "shutdownAction": "none",
+  "customizations": {
+    "vscode": {
+      "extensions": ["Dart-Code.flutter", "Dart-Code.dart-code"],
+      "settings": {
+        "git.openRepositoryInParentFolders": "always"
+      }
+    }
+  }
+}

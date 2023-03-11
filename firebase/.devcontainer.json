@@ -1,0 +1,21 @@
+{
+  "name": "Hot Summer Firebase",
+  "dockerComposeFile": [
+    "../docker-compose.yml"
+  ],
+  "forwardPorts": [
+    6080
+  ],
+  "service": "firebase",
+  "workspaceFolder": "/workspace/firebase",
+  "postStartCommand": "git config --global --add safe.directory /workspace",
+  "shutdownAction": "none",
+  "customizations": {
+    "vscode": {
+      "extensions": [],
+      "settings": {
+        "git.openRepositoryInParentFolders": "always"
+      }
+    }
+  }
+}
