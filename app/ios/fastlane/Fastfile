@@ -118,15 +118,3 @@ lane :build_upload_testflight do
   build_release
   upload_release
 end
-
-desc "Fetch and upload dSYM files to Firebase Crashlytics"
-lane :refresh_dsyms_firebase do |options|
-  load_asc_api_key
-  download_dsyms(
-    app_identifier: ENV["DEVELOPER_APP_IDENTIFIER"],
-      dsym_path: "/Users/runner/work/memo/memo/build/ios/archive/Runner.xcarchive/dSYMs.zip",
-      binary_path: "/Users/runner/work/memo/memo/ios/Pods/FirebaseCrashlytics/upload-symbols",
-  )
-  upload_symbols_to_crashlytics(gsp_path: "./runner/GoogleService-Info.plist")
-  clean_build_artifacts
-end
