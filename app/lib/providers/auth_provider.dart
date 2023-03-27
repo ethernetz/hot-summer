@@ -5,6 +5,7 @@ import 'package:crypto/crypto.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class AuthProvider with ChangeNotifier {
@@ -16,6 +17,49 @@ class AuthProvider with ChangeNotifier {
 
   Future<void> signOut() async {
     await _firebaseAuth.signOut();
+  }
+
+  Future<UserCredential?> signInWithRandom() async {
+    try {
+      // Create a new credential
+      final credential = GoogleAuthProvider.credential(
+        accessToken: "abc",
+        idToken: "def",
+      );
+
+      // Once signed in, return the UserCredential
+      return await _firebaseAuth.signInWithCredential(credential);
+    } catch (exception, stack) {
+      print(exception);
+      FirebaseCrashlytics.instance.recordError(e, stack, fatal: true);
+      return null;
+    }
+  }
+
+  Future<UserCredential?> signInWithGoogle() async {
+    try {
+      // Trigger the authentication flow
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+      // Obtain the auth details from the request
+      final GoogleSignInAuthentication? googleAuth =
+          await googleUser?.authentication;
+
+      // Create a new credential
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
+      );
+
+      print(googleAuth?.accessToken);
+
+      // Once signed in, return the UserCredential
+      return await _firebaseAuth.signInWithCredential(credential);
+    } catch (exception, stack) {
+      print(exception);
+      FirebaseCrashlytics.instance.recordError(e, stack, fatal: true);
+      return null;
+    }
   }
 
   /// Generates a cryptographically secure random nonce, to be included in a
@@ -85,9 +129,7 @@ class AuthProvider with ChangeNotifier {
       await firebaseUser.updateEmail(userEmail);
       return firebaseUser;
     } catch (exception, stack) {
-      print('got an exception');
       print(exception);
-
       FirebaseCrashlytics.instance.recordError(e, stack, fatal: true);
       return null;
     }

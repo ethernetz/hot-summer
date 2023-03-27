@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -26,13 +29,15 @@ void main() async {
   };
 
   if (kDebugMode) {
-   try {
-     FirebaseFirestore.instance.useFirestoreEmulator('localhost', 8080);
-     await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
-   } catch (e) {
-     // ignore: avoid_print
-     print(e);
-   }
+    try {
+      String host = Platform.isAndroid ? "10.0.2.2" : "localhost";
+      FirebaseFirestore.instance.useFirestoreEmulator(host, 8080);
+      await FirebaseAuth.instance.useAuthEmulator(host, 9099);
+    } catch (e) {
+      // ignore: avoid_print
+      print(e);
+    }
+  }
 
   runApp(const MyApp());
 }
@@ -73,7 +78,7 @@ class MyHomePage extends StatelessWidget {
     // print(firebaseUser);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Apple Sign Inn'),
+        title: const Text('Hot Summer'),
       ),
       body: firebaseUser == null ? const AuthScreen() : const ChatScreen(),
     );

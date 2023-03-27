@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
+import 'package:workspaces/components/sign_in_with_google_button.dart';
 import 'package:workspaces/providers/auth_provider.dart';
 
 class AuthScreen extends StatelessWidget {
@@ -20,7 +21,8 @@ class AuthScreen extends StatelessWidget {
               onPressed: () {
                 context.read<AuthProvider>().signInWithApple();
               },
-            )
+            ),
+            const SignInWithGoogleButton()
           ],
         ),
       ),
