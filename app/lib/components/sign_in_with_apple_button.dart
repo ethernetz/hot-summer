@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:workspaces/providers/auth_provider.dart';
 
-class SignInWithGoogleButton extends StatelessWidget {
-  const SignInWithGoogleButton({super.key});
+class SignInWithAppleButton extends StatelessWidget {
+  const SignInWithAppleButton({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +14,7 @@ class SignInWithGoogleButton extends StatelessWidget {
         minimumSize: const Size.fromHeight(40),
       ),
       onPressed: () {
-        context.read<AuthProvider>().signInWithGoogle();
+        context.read<AuthProvider>().signInWithApple();
       },
       child: Padding(
         padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
@@ -24,7 +24,7 @@ class SignInWithGoogleButton extends StatelessWidget {
             Expanded(
               flex: 3,
               child: Image(
-                image: AssetImage("assets/google_logo.png"),
+                image: AssetImage("assets/apple_logo.png"),
                 height: 32,
                 width: 32,
               ),
@@ -32,7 +32,7 @@ class SignInWithGoogleButton extends StatelessWidget {
             Expanded(
               flex: 7,
               child: Text(
-                'Sign in with Google',
+                'Sign in with Apple',
                 style: TextStyle(
                   fontSize: 20,
                   color: Colors.white,

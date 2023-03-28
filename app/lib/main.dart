@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -30,12 +28,10 @@ void main() async {
 
   if (kDebugMode) {
     try {
-      String host = Platform.isAndroid ? "10.0.2.2" : "localhost";
-      FirebaseFirestore.instance.useFirestoreEmulator(host, 8080);
-      await FirebaseAuth.instance.useAuthEmulator(host, 9099);
-    } catch (e) {
-      // ignore: avoid_print
-      print(e);
+      FirebaseFirestore.instance.useFirestoreEmulator("firebase", 8080);
+      await FirebaseAuth.instance.useAuthEmulator("firebase", 9099);
+    } catch (exception) {
+      print(exception);
     }
   }
 
