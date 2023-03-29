@@ -25,10 +25,4 @@ services:
     volumes:
       - ./firebase:/home/node/app
       - .:/workspace:cached # Mount the root folder that contains .git
-    command:
-      # Copy node_modules into volume-mounted directory so we can see them in dev environment
-      [
-        sh,
-        -c,
-        "cp -r /home/node/functions-cache/. /home/node/app/functions/. && firebase --project=hot-summer-9a82c emulators:start --only auth,firestore,functions --import=./emulator-cache --export-on-exit & npm run build:watch --prefix ./functions"
-      ]
+    command: /bin/sh -c "while sleep 1000; do :; done"
