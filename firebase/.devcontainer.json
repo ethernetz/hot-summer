@@ -14,7 +14,7 @@
   "shutdownAction": "none",
   "customizations": {
     "vscode": {
-      "extensions": ["toba.vsfire"],
+      "extensions": ["toba.vsfire", "esbenp.prettier-vscode"],
       "settings": {
         "git.openRepositoryInParentFolders": "always"
       }
