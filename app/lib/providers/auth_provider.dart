@@ -19,23 +19,37 @@ class AuthProvider with ChangeNotifier {
     await _firebaseAuth.signOut();
   }
 
-  Future<UserCredential?> signInWithGoogle() async {
+  Future<User?> signInWithGoogle() async {
     try {
       // Trigger the authentication flow
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
+      if (googleUser == null) {
+        return null;
+      }
+
       // Obtain the auth details from the request
-      final GoogleSignInAuthentication? googleAuth =
-          await googleUser?.authentication;
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
 
       // Create a new credential
-      final credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth?.accessToken,
-        idToken: googleAuth?.idToken,
+      final oauthCredential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
       );
 
-      // Once signed in, return the UserCredential
-      return await _firebaseAuth.signInWithCredential(credential);
+      final userCredential =
+          await _firebaseAuth.signInWithCredential(oauthCredential);
+
+      final firebaseUser = userCredential.user;
+
+      if (firebaseUser == null) {
+        return null;
+      }
+
+      await firebaseUser.updateDisplayName(googleUser.displayName);
+      await firebaseUser.updateEmail(googleUser.email);
+      return firebaseUser;
     } catch (exception, stack) {
       if (kDebugMode) {
         print(exception);
@@ -96,14 +110,14 @@ class AuthProvider with ChangeNotifier {
 
       // Sign in the user with Firebase. If the nonce we generated earlier does
       // not match the nonce in `appleCredential.identityToken`, sign in will fail.
-      final authResult =
+      final userCredential =
           await _firebaseAuth.signInWithCredential(oauthCredential);
 
       final displayName =
           '${appleCredential.givenName} ${appleCredential.familyName}';
       final userEmail = '${appleCredential.email}';
 
-      final firebaseUser = authResult.user;
+      final firebaseUser = userCredential.user;
       if (firebaseUser == null) {
         return null;
       }
@@ -112,7 +126,9 @@ class AuthProvider with ChangeNotifier {
       await firebaseUser.updateEmail(userEmail);
       return firebaseUser;
     } catch (exception, stack) {
-      print(exception);
+      if (kDebugMode) {
+        print(exception);
+      }
       FirebaseCrashlytics.instance.recordError(e, stack, fatal: true);
       return null;
     }
