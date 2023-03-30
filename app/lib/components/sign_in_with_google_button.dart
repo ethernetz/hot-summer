@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:workspaces/providers/auth_provider.dart';
+import 'package:workspaces/services/auth_service.dart';
 
 class SignInWithGoogleButton extends StatelessWidget {
   const SignInWithGoogleButton({super.key});
@@ -14,7 +14,7 @@ class SignInWithGoogleButton extends StatelessWidget {
         minimumSize: const Size.fromHeight(40),
       ),
       onPressed: () {
-        context.read<AuthProvider>().signInWithGoogle();
+        context.read<AuthService>().signInWithGoogle();
       },
       child: Padding(
         padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),

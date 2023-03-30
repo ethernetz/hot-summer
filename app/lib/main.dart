@@ -4,11 +4,12 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
-import 'package:workspaces/providers/auth_provider.dart';
+import 'package:workspaces/services/auth_service.dart';
 import 'package:workspaces/screens/chat_screen.dart';
 import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:workspaces/screens/auth_screen.dart';
+import 'package:workspaces/classes/hot_user.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -44,22 +45,24 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
         providers: [
-          ChangeNotifierProvider(
-            create: (ctx) => AuthProvider(FirebaseAuth.instance),
+          Provider(
+            create: (ctx) => AuthService(FirebaseAuth.instance),
           ),
-          StreamProvider(
+          StreamProvider<User?>(
             create: (BuildContext context) {
-              return context.read<AuthProvider>().authStateChanges;
+              return context.read<AuthService>().authStateChanges;
             },
             initialData: null,
-          )
-        ],
-        child: MaterialApp(
-          title: 'Hot Summer',
-          theme: ThemeData(
-            primarySwatch: Colors.blue,
           ),
-          home: const MyHomePage(),
+        ],
+        child: HotUserProxy(
+          child: MaterialApp(
+            title: 'Hot Summer',
+            theme: ThemeData(
+              primarySwatch: Colors.blue,
+            ),
+            home: const MyHomePage(),
+          ),
         ));
   }
 }
@@ -70,13 +73,57 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var firebaseUser = context.watch<User?>();
-    // print('user is');
-    // print(firebaseUser);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Hot Summer'),
       ),
       body: firebaseUser == null ? const AuthScreen() : const ChatScreen(),
+    );
+  }
+}
+
+class HotUserProxy extends StatefulWidget {
+  final Widget? child;
+
+  const HotUserProxy({super.key, this.child});
+
+  @override
+  State<HotUserProxy> createState() => _HotUserProxyState();
+}
+
+class _HotUserProxyState extends State<HotUserProxy> {
+  Stream<HotUser?> _hotUserStream = const Stream.empty();
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    var firebaseUser = context.watch<User?>();
+    _hotUserStream = getUserStream(firebaseUser);
+  }
+
+  Stream<HotUser?> getUserStream(User? firebaseUser) {
+    if (firebaseUser == null) {
+      return const Stream.empty();
+    }
+    return FirebaseFirestore.instance
+        .collection('users')
+        .doc(firebaseUser.uid)
+        .snapshots()
+        .map((userDocumentSnapshot) {
+      final userData = userDocumentSnapshot.data();
+      if (userData == null) {
+        return null;
+      }
+      return HotUser.fromJson(userData);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamProvider<HotUser?>.value(
+      value: _hotUserStream,
+      initialData: null,
+      child: widget.child,
     );
   }
 }

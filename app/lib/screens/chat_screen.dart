@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
-import 'package:workspaces/providers/auth_provider.dart';
+import 'package:workspaces/classes/hot_user.dart';
+import 'package:workspaces/services/auth_service.dart';
 
 class ChatScreen extends StatelessWidget {
   const ChatScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    var hotuser = context.watch<HotUser?>();
     return Scaffold(
       body: Column(
         children: [
+          Text(hotuser?.displayName ?? "no user"),
           Expanded(
             child: StreamBuilder(
                 stream: FirebaseFirestore.instance
@@ -34,9 +37,9 @@ class ChatScreen extends StatelessWidget {
           ),
           ElevatedButton(
             onPressed: () {
-              context.read<AuthProvider>().signOut();
+              context.read<AuthService>().signOut();
             },
-            child: const Text("sign oout"),
+            child: const Text("sign out"),
           )
         ],
       ),

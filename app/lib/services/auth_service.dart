@@ -8,10 +8,10 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:flutter/foundation.dart';
 
-class AuthProvider with ChangeNotifier {
+class AuthService {
   final FirebaseAuth _firebaseAuth;
 
-  AuthProvider(this._firebaseAuth);
+  AuthService(this._firebaseAuth);
 
   Stream<User?> get authStateChanges => _firebaseAuth.authStateChanges();
 
