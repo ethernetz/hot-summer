@@ -14,15 +14,15 @@
       },
       "oauth_client": [
         {
-          "client_id": "144277401934-bdbp4telshi4rrvg7o6o7ue6sgok54nc.apps.googleusercontent.com",
+          "client_id": "144277401934-ogp1p7eesam79u42lcesgnruasnvp3pr.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.ethannetz.hotsummer",
-            "certificate_hash": "c5c77e03599909a03b890da1ce425cd3785ace32"
+            "certificate_hash": "ac39a0a41168007a95651bd030bc7ca6cb91c6ae"
           }
         },
         {
-          "client_id": "144277401934-m76c3n3qgajm5i2flq24bbo97f0hatag.apps.googleusercontent.com",
+          "client_id": "144277401934-7jq71gd2rsn5ae9d1h8r5rvcghjjtf0d.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -35,7 +35,7 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "144277401934-m76c3n3qgajm5i2flq24bbo97f0hatag.apps.googleusercontent.com",
+              "client_id": "144277401934-7jq71gd2rsn5ae9d1h8r5rvcghjjtf0d.apps.googleusercontent.com",
               "client_type": 3
             },
             {
