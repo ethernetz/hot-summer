@@ -5,29 +5,30 @@ import 'package:workspaces/classes/hot_user.dart';
 import 'package:workspaces/components/hot_button.dart';
 import 'package:workspaces/services/auth_service.dart';
 
-class ChatScreen extends StatelessWidget {
-  const ChatScreen({super.key});
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     var hotuser = context.watch<HotUser?>();
-    return Scaffold(
-      body: Center(
-        child: HotButton(
-          onPressed: () {
-            context.read<AuthService>().signOut();
-          },
-          child: Text(
-            "SIGN OUT",
-            style: GoogleFonts.asap(
-              color: Colors.white,
-              fontWeight: FontWeight.w900,
-              fontStyle: FontStyle.italic,
-              fontSize: 36,
+    return Column(
+      children: [
+        Center(
+          child: HotButton(
+            onPressed: () {
+              // context.read<AuthService>().signOut();
+            },
+            child: Text(
+              "LOG WORKOUT",
+              style: GoogleFonts.kumbhSans(
+                color: Colors.white,
+                fontWeight: FontWeight.w900,
+                fontSize: 32,
+              ),
             ),
           ),
         ),
-      ),
+      ],
     );
   }
 }

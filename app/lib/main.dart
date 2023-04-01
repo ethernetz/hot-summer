@@ -85,7 +85,13 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     var firebaseUser = context.watch<User?>();
     return Scaffold(
-      body: firebaseUser == null ? const AuthScreen() : const ChatScreen(),
+      body: SafeArea(
+        bottom: false,
+        child: Container(
+          padding: const EdgeInsets.only(top: 20),
+          child: firebaseUser == null ? const AuthScreen() : const HomeScreen(),
+        ),
+      ),
     );
   }
 }
