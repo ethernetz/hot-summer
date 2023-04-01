@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:workspaces/components/sign_in_with_apple_button.dart';
-import 'package:workspaces/components/sign_in_with_google_button.dart';
+import 'package:workspaces/widgets/sign_in_with_apple_button.dart';
+import 'package:workspaces/widgets/sign_in_with_google_button.dart';
 
 class AuthScreen extends StatelessWidget {
   const AuthScreen({super.key});
