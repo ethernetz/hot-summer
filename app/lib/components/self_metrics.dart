@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:workspaces/classes/hot_user.dart';
 
 class SelfMetrics extends StatelessWidget {
   const SelfMetrics({
@@ -8,6 +10,10 @@ class SelfMetrics extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var hotuser = context.watch<HotUser?>();
+    if (hotuser == null) {
+      return const SizedBox();
+    }
     return Row(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -17,7 +23,7 @@ class SelfMetrics extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  '47',
+                  hotuser.streak.toString(),
                   style: GoogleFonts.kumbhSans(
                     color: Colors.white,
                     fontWeight: FontWeight.w900,
@@ -46,7 +52,7 @@ class SelfMetrics extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  '3',
+                  hotuser.daysRemaining?.toString() ?? '?',
                   style: GoogleFonts.kumbhSans(
                     color: Colors.white,
                     fontWeight: FontWeight.w900,
@@ -75,7 +81,7 @@ class SelfMetrics extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  '9',
+                  hotuser.medals.toString(),
                   style: GoogleFonts.kumbhSans(
                     color: Colors.white,
                     fontWeight: FontWeight.w900,

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
-import 'package:workspaces/classes/hot_user.dart';
 import 'package:workspaces/components/self_metrics.dart';
 import 'package:workspaces/widgets/hot_button.dart';
 import 'package:workspaces/services/auth_service.dart';
@@ -11,7 +9,6 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var hotuser = context.watch<HotUser?>();
     return SizedBox(
       width: double.infinity,
       child: Column(
