@@ -5,7 +5,7 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
 import 'package:workspaces/services/auth_service.dart';
-import 'package:workspaces/screens/chat_screen.dart';
+import 'package:workspaces/screens/home_screen.dart';
 import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:workspaces/screens/auth_screen.dart';
@@ -57,26 +57,34 @@ class MyApp extends StatelessWidget {
         ],
         child: HotUserProxy(
           child: MaterialApp(
-            title: 'Hot Summer',
+            home: const Home(),
             theme: ThemeData(
-              primarySwatch: Colors.blue,
+              brightness: Brightness.dark,
+              colorScheme: const ColorScheme.dark(
+                  // primary: Colors.red,
+                  // secondary: Colors.blue,
+                  // background: Colors.black,
+                  ),
+              scaffoldBackgroundColor: Colors.black,
+              outlinedButtonTheme: OutlinedButtonThemeData(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Colors.grey[900]),
+                  foregroundColor: MaterialStateProperty.all(Colors.white),
+                ),
+              ),
             ),
-            home: const MyHomePage(),
           ),
         ));
   }
 }
 
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({super.key});
+class Home extends StatelessWidget {
+  const Home({super.key});
 
   @override
   Widget build(BuildContext context) {
     var firebaseUser = context.watch<User?>();
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Hot Summer'),
-      ),
       body: firebaseUser == null ? const AuthScreen() : const ChatScreen(),
     );
   }
