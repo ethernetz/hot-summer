@@ -52,7 +52,7 @@ class SelfMetrics extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  hotuser.daysRemaining?.toString() ?? '?',
+                  hotuser.sessionsLeft?.toString() ?? '?',
                   style: GoogleFonts.kumbhSans(
                     color: Colors.white,
                     fontWeight: FontWeight.w900,
@@ -67,7 +67,7 @@ class SelfMetrics extends StatelessWidget {
               ],
             ),
             Text(
-              'Days remaining',
+              'Sessions left',
               style: GoogleFonts.kumbhSans(
                 color: Colors.white,
                 fontSize: 15,

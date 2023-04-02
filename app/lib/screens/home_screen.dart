@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:workspaces/components/self_metrics.dart';
+import 'package:workspaces/services/firestore_service.dart';
 import 'package:workspaces/widgets/hot_button.dart';
-import 'package:workspaces/services/auth_service.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -16,7 +17,7 @@ class HomeScreen extends StatelessWidget {
         children: [
           HotButton(
             onPressed: () {
-              // context.read<AuthService>().signOut();
+              context.read<FirestoreService>().logWorkout(context);
             },
             child: Text(
               "LOG WORKOUT",
@@ -28,7 +29,7 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 30),
-          SelfMetrics(),
+          const SelfMetrics(),
         ],
       ),
     );

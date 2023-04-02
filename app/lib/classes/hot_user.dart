@@ -4,7 +4,8 @@ class HotUser {
   final String email;
   final int streak;
   final int medals;
-  final int? daysRemaining;
+  final int? sessionsPerWeekGoal;
+  final int? sessionsLeft;
 
   const HotUser({
     required this.uid,
@@ -12,7 +13,8 @@ class HotUser {
     required this.email,
     required this.streak,
     required this.medals,
-    required this.daysRemaining,
+    required this.sessionsPerWeekGoal,
+    required this.sessionsLeft,
   });
 
   factory HotUser.fromJson(Map<String, dynamic> json) {
@@ -22,7 +24,8 @@ class HotUser {
       email: json['email'],
       streak: json['streak'],
       medals: json['medals'],
-      daysRemaining: json['daysRemaining'],
+      sessionsPerWeekGoal: json['sessionsPerWeekGoal'],
+      sessionsLeft: json['sessionsLeft'],
     );
   }
 }

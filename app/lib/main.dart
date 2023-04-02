@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
 import 'package:workspaces/services/auth_service.dart';
 import 'package:workspaces/screens/home_screen.dart';
+import 'package:workspaces/services/firestore_service.dart';
 import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:workspaces/screens/auth_screen.dart';
@@ -47,6 +48,9 @@ class MyApp extends StatelessWidget {
         providers: [
           Provider(
             create: (ctx) => AuthService(FirebaseAuth.instance),
+          ),
+          Provider(
+            create: (ctx) => FirestoreService(FirebaseFirestore.instance),
           ),
           StreamProvider<User?>(
             create: (BuildContext context) {
