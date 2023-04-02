@@ -136,4 +136,9 @@ class AuthService {
       return null;
     }
   }
+
+  Future<User?> signInAnonymously() async {
+    final userCredential = await _firebaseAuth.signInAnonymously();
+    return userCredential.user;
+  }
 }

@@ -1,7 +1,7 @@
 class HotUser {
   final String uid;
-  final String displayName;
-  final String email;
+  final String? displayName;
+  final String? email;
   final int streak;
   final int medals;
   final int? sessionsPerWeekGoal;

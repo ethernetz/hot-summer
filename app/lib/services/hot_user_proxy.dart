@@ -25,7 +25,7 @@ class _HotUserProxyState extends State<HotUserProxy> {
 
   Stream<HotUser?> getUserStream(User? firebaseUser) {
     if (firebaseUser == null) {
-      return const Stream.empty();
+      return Stream<HotUser?>.value(null);
     }
     return FirebaseFirestore.instance
         .collection('users')

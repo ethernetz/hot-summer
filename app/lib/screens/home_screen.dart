@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:workspaces/components/self_metrics.dart';
+import 'package:workspaces/services/auth_service.dart';
 import 'package:workspaces/services/firestore_service.dart';
 import 'package:workspaces/widgets/hot_button.dart';
 
@@ -30,6 +31,13 @@ class HomeScreen extends StatelessWidget {
           ),
           const SizedBox(height: 30),
           const SelfMetrics(),
+          const SizedBox(height: 200),
+          ElevatedButton(
+            onPressed: () {
+              context.read<AuthService>().signOut();
+            },
+            child: const Text('sign out'),
+          )
         ],
       ),
     );

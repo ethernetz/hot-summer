@@ -4,13 +4,14 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
+import 'package:workspaces/classes/hot_user.dart';
+import 'package:workspaces/screens/onboarding_screen.dart';
 import 'package:workspaces/services/auth_service.dart';
 import 'package:workspaces/screens/home_screen.dart';
 import 'package:workspaces/services/firestore_service.dart';
 import 'package:workspaces/services/hot_user_proxy.dart';
 import 'firebase_options.dart';
 import 'package:flutter/material.dart';
-import 'package:workspaces/screens/auth_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -87,15 +88,39 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var firebaseUser = context.watch<User?>();
     return Scaffold(
       body: SafeArea(
         bottom: false,
         child: Container(
           padding: const EdgeInsets.only(top: 20),
-          child: firebaseUser == null ? const AuthScreen() : const HomeScreen(),
+          child: const AuthGate(),
         ),
       ),
     );
+  }
+}
+
+class AuthGate extends StatelessWidget {
+  const AuthGate({super.key});
+  @override
+  Widget build(BuildContext context) {
+    var firebaseUser = context.watch<User?>();
+    var hotUser = context.watch<HotUser?>();
+    if (firebaseUser == null) {
+      if (FirebaseAuth.instance.currentUser == null) {
+        context.read<AuthService>().signInAnonymously();
+      }
+      return const Text("splash");
+    }
+
+    if (hotUser == null) {
+      return const Text("loading your profile...");
+    }
+
+    if (hotUser.sessionsPerWeekGoal == null) {
+      return const OnboardingScreen();
+    }
+
+    return const HomeScreen();
   }
 }
