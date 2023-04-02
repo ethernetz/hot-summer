@@ -7,10 +7,10 @@ import 'package:provider/provider.dart';
 import 'package:workspaces/services/auth_service.dart';
 import 'package:workspaces/screens/home_screen.dart';
 import 'package:workspaces/services/firestore_service.dart';
+import 'package:workspaces/services/hot_user_proxy.dart';
 import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:workspaces/screens/auth_screen.dart';
-import 'package:workspaces/classes/hot_user.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -96,52 +96,6 @@ class Home extends StatelessWidget {
           child: firebaseUser == null ? const AuthScreen() : const HomeScreen(),
         ),
       ),
-    );
-  }
-}
-
-class HotUserProxy extends StatefulWidget {
-  final Widget? child;
-
-  const HotUserProxy({super.key, this.child});
-
-  @override
-  State<HotUserProxy> createState() => _HotUserProxyState();
-}
-
-class _HotUserProxyState extends State<HotUserProxy> {
-  Stream<HotUser?> _hotUserStream = const Stream.empty();
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    var firebaseUser = context.watch<User?>();
-    _hotUserStream = getUserStream(firebaseUser);
-  }
-
-  Stream<HotUser?> getUserStream(User? firebaseUser) {
-    if (firebaseUser == null) {
-      return const Stream.empty();
-    }
-    return FirebaseFirestore.instance
-        .collection('users')
-        .doc(firebaseUser.uid)
-        .snapshots()
-        .map((userDocumentSnapshot) {
-      final userData = userDocumentSnapshot.data();
-      if (userData == null) {
-        return null;
-      }
-      return HotUser.fromJson(userData);
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return StreamProvider<HotUser?>.value(
-      value: _hotUserStream,
-      initialData: null,
-      child: widget.child,
     );
   }
 }
