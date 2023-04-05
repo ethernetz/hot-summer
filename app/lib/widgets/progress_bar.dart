@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 
 class ProgressBar extends StatelessWidget {
@@ -22,7 +23,7 @@ class ProgressBar extends StatelessWidget {
         ),
       ),
       child: FractionallySizedBox(
-        widthFactor: currentValue / maxValue,
+        widthFactor: min(currentValue, maxValue) / maxValue,
         heightFactor: 1,
         child: Container(
           decoration: const BoxDecoration(

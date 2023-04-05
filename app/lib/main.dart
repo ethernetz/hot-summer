@@ -10,6 +10,7 @@ import 'package:workspaces/services/auth_service.dart';
 import 'package:workspaces/screens/home_screen.dart';
 import 'package:workspaces/services/firestore_service.dart';
 import 'package:workspaces/services/hot_user_proxy.dart';
+import 'package:workspaces/services/workouts_proxy.dart';
 import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 
@@ -61,20 +62,19 @@ class MyApp extends StatelessWidget {
           ),
         ],
         child: HotUserProxy(
-          child: MaterialApp(
-            home: const Home(),
-            theme: ThemeData(
-              brightness: Brightness.dark,
-              colorScheme: const ColorScheme.dark(
-                  // primary: Colors.red,
-                  // secondary: Colors.blue,
-                  // background: Colors.black,
+          child: WorkoutsProxy(
+            child: MaterialApp(
+              home: const Home(),
+              theme: ThemeData(
+                brightness: Brightness.dark,
+                colorScheme: const ColorScheme.dark(),
+                scaffoldBackgroundColor: Colors.black,
+                outlinedButtonTheme: OutlinedButtonThemeData(
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all(Colors.grey[900]),
+                    foregroundColor: MaterialStateProperty.all(Colors.white),
                   ),
-              scaffoldBackgroundColor: Colors.black,
-              outlinedButtonTheme: OutlinedButtonThemeData(
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.grey[900]),
-                  foregroundColor: MaterialStateProperty.all(Colors.white),
                 ),
               ),
             ),

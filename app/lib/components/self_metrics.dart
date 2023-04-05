@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:workspaces/classes/hot_user.dart';
+import 'package:workspaces/classes/workouts.dart';
 import 'package:workspaces/widgets/progress_bar.dart';
 
 class SelfMetrics extends StatelessWidget {
@@ -12,6 +13,7 @@ class SelfMetrics extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var hotuser = context.watch<HotUser?>();
+    var workouts = context.watch<Workouts>();
     if (hotuser == null) {
       return const SizedBox();
     }
@@ -91,11 +93,11 @@ class SelfMetrics extends StatelessWidget {
         const SizedBox(height: 16),
         Column(
           children: [
-            const SizedBox(
+            SizedBox(
               width: 275,
               child: ProgressBar(
-                currentValue: 2,
-                maxValue: 3,
+                currentValue: workouts.getNumWorkoutsSinceMonday(),
+                maxValue: hotuser.sessionsPerWeekGoal!,
               ),
             ),
             Text(

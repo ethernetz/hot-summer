@@ -11,7 +11,6 @@ export const createUserDocument = functions.auth.user().onCreate((userRecord) =>
 		displayName: userRecord.displayName,
 		streak: 0,
 		medals: 0,
-		lastWorkoutTimestamp: undefined,
 	};
 	return admin.firestore().collection('users').doc(userRecord.uid).set(user);
 });

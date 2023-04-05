@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 class HotUser {
   final String uid;
   final String? displayName;
@@ -7,8 +5,6 @@ class HotUser {
   final int streak;
   final int medals;
   final int? sessionsPerWeekGoal;
-  final int? sessionsLeft;
-  final Timestamp? lastWorkoutTimestamp;
 
   const HotUser({
     required this.uid,
@@ -17,8 +13,6 @@ class HotUser {
     required this.streak,
     required this.medals,
     required this.sessionsPerWeekGoal,
-    required this.sessionsLeft,
-    required this.lastWorkoutTimestamp,
   });
 
   factory HotUser.fromJson(Map<String, dynamic> json) {
@@ -29,8 +23,6 @@ class HotUser {
       streak: json['streak'],
       medals: json['medals'],
       sessionsPerWeekGoal: json['sessionsPerWeekGoal'],
-      sessionsLeft: json['sessionsLeft'],
-      lastWorkoutTimestamp: json['lastWorkoutTimestamp'],
     );
   }
 }
