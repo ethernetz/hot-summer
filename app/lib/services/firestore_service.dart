@@ -28,13 +28,22 @@ class FirestoreService {
     if (hotuser.sessionsPerWeekGoal == null) {
       return Future.value();
     }
+
     return _firebaseFirestore.collection('users').doc(hotuser.uid).update(
       {
-        'streak': hotuser.streak + 1,
-        'sessionsLeft': hotuser.sessionsLeft == 1
-            ? hotuser.sessionsPerWeekGoal
-            : hotuser.sessionsLeft! - 1,
+        'lastWorkoutTimestamp': Timestamp.now(),
+        'streak': _shouldContinueStreak(hotuser.lastWorkoutTimestamp)
+            ? hotuser.streak + 1
+            : 1,
+        // 'sessionsLeft': hotuser.sessionsLeft == 1
+        //     ? hotuser.sessionsPerWeekGoal
+        //     : hotuser.sessionsLeft! - 1,
       },
     );
+  }
+
+  bool _shouldContinueStreak(Timestamp? lastWorkoutTimestamp) {
+    if (lastWorkoutTimestamp == null) return false;
+    return lastWorkoutTimestamp.seconds + 259200 > Timestamp.now().seconds;
   }
 }
