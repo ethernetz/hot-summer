@@ -17,6 +17,7 @@ class SelfMetrics extends StatelessWidget {
     if (hotuser == null) {
       return const SizedBox();
     }
+    final numWorkoutsSinceMonday = workouts.getNumWorkoutsSinceMonday();
     return Column(
       children: [
         Row(
@@ -96,12 +97,15 @@ class SelfMetrics extends StatelessWidget {
             SizedBox(
               width: 275,
               child: ProgressBar(
-                currentValue: workouts.getNumWorkoutsSinceMonday(),
+                currentValue: numWorkoutsSinceMonday,
                 maxValue: hotuser.sessionsPerWeekGoal!,
               ),
             ),
+            const SizedBox(height: 5),
             Text(
-              'Sessions left this week',
+              numWorkoutsSinceMonday >= hotuser.sessionsPerWeekGoal!
+                  ? 'Hell yeah! $numWorkoutsSinceMonday workouts this week'
+                  : '${hotuser.sessionsPerWeekGoal! - numWorkoutsSinceMonday} sessions left this week',
               style: GoogleFonts.kumbhSans(
                 color: Colors.white,
                 fontSize: 15,

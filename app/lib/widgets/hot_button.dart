@@ -15,8 +15,8 @@ class _HotButtonState extends State<HotButton>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller = AnimationController(
     vsync: this,
-    duration: const Duration(milliseconds: 150),
-    reverseDuration: const Duration(milliseconds: 150),
+    duration: const Duration(milliseconds: 100),
+    reverseDuration: const Duration(milliseconds: 100),
     value: 1.0,
     upperBound: 1.0,
     lowerBound: 0.8,

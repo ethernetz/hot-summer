@@ -24,6 +24,7 @@ class FirestoreService {
 
   Future<void> logWorkout(BuildContext context) {
     var hotuser = context.read<HotUser?>();
+    var workouts = context.read<Workouts>();
     if (hotuser == null) {
       return Future.value();
     }
@@ -32,32 +33,16 @@ class FirestoreService {
     }
 
     final userRef = _firebaseFirestore.collection('users').doc(hotuser.uid);
-    final userWorkoutsRef = userRef.collection('workouts');
-    final userNewWorkoutRef = userWorkoutsRef.doc();
+    final userNewWorkoutRef = userRef.collection('workouts').doc();
 
-    return _firebaseFirestore.runTransaction((transaction) async {
-      final userDocumentSnapshot = await transaction.get(userRef);
-      final userData = userDocumentSnapshot.data();
-      if (userData == null) {
-        return;
-      }
-      final user = HotUser.fromJson(userData);
-
-      final latestWorkoutSnapshot = await userWorkoutsRef
-          .orderBy("timestamp", descending: true)
-          .limit(1)
-          .get();
-
-      final workouts = Workouts.fromSnapshots(latestWorkoutSnapshot.docs);
-
-      transaction.update(userRef, {
-        "streak": _shouldContinueStreak(workouts) ? user.streak + 1 : 1,
-      });
-
-      transaction.set(userNewWorkoutRef, {
+    return Future.wait([
+      userRef.update({
+        "streak": _shouldContinueStreak(workouts) ? hotuser.streak + 1 : 1,
+      }),
+      userNewWorkoutRef.set({
         "timestamp": Timestamp.now(),
-      });
-    });
+      })
+    ]);
   }
 
   bool _shouldContinueStreak(Workouts workouts) {
