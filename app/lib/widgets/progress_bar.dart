@@ -1,11 +1,37 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 
-class ProgressBar extends StatelessWidget {
+class ProgressBar extends StatefulWidget {
   final int currentValue;
   final int maxValue;
   const ProgressBar(
-      {super.key, required this.currentValue, required this.maxValue});
+      {Key? key, required this.currentValue, required this.maxValue})
+      : super(key: key);
+
+  @override
+  State<ProgressBar> createState() => _ProgressBarState();
+}
+
+class _ProgressBarState extends State<ProgressBar> {
+  double _widthFactor = 0.0;
+
+  @override
+  void initState() {
+    super.initState();
+    _widthFactor = min(widget.currentValue, widget.maxValue) / widget.maxValue;
+  }
+
+  @override
+  void didUpdateWidget(ProgressBar oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.currentValue != widget.currentValue ||
+        oldWidget.maxValue != widget.maxValue) {
+      setState(() {
+        _widthFactor =
+            min(widget.currentValue, widget.maxValue) / widget.maxValue;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,9 +48,11 @@ class ProgressBar extends StatelessWidget {
           Radius.circular(20),
         ),
       ),
-      child: FractionallySizedBox(
-        widthFactor: min(currentValue, maxValue) / maxValue,
+      child: AnimatedFractionallySizedBox(
+        widthFactor: _widthFactor,
         heightFactor: 1,
+        curve: Curves.easeOutCubic,
+        duration: const Duration(seconds: 1),
         child: Container(
           decoration: const BoxDecoration(
             borderRadius: BorderRadius.all(
