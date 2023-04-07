@@ -10,31 +10,46 @@ class WorkoutButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return HotButton(
-        onPressed: () {
-          final currentWorkoutProvider = context.read<CurrentWorkoutProvider>();
-          currentWorkoutProvider.isWorkingOut
-              ? currentWorkoutProvider.endWorkout()
-              : currentWorkoutProvider.startWorkout();
-        },
-        child: Selector<CurrentWorkoutProvider, bool>(
-          selector: (_, provider) => provider.isWorkingOut,
-          builder: (_, isWorkingOut, __) {
-            return isWorkingOut
-                ? Text(
-                    "COMPLETE WORKOUT",
-                    style: GoogleFonts.kumbhSans(
-                      fontWeight: FontWeight.w900,
-                      fontSize: 30,
+      onPressed: () {
+        final currentWorkoutProvider = context.read<CurrentWorkoutProvider>();
+        currentWorkoutProvider.isWorkingOut
+            ? currentWorkoutProvider.endWorkout()
+            : currentWorkoutProvider.startWorkout();
+      },
+      child: Selector<CurrentWorkoutProvider, bool>(
+        selector: (_, provider) => provider.isWorkingOut,
+        builder: (_, isWorkingOut, __) {
+          return AnimatedSwitcher(
+            duration: const Duration(milliseconds: 25),
+            child: Builder(
+              key: ValueKey(isWorkingOut),
+              builder: (BuildContext context) {
+                if (isWorkingOut) {
+                  return Container(
+                    height: 37,
+                    alignment: Alignment.center,
+                    child: Text(
+                      "COMPLETE WORKOUT",
+                      style: GoogleFonts.kumbhSans(
+                        fontWeight: FontWeight.w900,
+                        fontSize: 25,
+                      ),
                     ),
-                  )
-                : Text(
+                  );
+                } else {
+                  return Text(
                     "START WORKOUT",
                     style: GoogleFonts.kumbhSans(
                       fontWeight: FontWeight.w900,
                       fontSize: 30,
                     ),
                   );
-          },
-        ));
+                }
+              },
+            ),
+          );
+        },
+      ),
+    );
   }
 }
