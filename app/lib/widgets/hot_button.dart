@@ -79,7 +79,9 @@ class _HotButtonState extends State<HotButton>
           onTapUp: _onTapUp,
           onTap: _onTap,
           child: Container(
-            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 40),
+            padding: const EdgeInsets.symmetric(vertical: 20),
+            width: double.infinity,
+            alignment: Alignment.center,
             decoration: BoxDecoration(
               // color: _isPressed ? Colors.grey : Colors.red,
               gradient: const LinearGradient(

@@ -8,6 +8,7 @@ import 'package:workspaces/classes/hot_user.dart';
 import 'package:workspaces/screens/onboarding_screen.dart';
 import 'package:workspaces/services/auth_service.dart';
 import 'package:workspaces/screens/home_screen.dart';
+import 'package:workspaces/services/current_workout_provider.dart';
 import 'package:workspaces/services/firestore_service.dart';
 import 'package:workspaces/services/hot_user_proxy.dart';
 import 'package:workspaces/services/workouts_proxy.dart';
@@ -60,6 +61,9 @@ class MyApp extends StatelessWidget {
             },
             initialData: null,
           ),
+          ChangeNotifierProvider(
+            create: (ctx) => CurrentWorkoutProvider(),
+          ),
         ],
         child: HotUserProxy(
           child: WorkoutsProxy(
@@ -91,9 +95,11 @@ class Home extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         bottom: false,
-        child: Container(
-          padding: const EdgeInsets.only(top: 20),
-          child: const AuthGate(),
+        child: SingleChildScrollView(
+          child: Container(
+            padding: const EdgeInsets.only(top: 20),
+            child: const AuthGate(),
+          ),
         ),
       ),
     );

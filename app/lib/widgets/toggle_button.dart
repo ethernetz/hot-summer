@@ -1,4 +1,3 @@
-// create a button that accepts a child and an isSelected boolean value. when the value is true, the button should be green. when the value is false, the button should be red
 import 'package:flutter/material.dart';
 
 class ToggleButton extends StatelessWidget {
@@ -21,7 +20,7 @@ class ToggleButton extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 10),
         decoration: BoxDecoration(
           color: isSelected ? Colors.green : Colors.red,
-          borderRadius: BorderRadius.circular(5),
+          borderRadius: BorderRadius.circular(8),
         ),
         child: Center(
           child: child,
