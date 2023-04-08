@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:workspaces/components/current_workout.dart';
 import 'package:workspaces/components/self_metrics.dart';
 import 'package:workspaces/components/workout_button.dart';
 import 'package:workspaces/services/auth_service.dart';
@@ -17,6 +18,8 @@ class HomeScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const WorkoutButton(),
+            const SizedBox(height: 30),
+            const CurrentWorkout(),
             const SizedBox(height: 30),
             const SelfMetrics(),
             const SizedBox(height: 200),

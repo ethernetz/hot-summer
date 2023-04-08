@@ -12,7 +12,6 @@ class CurrentWorkoutProvider extends ChangeNotifier {
 
   void endWorkout() {
     _isWorkingOut = false;
-
     notifyListeners();
   }
 }
