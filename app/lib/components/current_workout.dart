@@ -85,7 +85,7 @@ class _CurrentWorkoutState extends State<CurrentWorkout> {
           child: activityCard,
         );
       },
-      duration: const Duration(milliseconds: 1000),
+      duration: const Duration(milliseconds: 100),
     );
     activities.removeAt(index);
   }
