@@ -60,10 +60,12 @@ class _CurrentWorkoutState extends State<CurrentWorkout> {
     final activity = activities[index];
     return Padding(
       padding: const EdgeInsets.only(bottom: 15),
-      child: ActivityCard(
-        activity: activity,
-        key: activity.uniqueKey,
-        onClosePressed: () => _removeActivity(index),
+      child: ChangeNotifierProvider<Activity>.value(
+        value: activity,
+        child: ActivityCard(
+          key: activity.uniqueKey,
+          onClosePressed: () => _removeActivity(index),
+        ),
       ),
     );
   }
