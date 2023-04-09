@@ -98,14 +98,15 @@ class _CurrentWorkoutState extends State<CurrentWorkout> {
   Button buildAddButton() {
     return Button(
       onPressed: () => addActivity(),
-      gradient: const LinearGradient(
-        begin: Alignment.centerLeft,
-        end: Alignment.centerRight,
-        colors: [
-          Color(0xff668ae7),
-          Color(0xff668ffa),
-        ],
-      ),
+      // gradient: const LinearGradient(
+      //   begin: Alignment.centerLeft,
+      //   end: Alignment.centerRight,
+      //   colors: [
+      //     Color(0xff668ae7),
+      //     Color(0xff668ffa),
+      //   ],
+      // ),
+      color: const Color(0xFFC32B9C),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

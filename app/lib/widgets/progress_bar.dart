@@ -58,7 +58,7 @@ class _ProgressBarState extends State<ProgressBar> {
             borderRadius: BorderRadius.all(
               Radius.circular(20),
             ),
-            color: Color(0xff8a12f7),
+            color: Color(0xff8D0BB4),
           ),
         ),
       ),
