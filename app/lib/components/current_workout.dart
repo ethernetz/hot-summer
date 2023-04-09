@@ -37,6 +37,7 @@ class _CurrentWorkoutState extends State<CurrentWorkout> {
 
     return AnimatedList(
       shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
       key: _listKey,
       initialItemCount: 0,
       itemBuilder: (context, index, animation) {
