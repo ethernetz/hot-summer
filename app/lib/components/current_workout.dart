@@ -24,14 +24,14 @@ class _CurrentWorkoutState extends State<CurrentWorkout> {
         (currentWorkoutProvider) => currentWorkoutProvider.isWorkingOut);
 
     if (isWorkingOut && !addButtonExists) {
-      addAddButton();
+      _addAddButton();
     }
     if (!isWorkingOut) {
       if (activities.isNotEmpty) {
-        removeAllActivities();
+        _removeAllActivities();
       }
       if (addButtonExists) {
-        removeAddButton();
+        _removeAddButton();
       }
     }
 
@@ -40,30 +40,32 @@ class _CurrentWorkoutState extends State<CurrentWorkout> {
       key: _listKey,
       initialItemCount: 0,
       itemBuilder: (context, index, animation) {
-        final curvedAnimation = CurvedAnimation(
-          parent: animation,
-          curve: Curves.easeInOut,
-        );
-
         if (index == activities.length) {
           return SizeTransition(
-            sizeFactor: curvedAnimation,
-            child: buildAddButton(),
+            sizeFactor: _getCurvedAnimation(animation),
+            child: _buildAddButton(),
           );
         }
 
-        return Padding(
-          padding: const EdgeInsets.only(bottom: 15),
-          child: ActivityCard(
-            activity: activities[index],
-            onClosePressed: () => removeActivity(index),
-          ),
+        return SizeTransition(
+          sizeFactor: _getCurvedAnimation(animation),
+          child: _buildActivityCard(index),
         );
       },
     );
   }
 
-  void addActivity() {
+  Widget _buildActivityCard(int index) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 15),
+      child: ActivityCard(
+        activity: activities[index],
+        onClosePressed: () => _removeActivity(index),
+      ),
+    );
+  }
+
+  void _addActivity() {
     activities.add('item ${Random().nextInt(100)}');
     _listKey.currentState?.insertItem(
       activities.length - 1,
@@ -71,33 +73,30 @@ class _CurrentWorkoutState extends State<CurrentWorkout> {
     );
   }
 
-  void removeActivity(int index) {
-    final activity = activities[index];
+  void _removeActivity(int index) {
+    final activityCard = _buildActivityCard(index);
     _listKey.currentState?.removeItem(
       index,
       (context, animation) {
         return SizeTransition(
-          sizeFactor: animation,
-          child: ActivityCard(
-            activity: activity,
-            onClosePressed: () => {},
-          ),
+          sizeFactor: _getCurvedAnimation(animation),
+          child: activityCard,
         );
       },
-      duration: const Duration(milliseconds: 100),
+      duration: const Duration(milliseconds: 1000),
     );
     activities.removeAt(index);
   }
 
-  void removeAllActivities() {
+  void _removeAllActivities() {
     for (var i = activities.length - 1; i >= 0; i--) {
-      removeActivity(i);
+      _removeActivity(i);
     }
   }
 
-  Button buildAddButton() {
+  Button _buildAddButton() {
     return Button(
-      onPressed: () => addActivity(),
+      onPressed: () => _addActivity(),
       // gradient: const LinearGradient(
       //   begin: Alignment.centerLeft,
       //   end: Alignment.centerRight,
@@ -124,7 +123,7 @@ class _CurrentWorkoutState extends State<CurrentWorkout> {
     );
   }
 
-  void addAddButton() {
+  void _addAddButton() {
     _listKey.currentState?.insertItem(
       0,
       duration: const Duration(milliseconds: 100),
@@ -132,7 +131,7 @@ class _CurrentWorkoutState extends State<CurrentWorkout> {
     addButtonExists = true;
   }
 
-  void removeAddButton() {
+  void _removeAddButton() {
     _listKey.currentState?.removeItem(
       0,
       (
@@ -140,12 +139,19 @@ class _CurrentWorkoutState extends State<CurrentWorkout> {
         Animation<double> animation,
       ) {
         return SizeTransition(
-          sizeFactor: animation,
-          child: buildAddButton(),
+          sizeFactor: _getCurvedAnimation(animation),
+          child: _buildAddButton(),
         );
       },
       duration: const Duration(milliseconds: 100),
     );
     addButtonExists = false;
+  }
+
+  CurvedAnimation _getCurvedAnimation(Animation<double> animation) {
+    return CurvedAnimation(
+      parent: animation,
+      curve: Curves.easeInOut,
+    );
   }
 }
