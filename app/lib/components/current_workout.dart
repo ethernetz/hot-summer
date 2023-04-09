@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:workspaces/components/activity_card.dart';
 import 'package:workspaces/services/current_workout_provider.dart';
@@ -47,10 +48,7 @@ class _CurrentWorkoutState extends State<CurrentWorkout> {
         if (index == activities.length) {
           return SizeTransition(
             sizeFactor: curvedAnimation,
-            child: Button(
-              child: const Text('Add activity'),
-              onPressed: () => addActivity(),
-            ),
+            child: buildAddButton(),
           );
         }
 
@@ -62,7 +60,7 @@ class _CurrentWorkoutState extends State<CurrentWorkout> {
             background: Container(color: Colors.red[700]),
             direction: DismissDirection.startToEnd,
             child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10),
+              padding: const EdgeInsets.only(bottom: 15),
               child: ActivityCard(
                 activity: activities[index],
                 onClosePressed: () => removeActivity(index),
@@ -78,7 +76,7 @@ class _CurrentWorkoutState extends State<CurrentWorkout> {
     activities.add('item ${Random().nextInt(100)}');
     _listKey.currentState?.insertItem(
       activities.length - 1,
-      duration: const Duration(milliseconds: 250),
+      duration: const Duration(milliseconds: 100),
     );
   }
 
@@ -106,6 +104,34 @@ class _CurrentWorkoutState extends State<CurrentWorkout> {
     }
   }
 
+  Button buildAddButton() {
+    return Button(
+      onPressed: () => addActivity(),
+      gradient: const LinearGradient(
+        begin: Alignment.centerLeft,
+        end: Alignment.centerRight,
+        colors: [
+          Color(0xff668ae7),
+          Color(0xff668ffa),
+        ],
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Icon(Icons.add, color: Colors.white),
+          const SizedBox(width: 4),
+          Text(
+            "Add activity",
+            style: GoogleFonts.kumbhSans(
+              fontWeight: FontWeight.w600,
+              fontSize: 20,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   void addAddButton() {
     _listKey.currentState?.insertItem(
       0,
@@ -123,10 +149,7 @@ class _CurrentWorkoutState extends State<CurrentWorkout> {
       ) {
         return SizeTransition(
           sizeFactor: animation,
-          child: Button(
-            child: const Text('Add activity'),
-            onPressed: () => addActivity(),
-          ),
+          child: buildAddButton(),
         );
       },
       duration: const Duration(milliseconds: 100),

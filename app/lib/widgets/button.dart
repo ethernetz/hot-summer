@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class Button extends StatelessWidget {
   final Widget child;
   final Color color;
+  final Gradient? gradient;
   final void Function()? onPressed;
 
   const Button({
@@ -10,6 +11,7 @@ class Button extends StatelessWidget {
     required this.child,
     this.onPressed,
     this.color = Colors.purple,
+    this.gradient,
   });
 
   @override
@@ -20,6 +22,7 @@ class Button extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 10),
         decoration: BoxDecoration(
           color: color,
+          gradient: gradient,
           borderRadius: BorderRadius.circular(8),
         ),
         child: Center(

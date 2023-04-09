@@ -83,7 +83,6 @@ class _HotButtonState extends State<HotButton>
             width: double.infinity,
             alignment: Alignment.center,
             decoration: BoxDecoration(
-              // color: _isPressed ? Colors.grey : Colors.red,
               gradient: const LinearGradient(
                 begin: Alignment.centerLeft,
                 end: Alignment.centerRight,
