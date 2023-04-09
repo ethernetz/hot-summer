@@ -52,20 +52,11 @@ class _CurrentWorkoutState extends State<CurrentWorkout> {
           );
         }
 
-        return SizeTransition(
-          sizeFactor: curvedAnimation,
-          child: Dismissible(
-            key: Key('${activities[index].hashCode}'),
-            onDismissed: (direction) => removeActivity(index),
-            background: Container(color: Colors.red[700]),
-            direction: DismissDirection.startToEnd,
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 15),
-              child: ActivityCard(
-                activity: activities[index],
-                onClosePressed: () => removeActivity(index),
-              ),
-            ),
+        return Padding(
+          padding: const EdgeInsets.only(bottom: 15),
+          child: ActivityCard(
+            activity: activities[index],
+            onClosePressed: () => removeActivity(index),
           ),
         );
       },
