@@ -43,22 +43,21 @@ class ActivityCard extends StatelessWidget {
           ),
           DefaultTextStyle(
             style: GoogleFonts.kumbhSans(
-              fontSize: 15,
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
             ),
             textAlign: TextAlign.center,
             child: Table(
               columnWidths: const {
-                0: FixedColumnWidth(75),
-                1: IntrinsicColumnWidth(flex: 1),
-                2: FixedColumnWidth(75),
-                3: FixedColumnWidth(75),
+                0: FixedColumnWidth(40),
+                1: IntrinsicColumnWidth(flex: 2),
+                2: IntrinsicColumnWidth(flex: 1),
+                3: IntrinsicColumnWidth(flex: 1),
               },
               children: [
                 const TableRow(
                   children: [
-                    Text(
-                      'Set',
-                    ),
+                    Text('Set'),
                     Text('Previous'),
                     Text('lbs'),
                     Text('Reps'),
@@ -69,20 +68,33 @@ class ActivityCard extends StatelessWidget {
                     children: [
                       TableCell(
                         verticalAlignment: TableCellVerticalAlignment.middle,
-                        child: Text((i + 1).toString()),
+                        child: Text(
+                          (i + 1).toString(),
+                        ),
                       ),
                       const TableCell(
                         verticalAlignment: TableCellVerticalAlignment.middle,
-                        child: Text('---'),
+                        child: Text(
+                          '12lb x 13',
+                          style: TextStyle(
+                            color: Colors.white60,
+                          ),
+                        ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 6),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 6,
+                        ),
                         child: NumberField(
                           controller: activity.sets[i].weightController,
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 6),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 6,
+                        ),
                         child: NumberField(
                           controller: activity.sets[i].repsController,
                         ),
@@ -96,9 +108,8 @@ class ActivityCard extends StatelessWidget {
           Center(
             child: SizedBox(
               width: 125,
-              child: Button(
-                onPressed: () => activity.addSet(),
-                color: const Color(0xFFC32B9C),
+              child: GestureDetector(
+                onTap: () => activity.addSet(),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -108,7 +119,7 @@ class ActivityCard extends StatelessWidget {
                       "Add set",
                       style: GoogleFonts.kumbhSans(
                         fontWeight: FontWeight.w600,
-                        fontSize: 15,
+                        fontSize: 16,
                       ),
                     ),
                   ],

@@ -13,21 +13,20 @@ class NumberField extends StatelessWidget {
       textAlign: TextAlign.center,
       keyboardType: TextInputType.number,
       textInputAction: TextInputAction.next,
-      maxLength: 4,
-      decoration: InputDecoration(
+      maxLength: 3,
+      style: DefaultTextStyle.of(context).style,
+      decoration: const InputDecoration(
         counterText: "",
         isDense: true,
-        contentPadding: const EdgeInsets.symmetric(vertical: 6, horizontal: 4),
-        enabledBorder: OutlineInputBorder(
+        contentPadding: EdgeInsets.symmetric(vertical: 6, horizontal: 4),
+        enabledBorder: UnderlineInputBorder(
           borderSide: BorderSide(
-            color: Colors.grey[700]!,
-            width: 2,
+            color: Color(0xFFC32B9C),
           ),
         ),
-        focusedBorder: OutlineInputBorder(
+        focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(
-            color: Colors.grey[700]!,
-            width: 2,
+            color: Color(0xFFC32B9C),
           ),
         ),
       ),
