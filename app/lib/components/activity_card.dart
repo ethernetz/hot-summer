@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:workspaces/widgets/number_input.dart';
+import 'package:workspaces/classes/activity.dart';
+import 'package:workspaces/widgets/number_field.dart';
 
 class ActivityCard extends StatelessWidget {
   final void Function() onClosePressed;
-  final String activity;
+  final Activity activity;
   const ActivityCard({
     required this.onClosePressed,
     required this.activity,
@@ -71,14 +72,16 @@ class ActivityCard extends StatelessWidget {
                     child: Text('---'),
                   ),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 6),
-                    child: NumberInput(
-                      initialValue: 4820,
+                    padding: const EdgeInsets.symmetric(horizontal: 6),
+                    child: NumberField(
+                      controller: activity.weightController,
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 6),
-                    child: NumberInput(),
+                    padding: const EdgeInsets.symmetric(horizontal: 6),
+                    child: NumberField(
+                      controller: activity.repsController,
+                    ),
                   ),
                 ],
               )

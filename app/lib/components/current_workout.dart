@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:workspaces/classes/activity.dart';
 import 'package:workspaces/components/activity_card.dart';
 import 'package:workspaces/services/current_workout_provider.dart';
 import 'package:workspaces/widgets/button.dart';
-import 'dart:math';
 
 class CurrentWorkout extends StatefulWidget {
   const CurrentWorkout({super.key});
@@ -15,7 +15,7 @@ class CurrentWorkout extends StatefulWidget {
 
 class _CurrentWorkoutState extends State<CurrentWorkout> {
   final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
-  List<String> activities = [];
+  List<Activity> activities = [];
   bool addButtonExists = false;
 
   @override
@@ -56,17 +56,19 @@ class _CurrentWorkoutState extends State<CurrentWorkout> {
   }
 
   Widget _buildActivityCard(int index) {
+    final activity = activities[index];
     return Padding(
       padding: const EdgeInsets.only(bottom: 15),
       child: ActivityCard(
-        activity: activities[index],
+        activity: activity,
+        key: activity.uniqueKey,
         onClosePressed: () => _removeActivity(index),
       ),
     );
   }
 
   void _addActivity() {
-    activities.add('item ${Random().nextInt(100)}');
+    activities.add(Activity(uniqueKey: UniqueKey()));
     _listKey.currentState?.insertItem(
       activities.length - 1,
       duration: const Duration(milliseconds: 100),

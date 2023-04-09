@@ -1,28 +1,15 @@
 import 'package:flutter/material.dart';
 
-class NumberInput extends StatefulWidget {
-  final int? initialValue;
-  const NumberInput({super.key, this.initialValue});
-
-  @override
-  State<NumberInput> createState() => _NumberInputState();
-}
-
-class _NumberInputState extends State<NumberInput> {
-  late TextEditingController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = TextEditingController(text: widget.initialValue?.toString());
-  }
+class NumberField extends StatelessWidget {
+  final TextEditingController controller;
+  const NumberField({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context) {
     return TextField(
-      controller: _controller,
-      onTap: () => _controller.selection = TextSelection(
-          baseOffset: 0, extentOffset: _controller.value.text.length),
+      controller: controller,
+      onTap: () => controller.selection = TextSelection(
+          baseOffset: 0, extentOffset: controller.value.text.length),
       textAlign: TextAlign.center,
       keyboardType: TextInputType.number,
       textInputAction: TextInputAction.next,
