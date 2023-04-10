@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:workspaces/classes/activity.dart';
+import 'package:workspaces/classes/activity_type.dart';
 import 'package:workspaces/components/activity_card.dart';
+import 'package:workspaces/components/select_activity.dart';
 import 'package:workspaces/services/current_workout_provider.dart';
 import 'package:workspaces/widgets/button.dart';
 
@@ -44,7 +46,7 @@ class _CurrentWorkoutState extends State<CurrentWorkout> {
         if (index == activities.length) {
           return SizeTransition(
             sizeFactor: _getCurvedAnimation(animation),
-            child: _buildAddButton(),
+            child: _buildAddActivityButton(),
           );
         }
 
@@ -70,8 +72,27 @@ class _CurrentWorkoutState extends State<CurrentWorkout> {
     );
   }
 
-  void _addActivity() {
-    activities.add(Activity(uniqueKey: UniqueKey()));
+  void _addActivity() async {
+    final activityType = await showModalBottomSheet<ActivityType>(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20),
+          topRight: Radius.circular(20),
+        ),
+      ),
+      backgroundColor: Colors.grey[900],
+      isScrollControlled: true,
+      builder: (context) => SizedBox(
+        height: MediaQuery.of(context).size.height * 0.9,
+        child: const SelectActivity(),
+      ),
+    );
+    if (activityType == null) return;
+    activities.add(Activity(
+      uniqueKey: UniqueKey(),
+      activityType: activityType,
+    ));
     _listKey.currentState?.insertItem(
       activities.length - 1,
       duration: const Duration(milliseconds: 100),
@@ -99,7 +120,7 @@ class _CurrentWorkoutState extends State<CurrentWorkout> {
     }
   }
 
-  Button _buildAddButton() {
+  Button _buildAddActivityButton() {
     return Button(
       onPressed: () => _addActivity(),
       // gradient: const LinearGradient(
@@ -145,7 +166,7 @@ class _CurrentWorkoutState extends State<CurrentWorkout> {
       ) {
         return SizeTransition(
           sizeFactor: _getCurvedAnimation(animation),
-          child: _buildAddButton(),
+          child: _buildAddActivityButton(),
         );
       },
       duration: const Duration(milliseconds: 100),

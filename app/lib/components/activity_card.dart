@@ -3,7 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:keyboard_actions/keyboard_actions.dart';
 import 'package:provider/provider.dart';
 import 'package:workspaces/classes/activity.dart';
-import 'package:workspaces/widgets/button.dart';
 import 'package:workspaces/widgets/number_field.dart';
 
 class ActivityCard extends StatelessWidget {
@@ -33,7 +32,7 @@ class ActivityCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Arnold Press",
+                  activity.activityType.displayName,
                   style: GoogleFonts.kumbhSans(
                     fontWeight: FontWeight.w600,
                     fontSize: 24,
