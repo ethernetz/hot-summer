@@ -48,17 +48,31 @@ class _ProgressBarState extends State<ProgressBar> {
           Radius.circular(20),
         ),
       ),
-      child: AnimatedFractionallySizedBox(
-        widthFactor: _widthFactor,
-        heightFactor: 1,
-        curve: Curves.easeOutCubic,
-        duration: const Duration(seconds: 1),
+      child: ShaderMask(
+        shaderCallback: (Rect bounds) => const LinearGradient(
+          colors: [
+            Color(0xffED6F00),
+            Color(0xffAF0BE6),
+          ],
+          begin: Alignment.centerLeft,
+          end: Alignment.centerRight,
+        ).createShader(bounds),
         child: Container(
-          decoration: const BoxDecoration(
-            borderRadius: BorderRadius.all(
-              Radius.circular(20),
+          width: double.infinity,
+          alignment: Alignment.centerLeft,
+          child: AnimatedFractionallySizedBox(
+            widthFactor: _widthFactor,
+            heightFactor: 1,
+            curve: Curves.easeOutCubic,
+            duration: const Duration(seconds: 1),
+            child: Container(
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(20),
+                ),
+                color: Colors.white,
+              ),
             ),
-            color: Color(0xff8D0BB4),
           ),
         ),
       ),
