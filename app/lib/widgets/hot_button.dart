@@ -63,27 +63,39 @@ class _HotButtonState extends State<HotButton>
   Widget build(BuildContext context) {
     return ScaleTransition(
       scale: _animation,
-      child: GestureDetector(
-        onTapCancel: _onTapCancel,
-        onTapDown: _onTapDown,
-        onTapUp: _onTapUp,
-        onTap: _onTap,
-        child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 20),
-          width: double.infinity,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            gradient: const LinearGradient(
-              begin: Alignment.centerLeft,
-              end: Alignment.centerRight,
-              colors: [
-                Color(0xffED6F00),
-                Color(0xffAF0BE6),
-              ],
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            BoxShadow(
+              color: const Color(0xFFC32B9C).withOpacity(0.5),
+              blurRadius: 20.0,
+              spreadRadius: 10,
             ),
-            borderRadius: BorderRadius.circular(8),
+          ],
+        ),
+        child: GestureDetector(
+          onTapCancel: _onTapCancel,
+          onTapDown: _onTapDown,
+          onTapUp: _onTapUp,
+          onTap: _onTap,
+          child: Container(
+            padding: const EdgeInsets.symmetric(vertical: 20),
+            width: double.infinity,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
+                colors: [
+                  Color(0xffED6F00),
+                  Color(0xffAF0BE6),
+                ],
+              ),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: widget.child,
           ),
-          child: widget.child,
         ),
       ),
     );
