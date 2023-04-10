@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:workspaces/classes/workouts.dart';
 
+import 'common.dart';
+
 class WorkoutsProxy extends StatefulWidget {
   final Widget? child;
 
@@ -27,10 +29,7 @@ class _WorkoutsProxyState extends State<WorkoutsProxy> {
     if (firebaseUser == null) {
       return Stream<Workouts>.value(const Workouts(workouts: []));
     }
-    return FirebaseFirestore.instance
-        .collection('users')
-        .doc(firebaseUser.uid)
-        .collection('workouts')
+    return userWorkoutsCollectionRef(firebaseUser.uid)
         .orderBy("timestamp", descending: true)
         .snapshots()
         .map((workoutsSnapshot) =>

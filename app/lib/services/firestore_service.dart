@@ -1,9 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:workspaces/classes/current_activity.dart';
 import 'package:workspaces/classes/hot_user.dart';
 import 'package:workspaces/classes/onboarding_question.dart';
+import 'package:workspaces/classes/workout.dart';
 import 'package:workspaces/classes/workouts.dart';
+import 'package:workspaces/services/common.dart';
 
 class FirestoreService {
   final FirebaseFirestore _firebaseFirestore;
@@ -22,7 +25,8 @@ class FirestoreService {
     });
   }
 
-  Future<void> logWorkout(BuildContext context) {
+  Future<void> logWorkout(
+      BuildContext context, List<CurrentActivity> currentActivities) {
     var hotuser = context.read<HotUser?>();
     var workouts = context.read<Workouts>();
     if (hotuser == null) {
@@ -32,16 +36,14 @@ class FirestoreService {
       return Future.value();
     }
 
-    final userRef = _firebaseFirestore.collection('users').doc(hotuser.uid);
-    final userNewWorkoutRef = userRef.collection('workouts').doc();
+    final userRef = usersCollectionRef.doc(hotuser.uid);
+    final userNewWorkoutRef = userWorkoutsCollectionRef(hotuser.uid).doc();
 
     return Future.wait([
       userRef.update({
         "streak": _shouldContinueStreak(workouts) ? hotuser.streak + 1 : 1,
       }),
-      userNewWorkoutRef.set({
-        "timestamp": Timestamp.now(),
-      })
+      userNewWorkoutRef.set(Workout.fromCurrentActivities(currentActivities))
     ]);
   }
 

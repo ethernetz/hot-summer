@@ -7,10 +7,10 @@ class Workouts {
   const Workouts({required this.workouts});
 
   factory Workouts.fromSnapshots(
-      List<QueryDocumentSnapshot<Map<String, dynamic>>> workoutsSnapshots) {
+      List<QueryDocumentSnapshot<Workout>> workoutsSnapshots) {
     return Workouts(
       workouts: workoutsSnapshots
-          .map((workoutSnapshot) => Workout.fromJson(workoutSnapshot.data()))
+          .map((workoutSnapshot) => workoutSnapshot.data())
           .toList(),
     );
   }

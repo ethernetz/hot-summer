@@ -2,11 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:workspaces/classes/activity.dart';
+import 'package:workspaces/classes/current_activity.dart';
 import 'package:workspaces/classes/activity_type.dart';
 import 'package:workspaces/components/activity_card.dart';
 import 'package:workspaces/components/select_activity.dart';
 import 'package:workspaces/services/current_workout_provider.dart';
+import 'package:workspaces/services/firestore_service.dart';
 import 'package:workspaces/widgets/button.dart';
 
 class CurrentWorkout extends StatefulWidget {
@@ -18,7 +19,7 @@ class CurrentWorkout extends StatefulWidget {
 
 class _CurrentWorkoutState extends State<CurrentWorkout> {
   final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
-  List<Activity> activities = [];
+  List<CurrentActivity> activities = [];
   bool addButtonExists = false;
 
   @override
@@ -30,11 +31,12 @@ class _CurrentWorkoutState extends State<CurrentWorkout> {
       _addAddButton();
     }
     if (!isWorkingOut) {
+      if (addButtonExists) {
+        context.read<FirestoreService>().logWorkout(context, activities);
+        _removeAddButton();
+      }
       if (activities.isNotEmpty) {
         _removeAllActivities();
-      }
-      if (addButtonExists) {
-        _removeAddButton();
       }
     }
 
@@ -63,7 +65,7 @@ class _CurrentWorkoutState extends State<CurrentWorkout> {
     final activity = activities[index];
     return Padding(
       padding: const EdgeInsets.only(bottom: 15),
-      child: ChangeNotifierProvider<Activity>.value(
+      child: ChangeNotifierProvider<CurrentActivity>.value(
         value: activity,
         child: ActivityCard(
           key: activity.uniqueKey,
@@ -84,7 +86,7 @@ class _CurrentWorkoutState extends State<CurrentWorkout> {
       ),
     );
     if (activityType == null) return;
-    activities.add(Activity(
+    activities.add(CurrentActivity(
       uniqueKey: UniqueKey(),
       activityType: activityType,
     ));

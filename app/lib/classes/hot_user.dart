@@ -25,4 +25,16 @@ class HotUser {
       sessionsPerWeekGoal: json['sessionsPerWeekGoal'],
     );
   }
+
+  Map<String, dynamic> toFirestore() {
+    return {
+      "uid": uid,
+      if (displayName != null) "displayName": displayName,
+      if (email != null) "email": email,
+      "streak": streak,
+      "medals": medals,
+      if (sessionsPerWeekGoal != null)
+        "sessionsPerWeekGoal": sessionsPerWeekGoal,
+    };
+  }
 }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:keyboard_actions/keyboard_actions.dart';
 import 'package:provider/provider.dart';
-import 'package:workspaces/classes/activity.dart';
+import 'package:workspaces/classes/current_activity.dart';
 import 'package:workspaces/widgets/number_field.dart';
 
 class ActivityCard extends StatelessWidget {
@@ -14,7 +14,7 @@ class ActivityCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final activity = context.watch<Activity>();
+    final activity = context.watch<CurrentActivity>();
     return KeyboardActions(
       autoScroll: false,
       config: _buildKeyboardActionsConfig(activity),
@@ -138,7 +138,7 @@ class ActivityCard extends StatelessWidget {
     );
   }
 
-  KeyboardActionsConfig _buildKeyboardActionsConfig(Activity activity) {
+  KeyboardActionsConfig _buildKeyboardActionsConfig(CurrentActivity activity) {
     return KeyboardActionsConfig(
       keyboardActionsPlatform: KeyboardActionsPlatform.ALL,
       keyboardBarColor: Colors.grey[900],

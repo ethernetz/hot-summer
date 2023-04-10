@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:workspaces/classes/activity_type.dart';
 
-class Set {
+class CurrentSet {
   final TextEditingController weightController = TextEditingController();
   final FocusNode weightFocusNode = FocusNode();
   final TextEditingController repsController = TextEditingController();
   final FocusNode repsFocusNode = FocusNode();
 }
 
-class Activity extends ChangeNotifier {
+class CurrentActivity extends ChangeNotifier {
   final UniqueKey uniqueKey;
   final ActivityType activityType;
-  List<Set> sets = [Set()];
+  List<CurrentSet> sets = [CurrentSet()];
 
-  Activity({required this.uniqueKey, required this.activityType});
+  CurrentActivity({required this.uniqueKey, required this.activityType});
 
   void addSet() {
-    sets.add(Set());
+    sets.add(CurrentSet());
     notifyListeners();
   }
 }

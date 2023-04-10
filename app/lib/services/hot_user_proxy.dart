@@ -1,8 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:workspaces/classes/hot_user.dart';
+import 'package:workspaces/services/common.dart';
 
 class HotUserProxy extends StatefulWidget {
   final Widget? child;
@@ -27,17 +27,10 @@ class _HotUserProxyState extends State<HotUserProxy> {
     if (firebaseUser == null) {
       return Stream<HotUser?>.value(null);
     }
-    return FirebaseFirestore.instance
-        .collection('users')
+    return usersCollectionRef
         .doc(firebaseUser.uid)
         .snapshots()
-        .map((userDocumentSnapshot) {
-      final userData = userDocumentSnapshot.data();
-      if (userData == null) {
-        return null;
-      }
-      return HotUser.fromJson(userData);
-    });
+        .map((snapshot) => snapshot.data());
   }
 
   @override

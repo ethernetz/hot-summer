@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:workspaces/services/current_workout_provider.dart';
-import 'package:workspaces/services/firestore_service.dart';
 import 'package:workspaces/widgets/hot_button.dart';
 
 class WorkoutButton extends StatelessWidget {
@@ -14,7 +13,6 @@ class WorkoutButton extends StatelessWidget {
       onPressed: () {
         final currentWorkoutProvider = context.read<CurrentWorkoutProvider>();
         if (currentWorkoutProvider.isWorkingOut) {
-          context.read<FirestoreService>().logWorkout(context);
           currentWorkoutProvider.endWorkout();
         } else {
           currentWorkoutProvider.startWorkout();

@@ -1,15 +1,67 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:workspaces/classes/activity_type.dart';
+import 'package:workspaces/classes/current_activity.dart';
+
+class Set {
+  int weight;
+  int reps;
+
+  Set({required this.weight, required this.reps});
+}
+
+class Activity {
+  final ActivityType activityType;
+  final List<Set> sets;
+
+  Activity({required this.activityType, required this.sets});
+}
 
 class Workout {
   final Timestamp timestamp;
+  final List<Activity> activities;
 
   const Workout({
     required this.timestamp,
+    required this.activities,
   });
 
-  factory Workout.fromJson(Map<String, dynamic> json) {
+  factory Workout.fromCurrentActivities(List<CurrentActivity> json) {
     return Workout(
-      timestamp: json['timestamp'],
+        timestamp: Timestamp.now(),
+        activities: json.map((activity) {
+          return Activity(
+              activityType: activity.activityType,
+              sets: activity.sets.map((set) {
+                return Set(
+                    weight: int.tryParse(set.weightController.text) ?? 0,
+                    reps: int.tryParse(set.repsController.text) ?? 0);
+              }).toList());
+        }).toList());
+  }
+
+  factory Workout.fromJson(Map<String, dynamic>? json) {
+    return Workout(
+      timestamp: json!['timestamp'],
+      activities: [],
     );
+  }
+
+  Map<String, dynamic> toFirestore() {
+    return {
+      "timestamp": timestamp,
+      "activities": [
+        for (var activity in activities)
+          {
+            "activityType": activity.activityType.number,
+            "sets": [
+              for (var set in activity.sets)
+                {
+                  "weight": set.weight,
+                  "reps": set.reps,
+                }
+            ]
+          }
+      ]
+    };
   }
 }
