@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -73,19 +74,13 @@ class _CurrentWorkoutState extends State<CurrentWorkout> {
   }
 
   void _addActivity() async {
-    final activityType = await showModalBottomSheet<ActivityType>(
+    final activityType = await showCupertinoModalPopup<ActivityType>(
       context: context,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(20),
-          topRight: Radius.circular(20),
-        ),
-      ),
-      backgroundColor: Colors.grey[900],
-      isScrollControlled: true,
       builder: (context) => SizedBox(
         height: MediaQuery.of(context).size.height * 0.9,
-        child: const SelectActivity(),
+        child: const CupertinoPopupSurface(
+          child: SelectActivity(),
+        ),
       ),
     );
     if (activityType == null) return;
