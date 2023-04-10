@@ -220,6 +220,12 @@ enum ActivityType {
   tricepPushdownWithBar(214, 'Tricep Pushdown With Bar'),
   tricepPushdownWithRope(215, 'Tricep Pushdown With Rope');
 
+  static final Map<int, ActivityType> _map = {
+    for (var value in ActivityType.values) value.number: value
+  };
+
+  static ActivityType fromNumber(int number) => _map[number]!;
+
   const ActivityType(this.number, this.displayName);
 
   final int number;

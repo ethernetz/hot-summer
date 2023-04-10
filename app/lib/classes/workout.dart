@@ -42,7 +42,24 @@ class Workout {
   factory Workout.fromJson(Map<String, dynamic>? json) {
     return Workout(
       timestamp: json!['timestamp'],
-      activities: [],
+      activities: json['activities'] is Iterable
+          ? List.from(json['activities'])
+              .map(
+                (activity) => Activity(
+                  activityType:
+                      ActivityType.fromNumber(activity['activityType']),
+                  sets: List.from(activity['sets'])
+                      .map(
+                        (set) => Set(
+                          weight: set['weight'],
+                          reps: set['reps'],
+                        ),
+                      )
+                      .toList(),
+                ),
+              )
+              .toList()
+          : [],
     );
   }
 
