@@ -17,11 +17,11 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const WorkoutButton(),
+            const SelfMetrics(),
             const SizedBox(height: 30),
             const CurrentWorkout(),
-            const SizedBox(height: 30),
-            const SelfMetrics(),
+            const SizedBox(height: 20),
+            const WorkoutButton(),
             const SizedBox(height: 200),
             ElevatedButton(
               onPressed: () {
