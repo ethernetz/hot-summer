@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 
 class Set {
   final TextEditingController weightController = TextEditingController();
+  final FocusNode weightFocusNode = FocusNode();
   final TextEditingController repsController = TextEditingController();
+  final FocusNode repsFocusNode = FocusNode();
 }
 
 class Activity extends ChangeNotifier {

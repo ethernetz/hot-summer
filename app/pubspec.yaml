@@ -45,6 +45,7 @@ dependencies:
   firebase_crashlytics: ^3.0.16
   google_sign_in: ^6.0.2
   google_fonts: ^4.0.3
+  keyboard_actions: ^4.2.0
 
 dev_dependencies:
   flutter_test:
