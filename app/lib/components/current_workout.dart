@@ -30,14 +30,10 @@ class _CurrentWorkoutState extends State<CurrentWorkout> {
     if (isWorkingOut && !addButtonExists) {
       _addAddButton();
     }
-    if (!isWorkingOut) {
-      if (addButtonExists) {
-        context.read<FirestoreService>().logWorkout(context, activities);
-        _removeAddButton();
-      }
-      if (activities.isNotEmpty) {
-        _removeAllActivities();
-      }
+    if (!isWorkingOut && addButtonExists) {
+      context.read<FirestoreService>().logWorkout(context, activities);
+      _removeAllActivities();
+      _removeAddButton();
     }
 
     return AnimatedList(
@@ -108,7 +104,10 @@ class _CurrentWorkoutState extends State<CurrentWorkout> {
       },
       duration: const Duration(milliseconds: 100),
     );
-    activities.removeAt(index);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      activities[index].dispose();
+      activities.removeAt(index);
+    });
   }
 
   void _removeAllActivities() {

@@ -19,4 +19,15 @@ class CurrentActivity extends ChangeNotifier {
     sets.add(CurrentSet());
     notifyListeners();
   }
+
+  @override
+  void dispose() {
+    super.dispose();
+    for (var set in sets) {
+      set.weightController.dispose();
+      set.weightFocusNode.dispose();
+      set.repsController.dispose();
+      set.repsFocusNode.dispose();
+    }
+  }
 }
