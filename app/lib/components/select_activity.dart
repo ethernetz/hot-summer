@@ -20,7 +20,7 @@ class _SelectActivityState extends State<SelectActivity> {
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return [
             CupertinoSliverNavigationBar(
-              backgroundColor: CupertinoColors.systemGrey6,
+              // backgroundColor: CupertinoColors.systemGrey6,
               automaticallyImplyLeading: false,
               trailing: CupertinoButton(
                 padding: EdgeInsets.zero,
@@ -35,50 +35,48 @@ class _SelectActivityState extends State<SelectActivity> {
                 style: TextStyle(color: Colors.white),
               ),
             ),
+            SliverPersistentHeader(
+              delegate: _SliverAppBarDelegate(
+                minHeight: 40,
+                maxHeight: 40,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  child: CupertinoSearchTextField(
+                    placeholder: 'Search',
+                    style: const TextStyle(color: Colors.white),
+                    onChanged: (text) => _filterActivities(text),
+                  ),
+                ),
+              ),
+              pinned: true,
+            ),
           ];
         },
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),
-          child: Column(
-            children: [
-              const SizedBox(
-                height: 20,
-              ),
-              CupertinoSearchTextField(
-                placeholder: 'Search',
-                style: const TextStyle(color: Colors.white),
-                onChanged: (text) => _filterActivities(text),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Expanded(
-                child: ListView.separated(
-                  itemCount: filteredActivites.length + 1,
-                  itemBuilder: (BuildContext context, int index) {
-                    if (index == 0) {
-                      return Container();
-                    }
-                    var activity = filteredActivites[index - 1];
-                    return CupertinoListTile(
-                      title: Text(
-                        activity.displayName,
-                        style: const TextStyle(color: Colors.white),
-                      ),
-                      onTap: () {
-                        Navigator.pop(context, activity);
-                      },
-                    );
-                  },
-                  separatorBuilder: (BuildContext context, int index) {
-                    return const Divider(
-                      color: CupertinoColors.separator,
-                      thickness: 2,
-                    );
-                  },
+          child: ListView.separated(
+            itemCount: filteredActivites.length + 1,
+            itemBuilder: (BuildContext context, int index) {
+              if (index == 0) {
+                return Container();
+              }
+              var activity = filteredActivites[index - 1];
+              return CupertinoListTile(
+                title: Text(
+                  activity.displayName,
+                  style: const TextStyle(color: Colors.white),
                 ),
-              ),
-            ],
+                onTap: () {
+                  Navigator.pop(context, activity);
+                },
+              );
+            },
+            separatorBuilder: (BuildContext context, int index) {
+              return const Divider(
+                color: CupertinoColors.separator,
+                thickness: 2,
+              );
+            },
           ),
         ),
       ),
@@ -92,5 +90,36 @@ class _SelectActivityState extends State<SelectActivity> {
               activity.displayName.toLowerCase().contains(text.toLowerCase()))
           .toList();
     });
+  }
+}
+
+class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
+  _SliverAppBarDelegate(
+      {required this.minHeight, required this.maxHeight, required this.child});
+
+  final double minHeight;
+  final double maxHeight;
+  final Widget child;
+
+  @override
+  double get minExtent => minHeight;
+
+  @override
+  double get maxExtent => maxHeight;
+
+  @override
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return Container(
+      color: const Color(0xFF1C1C1E), // Custom dark color
+      child: SizedBox.expand(child: child),
+    );
+  }
+
+  @override
+  bool shouldRebuild(_SliverAppBarDelegate oldDelegate) {
+    return maxHeight != oldDelegate.maxHeight ||
+        minHeight != oldDelegate.minHeight ||
+        child != oldDelegate.child;
   }
 }
