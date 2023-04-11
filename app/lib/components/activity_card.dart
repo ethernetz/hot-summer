@@ -31,11 +31,14 @@ class ActivityCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  activity.activityType.displayName,
-                  style: GoogleFonts.kumbhSans(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 24,
+                Expanded(
+                  child: Text(
+                    activity.activityType.displayName,
+                    overflow: TextOverflow.ellipsis,
+                    style: GoogleFonts.kumbhSans(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 24,
+                    ),
                   ),
                 ),
                 IconButton(
