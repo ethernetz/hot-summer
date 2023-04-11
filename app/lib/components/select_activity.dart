@@ -15,14 +15,15 @@ class _SelectActivityState extends State<SelectActivity> {
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
-      backgroundColor: CupertinoColors.darkBackgroundGray,
+      backgroundColor: CupertinoColors.systemGrey6,
       child: NestedScrollView(
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return [
             CupertinoSliverNavigationBar(
-              backgroundColor: CupertinoColors.darkBackgroundGray,
+              backgroundColor: CupertinoColors.systemGrey6,
               automaticallyImplyLeading: false,
               trailing: CupertinoButton(
+                padding: EdgeInsets.zero,
                 child: const Icon(
                   CupertinoIcons.xmark_circle_fill,
                   color: CupertinoColors.systemGrey2,
@@ -60,7 +61,6 @@ class _SelectActivityState extends State<SelectActivity> {
                     }
                     var activity = filteredActivites[index - 1];
                     return CupertinoListTile(
-                      backgroundColor: CupertinoColors.darkBackgroundGray,
                       title: Text(
                         activity.displayName,
                         style: const TextStyle(color: Colors.white),
@@ -72,8 +72,8 @@ class _SelectActivityState extends State<SelectActivity> {
                   },
                   separatorBuilder: (BuildContext context, int index) {
                     return const Divider(
-                      color: CupertinoColors.systemGrey,
-                      thickness: 1,
+                      color: CupertinoColors.separator,
+                      thickness: 2,
                     );
                   },
                 ),
