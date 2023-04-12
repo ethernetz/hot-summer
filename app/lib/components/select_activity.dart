@@ -37,10 +37,10 @@ class _SelectActivityState extends State<SelectActivity> {
             ),
             SliverPersistentHeader(
               delegate: _SliverAppBarDelegate(
-                minHeight: 40,
-                maxHeight: 40,
+                minHeight: 60,
+                maxHeight: 60,
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  padding: const EdgeInsets.fromLTRB(15, 0, 15, 20),
                   child: CupertinoSearchTextField(
                     placeholder: 'Search',
                     style: const TextStyle(color: Colors.white),
@@ -55,6 +55,7 @@ class _SelectActivityState extends State<SelectActivity> {
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),
           child: ListView.separated(
+            padding: const EdgeInsets.all(0),
             itemCount: filteredActivites.length + 1,
             itemBuilder: (BuildContext context, int index) {
               if (index == 0) {
