@@ -7,10 +7,9 @@ export const createUserDocument = functions.auth.user().onCreate((userRecord) =>
 	functions.logger.info(`Running createUserDocument! ${userRecord.uid}`);
 	const user = {
 		uid: userRecord.uid,
-		email: userRecord.email,
-		displayName: userRecord.displayName,
 		streak: 0,
 		medals: 0,
+		activityHistory: {},
 	};
 	return admin.firestore().collection('users').doc(userRecord.uid).set(user);
 });

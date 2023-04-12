@@ -4,6 +4,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:workspaces/classes/current_activity.dart';
 import 'package:workspaces/classes/activity_type.dart';
+import 'package:workspaces/classes/hot_user.dart';
+import 'package:workspaces/classes/workout.dart';
+import 'package:workspaces/classes/workouts.dart';
 import 'package:workspaces/components/activity_card.dart';
 import 'package:workspaces/components/select_activity.dart';
 import 'package:workspaces/services/current_workout_provider.dart';
@@ -85,6 +88,7 @@ class _CurrentWorkoutState extends State<CurrentWorkout> {
     activities.add(CurrentActivity(
       uniqueKey: UniqueKey(),
       activityType: activityType,
+      previousActivity: getPreviousActivity(activityType),
     ));
     _listKey.currentState?.insertItem(
       activities.length - 1,
@@ -175,5 +179,18 @@ class _CurrentWorkoutState extends State<CurrentWorkout> {
       parent: animation,
       curve: Curves.easeInOut,
     );
+  }
+
+  Activity? getPreviousActivity(ActivityType activityType) {
+    final workoutIdOfPreviousActivity =
+        context.read<HotUser>().activityHistory[activityType]?.last;
+    if (workoutIdOfPreviousActivity == null) return null;
+    return context
+        .read<Workouts>()
+        .workouts
+        .firstWhere(
+            (workout) => workout.documentId == workoutIdOfPreviousActivity)
+        .activities
+        .firstWhere((activity) => activity.activityType == activityType);
   }
 }

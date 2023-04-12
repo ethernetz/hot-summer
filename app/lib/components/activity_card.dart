@@ -78,14 +78,22 @@ class ActivityCard extends StatelessWidget {
                             (i + 1).toString(),
                           ),
                         ),
-                        const TableCell(
+                        TableCell(
                           verticalAlignment: TableCellVerticalAlignment.middle,
-                          child: Text(
-                            '12lb x 13',
-                            style: TextStyle(
-                              color: Colors.white60,
-                            ),
-                          ),
+                          child: (() {
+                            final previousActivitySets =
+                                activity.previousActivity?.sets;
+                            if (previousActivitySets == null ||
+                                previousActivitySets.length <= i) {
+                              return Container();
+                            }
+                            return Text(
+                              '${previousActivitySets[i].weight}lb x ${previousActivitySets[i].reps}',
+                              style: const TextStyle(
+                                color: Colors.white60,
+                              ),
+                            );
+                          }()),
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(

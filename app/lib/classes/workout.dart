@@ -19,15 +19,19 @@ class Activity {
 class Workout {
   final Timestamp timestamp;
   final List<Activity> activities;
+  final String documentId;
 
   const Workout({
     required this.timestamp,
     required this.activities,
+    required this.documentId,
   });
 
-  factory Workout.fromCurrentActivities(List<CurrentActivity> json) {
+  factory Workout.fromCurrentActivities(
+      List<CurrentActivity> json, String documentId) {
     return Workout(
         timestamp: Timestamp.now(),
+        documentId: documentId,
         activities: json.map((activity) {
           return Activity(
               activityType: activity.activityType,
@@ -42,6 +46,7 @@ class Workout {
   factory Workout.fromJson(Map<String, dynamic>? json) {
     return Workout(
       timestamp: json!['timestamp'],
+      documentId: json['documentId'],
       activities: json['activities'] is Iterable
           ? List.from(json['activities'])
               .map(
@@ -66,6 +71,7 @@ class Workout {
   Map<String, dynamic> toFirestore() {
     return {
       "timestamp": timestamp,
+      "documentId": documentId,
       "activities": [
         for (var activity in activities)
           {

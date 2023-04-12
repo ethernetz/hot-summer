@@ -1,40 +1,39 @@
+import 'package:workspaces/classes/activity_type.dart';
+
 class HotUser {
   final String uid;
-  final String? displayName;
-  final String? email;
   final int streak;
   final int medals;
   final int? sessionsPerWeekGoal;
+  final Map<ActivityType, List<String>> activityHistory;
 
   const HotUser({
     required this.uid,
-    required this.displayName,
-    required this.email,
     required this.streak,
     required this.medals,
     required this.sessionsPerWeekGoal,
+    required this.activityHistory,
   });
 
   factory HotUser.fromJson(Map<String, dynamic> json) {
     return HotUser(
       uid: json['uid'],
-      displayName: json['displayName'],
-      email: json['email'],
       streak: json['streak'],
       medals: json['medals'],
       sessionsPerWeekGoal: json['sessionsPerWeekGoal'],
+      activityHistory: json['activityHistory'] != null
+          ? (json['activityHistory'] as Map<String, dynamic>).map(
+              (activityTypeNumber, workoutIdList) => MapEntry(
+                ActivityType.fromNumber(int.parse(activityTypeNumber)),
+                List<String>.from(workoutIdList),
+              ),
+            )
+          : {},
     );
   }
 
   Map<String, dynamic> toFirestore() {
-    return {
-      "uid": uid,
-      if (displayName != null) "displayName": displayName,
-      if (email != null) "email": email,
-      "streak": streak,
-      "medals": medals,
-      if (sessionsPerWeekGoal != null)
-        "sessionsPerWeekGoal": sessionsPerWeekGoal,
-    };
+    throw UnimplementedError(
+        'Converting user to firestore user object is currently unimplemented');
   }
 }

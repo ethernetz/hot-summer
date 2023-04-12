@@ -42,8 +42,15 @@ class FirestoreService {
     return Future.wait([
       userRef.update({
         "streak": _shouldContinueStreak(workouts) ? hotuser.streak + 1 : 1,
+        for (var activity in currentActivities)
+          "activityHistory.${activity.activityType.number}":
+              FieldValue.arrayUnion(
+            [userNewWorkoutRef.id],
+          ),
       }),
-      userNewWorkoutRef.set(Workout.fromCurrentActivities(currentActivities))
+      userNewWorkoutRef.set(
+        Workout.fromCurrentActivities(currentActivities, userNewWorkoutRef.id),
+      )
     ]);
   }
 
