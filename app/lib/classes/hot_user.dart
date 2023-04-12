@@ -28,7 +28,7 @@ class HotUser {
                 List<String>.from(workoutIdList),
               ),
             )
-          : {},
+          : <ActivityType, List<String>>{},
     );
   }
 
