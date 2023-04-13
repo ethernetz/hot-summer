@@ -76,12 +76,12 @@ class WorkoutButton extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Image(
-                    image: AssetImage("assets/fire_3d.png"),
+                    image: AssetImage("assets/flexed_biceps_3d_default.png"),
                     height: 30,
                     width: 30,
                   ),
                   const SizedBox(
-                    width: 5,
+                    width: 6,
                   ),
                   Text(
                     'Workout',
