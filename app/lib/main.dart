@@ -4,10 +4,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
-import 'package:workspaces/classes/hot_user.dart';
-import 'package:workspaces/screens/onboarding_screen.dart';
-import 'package:workspaces/services/auth_service.dart';
+import 'package:workspaces/screens/auth_screen.dart';
 import 'package:workspaces/screens/home_screen.dart';
+import 'package:workspaces/screens/workout_screen.dart';
+import 'package:workspaces/services/auth_service.dart';
 import 'package:workspaces/services/current_workout_provider.dart';
 import 'package:workspaces/services/firestore_service.dart';
 import 'package:workspaces/services/hot_user_proxy.dart';
@@ -68,7 +68,14 @@ class MyApp extends StatelessWidget {
         child: HotUserProxy(
           child: WorkoutsProxy(
             child: MaterialApp(
-              home: const Home(),
+              initialRoute: '/auth',
+              routes: {
+                '/auth': (context) => const AuthScreen(),
+                // When navigating to the "/" route, build the FirstScreen widget.
+                '/home': (context) => const HomeScreen(),
+                // When navigating to the "/second" route, build the SecondScreen widget.
+                '/workout': (context) => const WorkoutScreen(),
+              },
               theme: ThemeData(
                 brightness: Brightness.dark,
                 colorScheme: const ColorScheme.dark(),
@@ -84,49 +91,5 @@ class MyApp extends StatelessWidget {
             ),
           ),
         ));
-  }
-}
-
-class Home extends StatelessWidget {
-  const Home({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        bottom: false,
-        child: SingleChildScrollView(
-          child: Container(
-            padding: const EdgeInsets.only(top: 20),
-            child: const AuthGate(),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class AuthGate extends StatelessWidget {
-  const AuthGate({super.key});
-  @override
-  Widget build(BuildContext context) {
-    var firebaseUser = context.watch<User?>();
-    var hotUser = context.watch<HotUser?>();
-    if (firebaseUser == null) {
-      if (FirebaseAuth.instance.currentUser == null) {
-        context.read<AuthService>().signInAnonymously();
-      }
-      return const Text("splash");
-    }
-
-    if (hotUser == null) {
-      return const Text("loading your profile...");
-    }
-
-    if (hotUser.sessionsPerWeekGoal == null) {
-      return const OnboardingScreen();
-    }
-
-    return const HomeScreen();
   }
 }

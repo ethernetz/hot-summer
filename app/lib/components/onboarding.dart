@@ -17,14 +17,14 @@ List<OnboardingQuestion> onboardingQuestions = [
   ),
 ];
 
-class OnboardingScreen extends StatefulWidget {
-  const OnboardingScreen({super.key});
+class Onboarding extends StatefulWidget {
+  const Onboarding({super.key});
 
   @override
-  State<OnboardingScreen> createState() => _OnboardingScreenState();
+  State<Onboarding> createState() => _OnboardingState();
 }
 
-class _OnboardingScreenState extends State<OnboardingScreen> {
+class _OnboardingState extends State<Onboarding> {
   int _questionIndex = 0;
   int? _selectedAnswerIndex;
 
