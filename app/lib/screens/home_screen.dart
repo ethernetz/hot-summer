@@ -12,21 +12,35 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        bottom: false,
-        child: SingleChildScrollView(
-          child: Container(
-            padding: const EdgeInsets.only(top: 20),
-            child: Consumer<HotUser?>(
-              builder: (BuildContext context, hotUser, Widget? child) {
-                if (hotUser?.sessionsPerWeekGoal == null) {
-                  return const Text('You are signed out');
-                }
-                return const Home();
-              },
+      body: Stack(
+        children: [
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: ImageFiltered(
+              imageFilter: ImageFilter.blur(sigmaX: 60, sigmaY: 60),
+              child: CustomPaint(
+                size: const Size(200, 200),
+                painter: OrbPainter(),
+              ),
             ),
           ),
-        ),
+          SafeArea(
+            bottom: false,
+            child: SingleChildScrollView(
+              child: Container(
+                padding: const EdgeInsets.only(top: 20),
+                child: Consumer<HotUser?>(
+                  builder: (BuildContext context, hotUser, Widget? child) {
+                    if (hotUser?.sessionsPerWeekGoal == null) {
+                      return const Text('You are signed out');
+                    }
+                    return const Home();
+                  },
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
       floatingActionButton: const WorkoutButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -41,43 +55,87 @@ class WorkoutButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ClipRect(
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-        child: GestureDetector(
-          onTap: () {
-            Navigator.pushNamed(context, '/workout');
-          },
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(context, '/workout');
+      },
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(25),
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
           child: Container(
-            width: 220,
             height: 50,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(25),
               color: Colors.grey.shade800.withOpacity(0.5),
             ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Image(
-                  image: AssetImage("assets/fire_3d.png"),
-                  height: 30,
-                  width: 30,
-                ),
-                const SizedBox(
-                  width: 5,
-                ),
-                Text(
-                  'Workout',
-                  style: GoogleFonts.kumbhSans(
-                    fontWeight: FontWeight.w900,
-                    fontSize: 22,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Image(
+                    image: AssetImage("assets/fire_3d.png"),
+                    height: 30,
+                    width: 30,
                   ),
-                ),
-              ],
+                  const SizedBox(
+                    width: 5,
+                  ),
+                  Text(
+                    'Workout',
+                    style: GoogleFonts.kumbhSans(
+                      fontWeight: FontWeight.w900,
+                      fontSize: 22,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
       ),
     );
   }
+}
+
+class OrbPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final center = Offset(size.width / 2, size.height / 2);
+    final radius = size.width / 2;
+
+    const gradient = LinearGradient(
+      colors: [
+        Color(0xffED6F00),
+        Color(0xffAF0BE6),
+      ],
+      stops: [0.0, 1.0],
+      begin: Alignment.centerLeft,
+      end: Alignment.centerRight,
+    );
+
+    final paint = Paint()
+      ..shader =
+          gradient.createShader(Rect.fromCircle(center: center, radius: radius))
+      ..style = PaintingStyle.fill;
+
+    final rect = Rect.fromCenter(
+      center: center,
+      width: size.width,
+      height: size.height * 0.6,
+    );
+
+    canvas.save();
+    canvas.translate(center.dx, center.dy);
+    canvas.rotate(-45 * (3.14159265359 / 180)); // Rotate 45 degrees
+    canvas.translate(-center.dx, -center.dy);
+
+    canvas.drawOval(rect, paint);
+    canvas.restore();
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
