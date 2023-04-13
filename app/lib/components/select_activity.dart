@@ -37,10 +37,10 @@ class _SelectActivityState extends State<SelectActivity> {
             ),
             SliverPersistentHeader(
               delegate: _SliverAppBarDelegate(
-                minHeight: 60,
-                maxHeight: 60,
+                minHeight: 80,
+                maxHeight: 80,
                 child: Padding(
-                  padding: const EdgeInsets.fromLTRB(15, 0, 15, 20),
+                  padding: const EdgeInsets.fromLTRB(15, 0, 15, 40),
                   child: CupertinoSearchTextField(
                     placeholder: 'Search',
                     style: const TextStyle(color: Colors.white),
@@ -73,6 +73,24 @@ class _SelectActivityState extends State<SelectActivity> {
               );
             },
             separatorBuilder: (BuildContext context, int index) {
+              if (index == 0) {
+                return const TextWithDivider('A');
+              }
+              var activity = filteredActivites[index - 1];
+              var nextActivity = filteredActivites[index];
+              if (activity.displayName[0] != nextActivity.displayName[0]) {
+                return Column(
+                  children: [
+                    const Divider(
+                      color: CupertinoColors.separator,
+                      thickness: 2,
+                    ),
+                    const SizedBox(height: 20),
+                    TextWithDivider(nextActivity.displayName[0]),
+                  ],
+                );
+              }
+
               return const Divider(
                 color: CupertinoColors.separator,
                 thickness: 2,
@@ -84,13 +102,46 @@ class _SelectActivityState extends State<SelectActivity> {
     );
   }
 
-  _filterActivities(String text) {
+  void _filterActivities(String text) {
     setState(() {
       filteredActivites = ActivityType.values
           .where((activity) =>
               activity.displayName.toLowerCase().contains(text.toLowerCase()))
           .toList();
     });
+  }
+}
+
+class TextWithDivider extends StatelessWidget {
+  final String text;
+  const TextWithDivider(
+    this.text, {
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 20),
+          child: Text(
+            text,
+            style: CupertinoTheme.of(context).textTheme.textStyle.merge(
+                  TextStyle(
+                    fontSize: 16,
+                    color: CupertinoColors.secondaryLabel.resolveFrom(context),
+                  ),
+                ),
+          ),
+        ),
+        const Divider(
+          color: CupertinoColors.separator,
+          thickness: 2,
+        )
+      ],
+    );
   }
 }
 
