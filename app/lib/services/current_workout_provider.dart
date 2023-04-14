@@ -7,6 +7,7 @@ import 'package:workspaces/classes/workout.dart';
 import 'package:workspaces/classes/workouts.dart';
 import 'package:workspaces/components/activity_card.dart';
 import 'package:workspaces/components/select_activity.dart';
+import 'package:workspaces/services/firestore_service.dart';
 
 class CurrentWorkoutProvider extends ChangeNotifier {
   bool _isWorkingOut = false;
@@ -20,8 +21,9 @@ class CurrentWorkoutProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void endWorkout() {
+  void endWorkout(BuildContext context) {
     _isWorkingOut = false;
+    context.read<FirestoreService>().logWorkout(context, activities);
     notifyListeners();
   }
 

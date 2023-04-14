@@ -1,56 +1,77 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
-import 'package:workspaces/services/current_workout_provider.dart';
-import 'package:workspaces/widgets/hot_button.dart';
 
 class WorkoutButton extends StatelessWidget {
-  const WorkoutButton({super.key});
+  final String text;
+  final Function onTap;
+
+  const WorkoutButton({
+    super.key,
+    required this.text,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return HotButton(
-      onPressed: () {
-        final currentWorkoutProvider = context.read<CurrentWorkoutProvider>();
-        if (currentWorkoutProvider.isWorkingOut) {
-          currentWorkoutProvider.endWorkout();
-        } else {
-          currentWorkoutProvider.startWorkout();
-        }
-      },
-      child: Selector<CurrentWorkoutProvider, bool>(
-        selector: (_, provider) => provider.isWorkingOut,
-        builder: (_, isWorkingOut, __) {
-          return AnimatedSwitcher(
-            duration: const Duration(milliseconds: 25),
-            child: Builder(
-              key: ValueKey(isWorkingOut),
-              builder: (BuildContext context) {
-                if (isWorkingOut) {
-                  return Container(
-                    height: 37,
-                    alignment: Alignment.center,
-                    child: Text(
-                      "COMPLETE WORKOUT",
-                      style: GoogleFonts.kumbhSans(
-                        fontWeight: FontWeight.w900,
-                        fontSize: 25,
+    return Hero(
+      tag: 'workout_button',
+      child: Material(
+        type: MaterialType.transparency,
+        child: GestureDetector(
+          onTap: () => onTap(),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(25),
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
+              child: Material(
+                type: MaterialType.transparency,
+                child: Theme(
+                  data: Theme.of(context),
+                  child: Container(
+                    height: 50,
+                    // width: 140,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(25),
+                      color: Colors.grey.shade800.withOpacity(0.5),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 30),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Image(
+                            image: AssetImage(
+                                "assets/flexed_biceps_3d_default.png"),
+                            height: 30,
+                            width: 30,
+                          ),
+                          const SizedBox(
+                            width: 6,
+                          ),
+                          Flexible(
+                            child: Text(
+                              text,
+                              key: ValueKey<String>(text),
+                              style: GoogleFonts.kumbhSans(
+                                fontWeight: FontWeight.w900,
+                                fontSize: 22,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  );
-                } else {
-                  return Text(
-                    "START WORKOUT",
-                    style: GoogleFonts.kumbhSans(
-                      fontWeight: FontWeight.w900,
-                      fontSize: 30,
-                    ),
-                  );
-                }
-              },
+                  ),
+                ),
+              ),
             ),
-          );
-        },
+          ),
+        ),
       ),
     );
   }

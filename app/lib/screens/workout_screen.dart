@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:workspaces/components/current_workout.dart';
+import 'package:workspaces/components/workout_button.dart';
 import 'package:workspaces/services/current_workout_provider.dart';
 
 class WorkoutScreen extends StatelessWidget {
@@ -11,9 +12,17 @@ class WorkoutScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return DefaultTextStyle(
       style: const TextStyle(),
-      child: CupertinoPageScaffold(
+      child: Scaffold(
         backgroundColor: Colors.black,
-        child: CustomScrollView(
+        floatingActionButton: WorkoutButton(
+          text: 'Complete workout',
+          onTap: () {
+            context.read<CurrentWorkoutProvider>().endWorkout(context);
+            Navigator.pop(context);
+          },
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        body: CustomScrollView(
           slivers: [
             CupertinoSliverNavigationBar(
               automaticallyImplyLeading: false,

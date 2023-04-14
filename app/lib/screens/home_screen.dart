@@ -1,10 +1,10 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:workspaces/classes/hot_user.dart';
 import 'package:workspaces/components/home.dart';
+import 'package:workspaces/components/workout_button.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -42,60 +42,11 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
-      floatingActionButton: const WorkoutButton(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-    );
-  }
-}
-
-class WorkoutButton extends StatelessWidget {
-  const WorkoutButton({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.pushNamed(context, '/workout');
-      },
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(25),
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
-          child: Container(
-            height: 50,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(25),
-              color: Colors.grey.shade800.withOpacity(0.5),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Image(
-                    image: AssetImage("assets/flexed_biceps_3d_default.png"),
-                    height: 30,
-                    width: 30,
-                  ),
-                  const SizedBox(
-                    width: 6,
-                  ),
-                  Text(
-                    'Workout',
-                    style: GoogleFonts.kumbhSans(
-                      fontWeight: FontWeight.w900,
-                      fontSize: 22,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
+      floatingActionButton: WorkoutButton(
+        text: 'Workout',
+        onTap: () => Navigator.pushNamed(context, '/workout'),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }
