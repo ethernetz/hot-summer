@@ -14,10 +14,10 @@ class WorkoutScreen extends StatelessWidget {
       style: const TextStyle(),
       child: Scaffold(
         backgroundColor: Colors.black,
-        floatingActionButton: WorkoutButton(
+        floatingActionButton: HeroWorkoutButton(
           text: 'Complete workout',
           onTap: () {
-            context.read<CurrentWorkoutProvider>().endWorkout(context);
+            // context.read<CurrentWorkoutProvider>().endWorkout(context);
             Navigator.pop(context);
           },
         ),

@@ -42,7 +42,7 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
-      floatingActionButton: WorkoutButton(
+      floatingActionButton: HeroWorkoutButton(
         text: 'Workout',
         onTap: () => Navigator.pushNamed(context, '/workout'),
       ),
