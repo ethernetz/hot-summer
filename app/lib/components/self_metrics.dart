@@ -33,11 +33,7 @@ class SelfMetrics extends StatelessWidget {
                     children: [
                       Text(
                         hotuser.streak.toString(),
-                        style: GoogleFonts.kumbhSans(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w900,
-                          fontSize: 40,
-                        ),
+                        style: Theme.of(context).textTheme.displayLarge,
                       ),
                       const Image(
                         image: AssetImage("assets/fire_3d.png"),
@@ -48,10 +44,7 @@ class SelfMetrics extends StatelessWidget {
                   ),
                   Text(
                     'Streak',
-                    style: GoogleFonts.kumbhSans(
-                      color: Colors.white,
-                      fontSize: 15,
-                    ),
+                    style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ],
               ),
@@ -66,11 +59,7 @@ class SelfMetrics extends StatelessWidget {
                     children: [
                       Text(
                         hotuser.medals.toString(),
-                        style: GoogleFonts.kumbhSans(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w900,
-                          fontSize: 40,
-                        ),
+                        style: Theme.of(context).textTheme.displayLarge,
                       ),
                       const Image(
                         image: AssetImage("assets/1st_place_medal_3d.png"),
@@ -81,10 +70,7 @@ class SelfMetrics extends StatelessWidget {
                   ),
                   Text(
                     'Medals',
-                    style: GoogleFonts.kumbhSans(
-                      color: Colors.white,
-                      fontSize: 15,
-                    ),
+                    style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ],
               ),
@@ -106,10 +92,7 @@ class SelfMetrics extends StatelessWidget {
               numWorkoutsSinceMonday >= hotuser.sessionsPerWeekGoal!
                   ? 'Hell yeah! $numWorkoutsSinceMonday workouts this week'
                   : '${hotuser.sessionsPerWeekGoal! - numWorkoutsSinceMonday} sessions left this week',
-              style: GoogleFonts.kumbhSans(
-                color: Colors.white,
-                fontSize: 15,
-              ),
+              style: Theme.of(context).textTheme.bodyMedium,
             ),
           ],
         )

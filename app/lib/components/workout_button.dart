@@ -48,10 +48,7 @@ class HeroWorkoutButton extends StatelessWidget {
                 child: Text(
                   text.split('').join('\u200B'),
                   key: ValueKey<String>(text),
-                  style: GoogleFonts.kumbhSans(
-                    fontWeight: FontWeight.w900,
-                    fontSize: 22,
-                  ),
+                  style: Theme.of(context).textTheme.displayMedium,
                   maxLines: 1,
                 ),
               );
@@ -64,11 +61,7 @@ class HeroWorkoutButton extends StatelessWidget {
         textWidget: Text(
           text,
           key: ValueKey<String>(text),
-          style: GoogleFonts.kumbhSans(
-            fontWeight: FontWeight.w900,
-            fontSize: 22,
-          ),
-          overflow: TextOverflow.ellipsis,
+          style: Theme.of(context).textTheme.displayMedium,
           maxLines: 1,
         ),
       ),

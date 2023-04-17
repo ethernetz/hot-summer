@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/scheduler.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:workspaces/screens/auth_screen.dart';
 import 'package:workspaces/screens/home_screen.dart';
@@ -48,7 +48,6 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
-    timeDilation = 10.0;
     return MultiProvider(
         providers: [
           Provider(
@@ -89,6 +88,29 @@ class MyApp extends StatelessWidget {
                     foregroundColor: MaterialStateProperty.all(Colors.white),
                   ),
                 ),
+                textTheme: GoogleFonts.kumbhSansTextTheme(
+                  Theme.of(context).textTheme,
+                )
+                    .apply(
+                      bodyColor: Colors.white,
+                      displayColor: Colors.white,
+                    )
+                    .copyWith(
+                      displayLarge: GoogleFonts.kumbhSans(
+                        fontWeight: FontWeight.w900,
+                        fontSize: 40,
+                        color: Colors.white,
+                      ),
+                      displayMedium: GoogleFonts.kumbhSans(
+                        fontWeight: FontWeight.w900,
+                        fontSize: 22,
+                        color: Colors.white,
+                      ),
+                      bodyMedium: GoogleFonts.kumbhSans(
+                        fontSize: 15,
+                        color: Colors.white,
+                      ),
+                    ),
               ),
             ),
           ),
