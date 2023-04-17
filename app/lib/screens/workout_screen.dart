@@ -17,8 +17,8 @@ class WorkoutScreen extends StatelessWidget {
         floatingActionButton: HeroWorkoutButton(
           text: 'Complete workout',
           onTap: () {
-            // context.read<CurrentWorkoutProvider>().endWorkout(context);
-            Navigator.pop(context);
+            context.read<CurrentWorkoutProvider>().endWorkout(context);
+            Navigator.pushReplacementNamed(context, '/home');
           },
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -33,7 +33,8 @@ class WorkoutScreen extends StatelessWidget {
                   CupertinoIcons.back,
                   color: CupertinoColors.systemGrey2,
                 ),
-                onPressed: () => Navigator.pop(context, null),
+                onPressed: () =>
+                    Navigator.pushReplacementNamed(context, '/home'),
               ),
               largeTitle: const Text(
                 'Thursday, April 14',
@@ -49,7 +50,6 @@ class WorkoutScreen extends StatelessWidget {
               ),
             ),
             const SliverFillRemaining(
-              // child: CurrentWorkout(),
               child: CurrentWorkout(),
             ),
           ],

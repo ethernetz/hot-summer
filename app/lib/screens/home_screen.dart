@@ -5,12 +5,14 @@ import 'package:provider/provider.dart';
 import 'package:workspaces/classes/hot_user.dart';
 import 'package:workspaces/components/home.dart';
 import 'package:workspaces/components/workout_button.dart';
+import 'package:workspaces/services/current_workout_provider.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final currentWorkoutProvider = context.read<CurrentWorkoutProvider>();
     return Scaffold(
       body: Stack(
         children: [
@@ -43,8 +45,16 @@ class HomeScreen extends StatelessWidget {
         ],
       ),
       floatingActionButton: HeroWorkoutButton(
-        text: 'Workout',
-        onTap: () => Navigator.pushNamed(context, '/workout'),
+        text: currentWorkoutProvider.isWorkingOut
+            ? 'Return to workout'
+            : 'Workout',
+        onTap: () {
+          if (!currentWorkoutProvider.isWorkingOut) {
+            context.read<CurrentWorkoutProvider>().startWorkout();
+          }
+
+          Navigator.pushReplacementNamed(context, '/workout');
+        },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
