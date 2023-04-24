@@ -5,9 +5,9 @@ import 'package:workspaces/classes/hot_user.dart';
 import 'package:workspaces/services/common.dart';
 
 class HotUserProxy extends StatefulWidget {
-  final Widget? child;
+  final Widget child;
 
-  const HotUserProxy({super.key, this.child});
+  const HotUserProxy({super.key, required this.child});
 
   @override
   State<HotUserProxy> createState() => _HotUserProxyState();
@@ -20,7 +20,7 @@ class _HotUserProxyState extends State<HotUserProxy> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     var firebaseUser = context.watch<User?>();
-    _hotUserStream = getUserStream(firebaseUser);
+    _hotUserStream = getUserStream(firebaseUser).asBroadcastStream();
   }
 
   Stream<HotUser?> getUserStream(User? firebaseUser) {

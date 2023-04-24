@@ -36,4 +36,8 @@ class HotUser {
     throw UnimplementedError(
         'Converting user to firestore user object is currently unimplemented');
   }
+
+  isOnboarded() {
+    return sessionsPerWeekGoal != null;
+  }
 }

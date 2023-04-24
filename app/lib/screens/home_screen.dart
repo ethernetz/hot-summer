@@ -1,14 +1,25 @@
 import 'dart:ui';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:workspaces/classes/hot_user.dart';
 import 'package:workspaces/components/home.dart';
 import 'package:workspaces/components/workout_button.dart';
+import 'package:workspaces/screens/workout_screen.dart';
 import 'package:workspaces/services/current_workout_provider.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
+
+  static Route<dynamic> route() {
+    return CupertinoPageRoute(
+      builder: (BuildContext context) {
+        return const HomeScreen();
+      },
+      settings: const RouteSettings(name: '/home'),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +64,7 @@ class HomeScreen extends StatelessWidget {
             context.read<CurrentWorkoutProvider>().startWorkout();
           }
 
-          Navigator.pushReplacementNamed(context, '/workout');
+          Navigator.of(context).push(WorkoutScreen.route());
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

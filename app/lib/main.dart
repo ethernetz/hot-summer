@@ -7,7 +7,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:workspaces/screens/auth_screen.dart';
 import 'package:workspaces/screens/home_screen.dart';
-import 'package:workspaces/screens/workout_screen.dart';
 import 'package:workspaces/services/auth_service.dart';
 import 'package:workspaces/services/current_workout_provider.dart';
 import 'package:workspaces/services/firestore_service.dart';
@@ -69,13 +68,16 @@ class MyApp extends StatelessWidget {
         child: HotUserProxy(
           child: WorkoutsProxy(
             child: MaterialApp(
-              initialRoute: '/auth',
-              routes: {
-                '/auth': (context) => const AuthScreen(),
-                // When navigating to the "/" route, build the FirstScreen widget.
-                '/home': (context) => const HomeScreen(),
-                // When navigating to the "/second" route, build the SecondScreen widget.
-                '/workout': (context) => const WorkoutScreen(),
+              initialRoute: '/',
+              onGenerateRoute: (RouteSettings settings) {
+                switch (settings.name) {
+                  case '/':
+                    return AuthScreen.route();
+                  case '/home':
+                    return HomeScreen.route();
+                  default:
+                    throw Exception('Invalid route: ${settings.name}');
+                }
               },
               theme: ThemeData(
                 brightness: Brightness.dark,
@@ -111,6 +113,12 @@ class MyApp extends StatelessWidget {
                         color: Colors.white,
                       ),
                     ),
+                // pageTransitionsTheme: const PageTransitionsTheme(
+                //   builders: {
+                //     TargetPlatform.android: CupertinoPageTransitionsBuilder(),
+                //     TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+                //   },
+                // ),
               ),
             ),
           ),
