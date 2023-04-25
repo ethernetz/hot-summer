@@ -90,35 +90,31 @@ class MyApp extends StatelessWidget {
                     foregroundColor: MaterialStateProperty.all(Colors.white),
                   ),
                 ),
-                textTheme: GoogleFonts.kumbhSansTextTheme(
-                  Theme.of(context).textTheme,
-                )
-                    .apply(
-                      bodyColor: Colors.white,
-                      displayColor: Colors.white,
-                    )
+                textTheme: Theme.of(context)
+                    .textTheme
                     .copyWith(
-                      displayLarge: GoogleFonts.kumbhSans(
+                      displayLarge: const TextStyle(
+                        fontFamily: 'Kumbh Sans',
                         fontWeight: FontWeight.w900,
                         fontSize: 40,
                         color: Colors.white,
                       ),
-                      displayMedium: GoogleFonts.kumbhSans(
+                      displayMedium: const TextStyle(
+                        fontFamily: 'Kumbh Sans',
                         fontWeight: FontWeight.w900,
                         fontSize: 22,
                         color: Colors.white,
                       ),
-                      bodyMedium: GoogleFonts.kumbhSans(
+                      bodyMedium: const TextStyle(
+                        fontFamily: 'Kumbh Sans',
                         fontSize: 15,
                         color: Colors.white,
                       ),
+                    )
+                    .apply(
+                      bodyColor: Colors.white,
+                      displayColor: Colors.white,
                     ),
-                // pageTransitionsTheme: const PageTransitionsTheme(
-                //   builders: {
-                //     TargetPlatform.android: CupertinoPageTransitionsBuilder(),
-                //     TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
-                //   },
-                // ),
               ),
             ),
           ),

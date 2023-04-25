@@ -35,7 +35,8 @@ class ActivityCard extends StatelessWidget {
                   child: Text(
                     activity.activityType.displayName,
                     overflow: TextOverflow.ellipsis,
-                    style: GoogleFonts.kumbhSans(
+                    style: const TextStyle(
+                      fontFamily: 'Kumbh Sans',
                       fontWeight: FontWeight.w600,
                       fontSize: 24,
                     ),
@@ -48,9 +49,10 @@ class ActivityCard extends StatelessWidget {
               ],
             ),
             DefaultTextStyle(
-              style: GoogleFonts.kumbhSans(
-                fontSize: 16,
+              style: const TextStyle(
+                fontFamily: 'Kumbh Sans',
                 fontWeight: FontWeight.w600,
+                fontSize: 16,
               ),
               textAlign: TextAlign.center,
               child: Table(
@@ -128,12 +130,13 @@ class ActivityCard extends StatelessWidget {
                   onTap: () => activity.addSet(),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Icon(Icons.add, color: Colors.white),
-                      const SizedBox(width: 4),
+                    children: const [
+                      Icon(Icons.add, color: Colors.white),
+                      SizedBox(width: 4),
                       Text(
                         "Add set",
-                        style: GoogleFonts.kumbhSans(
+                        style: TextStyle(
+                          fontFamily: 'Kumbh Sans',
                           fontWeight: FontWeight.w600,
                           fontSize: 16,
                         ),
