@@ -6,7 +6,7 @@ import 'package:workspaces/components/workout_button.dart';
 import 'package:workspaces/screens/home_screen.dart';
 import 'package:workspaces/services/current_workout_provider.dart';
 
-class WorkoutScreen extends StatelessWidget {
+class WorkoutScreen extends StatefulWidget {
   const WorkoutScreen({super.key});
 
   static Route<dynamic> route() {
@@ -16,6 +16,23 @@ class WorkoutScreen extends StatelessWidget {
       },
       settings: const RouteSettings(name: '/workout'),
     );
+  }
+
+  @override
+  State<WorkoutScreen> createState() => _WorkoutScreenState();
+}
+
+class _WorkoutScreenState extends State<WorkoutScreen> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Navigator.replaceRouteBelow(
+        context,
+        anchorRoute: ModalRoute.of(context)!,
+        newRoute: HomeScreen.route(),
+      );
+    });
   }
 
   @override
@@ -49,11 +66,6 @@ class WorkoutScreen extends StatelessWidget {
                   color: CupertinoColors.systemGrey2,
                 ),
                 onPressed: () {
-                  Navigator.replaceRouteBelow(
-                    context,
-                    anchorRoute: ModalRoute.of(context)!,
-                    newRoute: HomeScreen.route(),
-                  );
                   Navigator.pop(context);
                 },
               ),
