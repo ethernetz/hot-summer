@@ -37,7 +37,11 @@ class HotUser {
         'Converting user to firestore user object is currently unimplemented');
   }
 
-  isOnboarded() {
+  bool isOnboarded() {
     return sessionsPerWeekGoal != null;
+  }
+
+  String? getLatestWorkoutIdWithActivityLogged(ActivityType activityType) {
+    return activityHistory[activityType]?.last;
   }
 }

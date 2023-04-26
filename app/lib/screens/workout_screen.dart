@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:workspaces/classes/workouts.dart';
 import 'package:workspaces/components/current_workout.dart';
 import 'package:workspaces/components/workout_button.dart';
 import 'package:workspaces/screens/home_screen.dart';
@@ -74,6 +75,7 @@ class _WorkoutScreenState extends State<WorkoutScreen> {
                 style: TextStyle(color: Colors.white),
               ),
               trailing: CupertinoButton(
+                padding: EdgeInsets.zero,
                 child: const Icon(
                   CupertinoIcons.plus,
                   color: CupertinoColors.systemGrey2,
@@ -82,8 +84,47 @@ class _WorkoutScreenState extends State<WorkoutScreen> {
                     context.read<CurrentWorkoutProvider>().addActivity(context),
               ),
             ),
-            const SliverFillRemaining(
-              child: CurrentWorkout(),
+            SliverFillRemaining(
+              child: Consumer<CurrentWorkoutProvider>(
+                builder: (
+                  BuildContext context,
+                  CurrentWorkoutProvider currentWorkoutProvider,
+                  Widget? child,
+                ) {
+                  if (currentWorkoutProvider.activities.isEmpty) {
+                    return Consumer<Workouts>(builder: (
+                      BuildContext context,
+                      Workouts workouts,
+                      Widget? child,
+                    ) {
+                      return ListView(
+                        children: [
+                          for (var workout
+                              in workouts.getLatestWorkoutsWithActivityLog())
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 15),
+                              child: Container(
+                                width: double.infinity,
+                                padding:
+                                    const EdgeInsets.fromLTRB(20, 10, 20, 20),
+                                decoration: BoxDecoration(
+                                  color: Colors.grey[900],
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Column(
+                                  children: [
+                                    Text(workout.localizedRelativeTime)
+                                  ],
+                                ),
+                              ),
+                            )
+                        ],
+                      );
+                    });
+                  }
+                  return const CurrentWorkout();
+                },
+              ),
             ),
           ],
         ),

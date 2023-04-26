@@ -43,7 +43,11 @@ class HomeScreen extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.only(top: 20),
                 child: Consumer<HotUser?>(
-                  builder: (BuildContext context, hotUser, Widget? child) {
+                  builder: (
+                    BuildContext context,
+                    HotUser? hotUser,
+                    Widget? child,
+                  ) {
                     if (hotUser?.sessionsPerWeekGoal == null) {
                       return const Text('You are signed out');
                     }

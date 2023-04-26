@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 import 'package:workspaces/classes/activity_type.dart';
 import 'package:workspaces/classes/current_activity.dart';
 
@@ -26,6 +27,29 @@ class Workout {
     required this.activities,
     required this.documentId,
   });
+
+  String get localizedRelativeTime {
+    final currentTime = DateTime.now();
+    final previousTime = timestamp.toDate();
+
+    final currentDate =
+        DateTime(currentTime.year, currentTime.month, currentTime.day);
+    final previousDate =
+        DateTime(previousTime.year, previousTime.month, previousTime.day);
+    final difference = currentDate.difference(previousDate);
+
+    if (difference.inDays == 0) {
+      return 'Today';
+    }
+    if (difference.inDays == 1) {
+      return 'Yesterday';
+    }
+    if (difference.inDays < 7) {
+      return 'Last ${DateFormat('EEEE').format(previousTime)}';
+    }
+
+    return DateFormat('MMMM d').format(previousTime);
+  }
 
   factory Workout.fromCurrentActivities(
       List<CurrentActivity> json, String documentId) {

@@ -24,6 +24,7 @@ class CurrentWorkoutProvider extends ChangeNotifier {
   void endWorkout(BuildContext context) {
     _isWorkingOut = false;
     context.read<FirestoreService>().logWorkout(context, activities);
+    _removeAllActivities();
     notifyListeners();
   }
 
@@ -55,8 +56,8 @@ class CurrentWorkoutProvider extends ChangeNotifier {
     });
   }
 
-  void removeActivity(BuildContext context, int index) {
-    final activityCard = _buildActivityCard(context, index);
+  void _removeActivity(int index) {
+    final activityCard = _buildActivityCard(index);
     _activitiesListKey?.currentState?.removeItem(
       index,
       (context, animation) {
@@ -74,16 +75,21 @@ class CurrentWorkoutProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void _removeAllActivities() {
+    for (var i = activities.length - 1; i >= 0; i--) {
+      _removeActivity(i);
+    }
+  }
+
   Widget buildActivityCardWithAnimation(
       BuildContext context, int index, Animation<double> animation) {
     return SizeTransition(
       sizeFactor: _getCurvedAnimation(animation),
-      child: _buildActivityCard(context, index),
+      child: _buildActivityCard(index),
     );
   }
 
-  Widget _buildActivityCard(BuildContext context, int index) {
-    final activities = context.watch<CurrentWorkoutProvider>().activities;
+  Widget _buildActivityCard(int index) {
     final activity = activities[index];
     return Padding(
       padding: const EdgeInsets.only(bottom: 15),
@@ -91,7 +97,7 @@ class CurrentWorkoutProvider extends ChangeNotifier {
         value: activity,
         child: ActivityCard(
           key: activity.uniqueKey,
-          onClosePressed: () => removeActivity(context, index),
+          onClosePressed: () => _removeActivity(index),
         ),
       ),
     );
@@ -99,16 +105,14 @@ class CurrentWorkoutProvider extends ChangeNotifier {
 
   Activity? _getPreviousActivity(
       BuildContext context, ActivityType activityType) {
-    final workoutIdOfPreviousActivity =
-        context.read<HotUser>().activityHistory[activityType]?.last;
-    if (workoutIdOfPreviousActivity == null) return null;
-    return context
-        .read<Workouts>()
-        .workouts
-        .firstWhere(
-            (workout) => workout.documentId == workoutIdOfPreviousActivity)
-        .activities
-        .firstWhere((activity) => activity.activityType == activityType);
+    final latestWorkoutIdWithActivityLogged = context
+        .read<HotUser>()
+        .getLatestWorkoutIdWithActivityLogged(activityType);
+    if (latestWorkoutIdWithActivityLogged == null) return null;
+    return context.read<Workouts>().getActivityLogFromWorkout(
+          latestWorkoutIdWithActivityLogged,
+          activityType,
+        );
   }
 
   CurvedAnimation _getCurvedAnimation(Animation<double> animation) {
