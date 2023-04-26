@@ -7,7 +7,7 @@ import 'package:workspaces/components/workout_button.dart';
 import 'package:workspaces/screens/home_screen.dart';
 import 'package:workspaces/services/current_workout_provider.dart';
 
-class WorkoutScreen extends StatefulWidget {
+class WorkoutScreen extends StatelessWidget {
   const WorkoutScreen({super.key});
 
   static Route<dynamic> route() {
@@ -20,24 +20,23 @@ class WorkoutScreen extends StatefulWidget {
   }
 
   @override
-  State<WorkoutScreen> createState() => _WorkoutScreenState();
-}
-
-class _WorkoutScreenState extends State<WorkoutScreen> {
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Navigator.replaceRouteBelow(
-        context,
-        anchorRoute: ModalRoute.of(context)!,
-        newRoute: HomeScreen.route(),
-      );
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
+    var route = ModalRoute.of(context);
+
+    void animationStatusListener(AnimationStatus status) {
+      if (status == AnimationStatus.completed) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          Navigator.replaceRouteBelow(
+            context,
+            anchorRoute: ModalRoute.of(context)!,
+            newRoute: HomeScreen.route(),
+          );
+        });
+        route!.animation?.removeStatusListener(animationStatusListener);
+      }
+    }
+
+    route!.animation!.addStatusListener(animationStatusListener);
     return DefaultTextStyle(
       style: const TextStyle(),
       child: Scaffold(

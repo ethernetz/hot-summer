@@ -42,7 +42,7 @@ class HeroWorkoutButton extends StatelessWidget {
             valueListenable: textNotifier,
             builder: (_, text, __) {
               return AnimatedSwitcher(
-                duration: const Duration(milliseconds: 100),
+                duration: const Duration(milliseconds: 300),
                 switchInCurve: Curves.easeOutCubic,
                 child: Text(
                   text.split('').join('\u200B'),
