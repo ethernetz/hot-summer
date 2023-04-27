@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:workspaces/widgets/frosted.dart';
 
 class HeroWorkoutButton extends StatelessWidget {
   final String text;

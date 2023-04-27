@@ -32,7 +32,7 @@ class SelfMetrics extends StatelessWidget {
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
-                    color: Color(0xff1c1c1c),
+                    color: const Color(0xff1c1c1c),
                   ),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
@@ -106,7 +106,7 @@ class SelfMetrics extends StatelessWidget {
             alignment: Alignment.center,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
-              color: Color(0xff1c1c1c),
+              color: const Color(0xff1c1c1c),
             ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
