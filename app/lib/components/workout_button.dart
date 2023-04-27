@@ -1,6 +1,5 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
+import 'package:workspaces/widgets/frosted.dart';
 
 class HeroWorkoutButton extends StatelessWidget {
   final String text;
@@ -80,47 +79,43 @@ class WorkoutButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      type: MaterialType.transparency,
-      child: GestureDetector(
-        onTap: () => onTap(),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(25),
-          child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
-            child: Material(
-              type: MaterialType.transparency,
-              child: Theme(
-                data: Theme.of(context),
-                child: Container(
-                  height: 50,
-                  // width: 140,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(25),
-                    color: Colors.grey.shade800.withOpacity(0.5),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 30),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Image(
-                          image:
-                              AssetImage("assets/flexed_biceps_3d_default.png"),
-                          height: 30,
-                          width: 30,
-                        ),
-                        const SizedBox(
-                          width: 6,
-                        ),
-                        Flexible(
-                          child: textWidget,
-                        ),
-                      ],
-                    ),
-                  ),
+    return GestureDetector(
+      onTap: () => onTap(),
+      child: Material(
+        type: MaterialType.transparency,
+        child: Theme(
+          data: Theme.of(context),
+          child: Container(
+            height: 60,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(40),
+              color: const Color(0xffFF00CD),
+              boxShadow: [
+                BoxShadow(
+                  color: const Color(0xffFF00CD).withOpacity(0.8),
+                  blurRadius: 10,
+                  spreadRadius: 2,
                 ),
+              ],
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // const Image(
+                  //   image: AssetImage("assets/flexed_biceps_3d_default.png"),
+                  //   height: 30,
+                  //   width: 30,
+                  // ),
+                  // const SizedBox(
+                  //   width: 6,
+                  // ),
+                  Flexible(
+                    child: textWidget,
+                  ),
+                ],
               ),
             ),
           ),

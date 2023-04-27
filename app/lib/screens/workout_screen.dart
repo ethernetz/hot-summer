@@ -40,7 +40,7 @@ class WorkoutScreen extends StatelessWidget {
     return DefaultTextStyle(
       style: const TextStyle(),
       child: Scaffold(
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.transparent,
         floatingActionButton: HeroWorkoutButton(
           text: 'Complete workout',
           onTap: () {
@@ -58,7 +58,7 @@ class WorkoutScreen extends StatelessWidget {
           slivers: [
             CupertinoSliverNavigationBar(
               automaticallyImplyLeading: false,
-              backgroundColor: Colors.black,
+              backgroundColor: Colors.transparent,
               leading: CupertinoButton(
                 padding: EdgeInsets.zero,
                 child: const Icon(
