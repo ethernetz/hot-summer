@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:workspaces/classes/workouts.dart';
 import 'package:workspaces/components/current_workout.dart';
@@ -110,10 +111,9 @@ class WorkoutScreen extends StatelessWidget {
                       ) {
                         return ListView(
                           children: [
-                            const Text(
+                            Text(
                               'Use a recent workout',
-                              style: TextStyle(
-                                fontFamily: 'Kumbh Sans',
+                              style: GoogleFonts.kumbhSans(
                                 fontWeight: FontWeight.w400,
                                 fontSize: 20,
                                 color: Colors.white,
@@ -152,8 +152,7 @@ class WorkoutScreen extends StatelessWidget {
                                       children: [
                                         Text(
                                           workout.localizedRelativeTime,
-                                          style: const TextStyle(
-                                            fontFamily: 'Kumbh Sans',
+                                          style: GoogleFonts.kumbhSans(
                                             fontWeight: FontWeight.w400,
                                             fontSize: 14,
                                             color: Colors.black,
@@ -162,8 +161,7 @@ class WorkoutScreen extends StatelessWidget {
                                         const SizedBox(height: 10),
                                         Text(
                                           workout.formattedActivityNameList,
-                                          style: const TextStyle(
-                                            fontFamily: 'Kumbh Sans',
+                                          style: GoogleFonts.kumbhSans(
                                             fontWeight: FontWeight.w700,
                                             fontSize: 18,
                                             color: Colors.black,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:keyboard_actions/keyboard_actions.dart';
 import 'package:provider/provider.dart';
 import 'package:workspaces/classes/current_activity.dart';
@@ -31,15 +32,12 @@ class ActivityCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Expanded(
-                  child: Text(
-                    activity.activityType.displayName,
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                      fontFamily: 'Kumbh Sans',
-                      fontWeight: FontWeight.w600,
-                      fontSize: 24,
-                    ),
-                  ),
+                  child: Text(activity.activityType.displayName,
+                      overflow: TextOverflow.ellipsis,
+                      style: GoogleFonts.kumbhSans(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 24,
+                      )),
                 ),
                 IconButton(
                   icon: const Icon(Icons.close),
@@ -48,8 +46,7 @@ class ActivityCard extends StatelessWidget {
               ],
             ),
             DefaultTextStyle(
-              style: const TextStyle(
-                fontFamily: 'Kumbh Sans',
+              style: GoogleFonts.kumbhSans(
                 fontWeight: FontWeight.w600,
                 fontSize: 16,
                 color: Colors.black,
@@ -130,13 +127,12 @@ class ActivityCard extends StatelessWidget {
                   onTap: () => activity.addSet(),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Icon(Icons.add, color: Colors.white),
-                      SizedBox(width: 4),
+                    children: [
+                      const Icon(Icons.add, color: Colors.white),
+                      const SizedBox(width: 4),
                       Text(
                         "Add set",
-                        style: TextStyle(
-                          fontFamily: 'Kumbh Sans',
+                        style: GoogleFonts.kumbhSans(
                           fontWeight: FontWeight.w600,
                           fontSize: 16,
                         ),

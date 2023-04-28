@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:sa3_liquid/liquid/plasma/plasma.dart';
 import 'package:workspaces/screens/auth_screen.dart';
@@ -166,22 +167,25 @@ class MyApp extends StatelessWidget {
               textTheme: Theme.of(context)
                   .textTheme
                   .copyWith(
-                    displayLarge: const TextStyle(
-                      fontFamily: 'Kumbh Sans',
+                    displayLarge: GoogleFonts.kumbhSans(
+                      textStyle: const TextStyle(
+                        fontSize: 40,
+                        color: Colors.black,
+                      ),
                       fontWeight: FontWeight.w500,
-                      fontSize: 40,
-                      color: Colors.black,
                     ),
-                    displayMedium: const TextStyle(
-                      fontFamily: 'Kumbh Sans',
+                    displayMedium: GoogleFonts.kumbhSans(
+                      textStyle: const TextStyle(
+                        fontSize: 22,
+                        color: Colors.black,
+                      ),
                       fontWeight: FontWeight.w700,
-                      fontSize: 22,
-                      color: Colors.black,
                     ),
-                    bodyMedium: const TextStyle(
-                      fontFamily: 'Kumbh Sans',
-                      fontSize: 15,
-                      color: Colors.black,
+                    bodyMedium: GoogleFonts.kumbhSans(
+                      textStyle: const TextStyle(
+                        fontSize: 15,
+                        color: Colors.black,
+                      ),
                     ),
                   )
                   .apply(
