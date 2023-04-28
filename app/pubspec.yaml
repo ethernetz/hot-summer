@@ -72,7 +72,15 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/
+    - assets/fonts/KumbhSans-Thin.ttf
+    - assets/fonts/KumbhSans-ExtraLight.ttf
+    - assets/fonts/KumbhSans-Light.ttf
+    - assets/fonts/KumbhSans-Regular.ttf
+    - assets/fonts/KumbhSans-Medium.ttf
+    - assets/fonts/KumbhSans-SemiBold.ttf
+    - assets/fonts/KumbhSans-Bold.ttf
+    - assets/fonts/KumbhSans-ExtraBold.ttf
+    - assets/fonts/KumbhSans-Black.ttf
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
