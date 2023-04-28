@@ -39,16 +39,34 @@ class Workout {
     final difference = currentDate.difference(previousDate);
 
     if (difference.inDays == 0) {
-      return 'Today';
+      return 'Today at ${DateFormat('h:mm a').format(previousTime)}';
     }
     if (difference.inDays == 1) {
-      return 'Yesterday';
+      return 'Yesterday at ${DateFormat('h:mm a').format(previousTime)}';
     }
     if (difference.inDays < 7) {
-      return 'Last ${DateFormat('EEEE').format(previousTime)}';
+      return 'Last ${DateFormat('EEEE').format(previousTime)} at ${DateFormat('h:mm a').format(previousTime)}';
     }
 
     return DateFormat('MMMM d').format(previousTime);
+  }
+
+  String get formattedActivityNameList {
+    final activityNames = activities
+        .map((activity) => activity.activityType.displayName)
+        .toList();
+
+    if (activityNames.isEmpty) {
+      return '';
+    }
+    if (activityNames.length == 1) {
+      return activityNames[0];
+    }
+
+    String formattedList =
+        activityNames.sublist(0, activityNames.length - 1).join(', ');
+    formattedList += ' and ${activityNames.last}';
+    return formattedList;
   }
 
   factory Workout.fromCurrentActivities(

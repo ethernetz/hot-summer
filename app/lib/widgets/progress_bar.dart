@@ -49,10 +49,10 @@ class _ProgressBarState extends State<ProgressBar> {
         ),
       ),
       child: ShaderMask(
-        shaderCallback: (Rect bounds) => const LinearGradient(
+        shaderCallback: (Rect bounds) => LinearGradient(
           colors: [
-            Color(0xffED6F00),
-            Color(0xffAF0BE6),
+            Theme.of(context).colorScheme.primary,
+            Theme.of(context).colorScheme.primary,
           ],
           begin: Alignment.centerLeft,
           end: Alignment.centerRight,

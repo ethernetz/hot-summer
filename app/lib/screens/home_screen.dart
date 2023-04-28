@@ -44,8 +44,16 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
       floatingActionButton: HeroWorkoutButton(
-        text:
-            currentWorkoutProvider.isWorkingOut ? 'Back to workout' : 'Workout',
+        child: Text(
+          (currentWorkoutProvider.isWorkingOut ? 'Back to workout' : 'Workout')
+              .split('')
+              .join('\u200B'),
+          key: ValueKey<String>(currentWorkoutProvider.isWorkingOut
+              ? 'Back to workout'
+              : 'Workout'),
+          style: Theme.of(context).textTheme.displayMedium,
+          maxLines: 1,
+        ),
         onTap: () {
           if (!currentWorkoutProvider.isWorkingOut) {
             context.read<CurrentWorkoutProvider>().startWorkout();

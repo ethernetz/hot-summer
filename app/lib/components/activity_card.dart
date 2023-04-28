@@ -21,8 +21,8 @@ class ActivityCard extends StatelessWidget {
         width: double.infinity,
         padding: const EdgeInsets.fromLTRB(20, 10, 20, 20),
         decoration: BoxDecoration(
-          color: Colors.grey[900],
-          borderRadius: BorderRadius.circular(8),
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(20),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -52,6 +52,7 @@ class ActivityCard extends StatelessWidget {
                 fontFamily: 'Kumbh Sans',
                 fontWeight: FontWeight.w600,
                 fontSize: 16,
+                color: Colors.black,
               ),
               textAlign: TextAlign.center,
               child: Table(
@@ -91,7 +92,7 @@ class ActivityCard extends StatelessWidget {
                             return Text(
                               '${previousActivitySets[i].weight}lb x ${previousActivitySets[i].reps}',
                               style: const TextStyle(
-                                color: Colors.white60,
+                                color: Colors.black45,
                               ),
                             );
                           }()),

@@ -21,18 +21,18 @@ class NumberField extends StatelessWidget {
       textInputAction: TextInputAction.next,
       maxLength: 3,
       style: DefaultTextStyle.of(context).style,
-      decoration: const InputDecoration(
+      decoration: InputDecoration(
         counterText: "",
         isDense: true,
-        contentPadding: EdgeInsets.symmetric(vertical: 6, horizontal: 4),
-        enabledBorder: UnderlineInputBorder(
+        contentPadding: const EdgeInsets.symmetric(vertical: 6, horizontal: 4),
+        enabledBorder: const UnderlineInputBorder(
           borderSide: BorderSide(
-            color: Color(0xFFC32B9C),
+            color: Colors.black,
           ),
         ),
         focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(
-            color: Color(0xFFC32B9C),
+            color: Theme.of(context).colorScheme.primary,
           ),
         ),
       ),

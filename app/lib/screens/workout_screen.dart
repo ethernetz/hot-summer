@@ -42,16 +42,13 @@ class WorkoutScreen extends StatelessWidget {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         floatingActionButton: HeroWorkoutButton(
-          text: 'Complete workout',
-          onTap: () {
-            context.read<CurrentWorkoutProvider>().endWorkout(context);
-            Navigator.replaceRouteBelow(
-              context,
-              anchorRoute: ModalRoute.of(context)!,
-              newRoute: HomeScreen.route(),
-            );
-            Navigator.pop(context);
-          },
+          child: const Icon(
+            CupertinoIcons.add,
+            color: CupertinoColors.black,
+            weight: 100,
+          ),
+          onTap: () =>
+              context.read<CurrentWorkoutProvider>().addActivity(context),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         body: CustomScrollView(
@@ -63,7 +60,7 @@ class WorkoutScreen extends StatelessWidget {
                 padding: EdgeInsets.zero,
                 child: const Icon(
                   CupertinoIcons.back,
-                  color: CupertinoColors.systemGrey2,
+                  color: CupertinoColors.white,
                 ),
                 onPressed: () {
                   Navigator.pop(context);
@@ -76,58 +73,104 @@ class WorkoutScreen extends StatelessWidget {
               trailing: CupertinoButton(
                 padding: EdgeInsets.zero,
                 child: const Icon(
-                  CupertinoIcons.plus,
-                  color: CupertinoColors.systemGrey2,
+                  CupertinoIcons.check_mark,
+                  color: CupertinoColors.white,
                 ),
-                onPressed: () =>
-                    context.read<CurrentWorkoutProvider>().addActivity(context),
+                onPressed: () => completeWorkout(context),
               ),
             ),
             SliverFillRemaining(
-              child: Consumer<CurrentWorkoutProvider>(
-                builder: (
-                  BuildContext context,
-                  CurrentWorkoutProvider currentWorkoutProvider,
-                  Widget? child,
-                ) {
-                  if (currentWorkoutProvider.activities.isEmpty) {
-                    return Consumer<Workouts>(builder: (
-                      BuildContext context,
-                      Workouts workouts,
-                      Widget? child,
-                    ) {
-                      return ListView(
-                        children: [
-                          for (var workout
-                              in workouts.getLatestWorkoutsWithActivityLog())
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 15),
-                              child: Container(
-                                width: double.infinity,
-                                padding:
-                                    const EdgeInsets.fromLTRB(20, 10, 20, 20),
-                                decoration: BoxDecoration(
-                                  color: Colors.grey[900],
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                child: Column(
-                                  children: [
-                                    Text(workout.localizedRelativeTime)
-                                  ],
-                                ),
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(12, 20, 12, 0),
+                child: Consumer<CurrentWorkoutProvider>(
+                  builder: (
+                    BuildContext context,
+                    CurrentWorkoutProvider currentWorkoutProvider,
+                    Widget? child,
+                  ) {
+                    if (currentWorkoutProvider.activities.isEmpty) {
+                      return Consumer<Workouts>(builder: (
+                        BuildContext context,
+                        Workouts workouts,
+                        Widget? child,
+                      ) {
+                        return ListView(
+                          children: [
+                            const Text(
+                              'Use a recent workout',
+                              style: TextStyle(
+                                fontFamily: 'Kumbh Sans',
+                                fontWeight: FontWeight.w400,
+                                fontSize: 20,
+                                color: Colors.white,
                               ),
-                            )
-                        ],
-                      );
-                    });
-                  }
-                  return const CurrentWorkout();
-                },
+                            ),
+                            const Divider(
+                              color: Colors.white,
+                              thickness: 1,
+                            ),
+                            SizedBox(height: 20),
+                            for (var workout
+                                in workouts.getLatestWorkoutsWithActivityLog())
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 15),
+                                child: Container(
+                                  width: double.infinity,
+                                  padding:
+                                      const EdgeInsets.fromLTRB(20, 10, 20, 20),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        workout.localizedRelativeTime,
+                                        style: const TextStyle(
+                                          fontFamily: 'Kumbh Sans',
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 14,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 10),
+                                      Text(
+                                        workout.formattedActivityNameList,
+                                        style: const TextStyle(
+                                          fontFamily: 'Kumbh Sans',
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 18,
+                                          color: Colors.black,
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              )
+                          ],
+                        );
+                      });
+                    }
+                    return const CurrentWorkout();
+                  },
+                ),
               ),
             ),
           ],
         ),
       ),
     );
+  }
+
+  void completeWorkout(BuildContext context) {
+    context.read<CurrentWorkoutProvider>().endWorkout(context);
+    Navigator.replaceRouteBelow(
+      context,
+      anchorRoute: ModalRoute.of(context)!,
+      newRoute: HomeScreen.route(),
+    );
+    Navigator.pop(context);
   }
 }

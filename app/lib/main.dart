@@ -87,10 +87,10 @@ class MyApp extends StatelessWidget {
                   SizedBox.expand(
                     child: Container(
                       color: const Color(0xff1c1c1c),
-                      child: const PlasmaRenderer(
+                      child: PlasmaRenderer(
                         type: PlasmaType.infinity,
-                        particles: 9,
-                        color: Color(0xddB71375),
+                        particles: 4,
+                        color: Theme.of(context).colorScheme.primary,
                         blur: 0.9,
                         size: 0.6,
                         speed: 1,
@@ -103,8 +103,8 @@ class MyApp extends StatelessWidget {
                         rotation: 0,
                         child: PlasmaRenderer(
                           type: PlasmaType.infinity,
-                          particles: 4,
-                          color: Color(0xdd8B1874),
+                          particles: 2,
+                          color: Theme.of(context).colorScheme.primary,
                           blur: 1.5,
                           size: 0.6,
                           speed: 1,
@@ -131,27 +131,31 @@ class MyApp extends StatelessWidget {
                     ),
                   ),
                   SizedBox.expand(
-                      child: Container(
-                    decoration: const BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        stops: [0, 0.8, 1],
-                        colors: [
-                          Colors.transparent,
-                          Colors.transparent,
-                          Color(0xcc1c1c1c),
-                        ],
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          stops: [0, 0.2, 0.8, 1],
+                          colors: [
+                            Color(0xcc1c1c1c),
+                            Colors.transparent,
+                            Colors.transparent,
+                            Color(0xcc1c1c1c),
+                          ],
+                        ),
                       ),
                     ),
-                  )),
+                  ),
                   child!,
                 ],
               );
             },
             theme: ThemeData(
               brightness: Brightness.dark,
-              colorScheme: const ColorScheme.dark(),
+              colorScheme: const ColorScheme.dark().copyWith(
+                primary: const Color(0xff82fffe),
+              ),
               scaffoldBackgroundColor: Colors.transparent,
               outlinedButtonTheme: OutlinedButtonThemeData(
                 style: ButtonStyle(
@@ -166,18 +170,18 @@ class MyApp extends StatelessWidget {
                       fontFamily: 'Kumbh Sans',
                       fontWeight: FontWeight.w500,
                       fontSize: 40,
-                      color: Colors.white,
+                      color: Colors.black,
                     ),
                     displayMedium: const TextStyle(
                       fontFamily: 'Kumbh Sans',
                       fontWeight: FontWeight.w700,
                       fontSize: 22,
-                      color: Colors.white,
+                      color: Colors.black,
                     ),
                     bodyMedium: const TextStyle(
                       fontFamily: 'Kumbh Sans',
                       fontSize: 15,
-                      color: Colors.white,
+                      color: Colors.black,
                     ),
                   )
                   .apply(
