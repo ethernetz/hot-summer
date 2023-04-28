@@ -5,7 +5,7 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
-// import 'package:sa3_liquid/liquid/plasma/plasma.dart';
+import 'package:sa3_liquid/liquid/plasma/plasma.dart';
 import 'package:workspaces/screens/auth_screen.dart';
 import 'package:workspaces/screens/home_screen.dart';
 import 'package:workspaces/services/auth_service.dart';
@@ -87,36 +87,36 @@ class MyApp extends StatelessWidget {
                   SizedBox.expand(
                     child: Container(
                       color: const Color(0xff1c1c1c),
-                      // child: PlasmaRenderer(
-                      //   type: PlasmaType.infinity,
-                      //   particles: 4,
-                      //   color: Theme.of(context).colorScheme.primary,
-                      //   blur: 0.9,
-                      //   size: 0.6,
-                      //   speed: 1,
-                      //   offset: 0,
-                      //   blendMode: BlendMode.screen,
-                      //   particleType: ParticleType.atlas,
-                      //   variation1: 0,
-                      //   variation2: 0,
-                      //   variation3: 0,
-                      //   rotation: 0,
-                      //   child: PlasmaRenderer(
-                      //     type: PlasmaType.infinity,
-                      //     particles: 2,
-                      //     color: Theme.of(context).colorScheme.primary,
-                      //     blur: 1.5,
-                      //     size: 0.6,
-                      //     speed: 1,
-                      //     offset: 0,
-                      //     blendMode: BlendMode.screen,
-                      //     particleType: ParticleType.atlas,
-                      //     variation1: 0,
-                      //     variation2: 0,
-                      //     variation3: 0,
-                      //     rotation: 0,
-                      //   ),
-                      // ),
+                      child: PlasmaRenderer(
+                        type: PlasmaType.infinity,
+                        particles: 4,
+                        color: Theme.of(context).colorScheme.primary,
+                        blur: 0.9,
+                        size: 0.6,
+                        speed: 1,
+                        offset: 0,
+                        blendMode: BlendMode.screen,
+                        particleType: ParticleType.atlas,
+                        variation1: 0,
+                        variation2: 0,
+                        variation3: 0,
+                        rotation: 0,
+                        child: PlasmaRenderer(
+                          type: PlasmaType.infinity,
+                          particles: 2,
+                          color: Theme.of(context).colorScheme.primary,
+                          blur: 1.5,
+                          size: 0.6,
+                          speed: 1,
+                          offset: 0,
+                          blendMode: BlendMode.screen,
+                          particleType: ParticleType.atlas,
+                          variation1: 0,
+                          variation2: 0,
+                          variation3: 0,
+                          rotation: 0,
+                        ),
+                      ),
                     ),
                   ),
                   SizedBox.expand(
