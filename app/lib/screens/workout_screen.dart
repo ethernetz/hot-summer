@@ -55,7 +55,7 @@ class WorkoutScreen extends StatelessWidget {
           slivers: [
             CupertinoSliverNavigationBar(
               automaticallyImplyLeading: false,
-              backgroundColor: Colors.transparent,
+              backgroundColor: Color(0x01ffffff),
               leading: CupertinoButton(
                 padding: EdgeInsets.zero,
                 child: const Icon(
@@ -109,43 +109,54 @@ class WorkoutScreen extends StatelessWidget {
                               color: Colors.white,
                               thickness: 1,
                             ),
-                            SizedBox(height: 20),
+                            const SizedBox(height: 20),
                             for (var workout
                                 in workouts.getLatestWorkoutsWithActivityLog())
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 15),
-                                child: Container(
-                                  width: double.infinity,
-                                  padding:
-                                      const EdgeInsets.fromLTRB(20, 10, 20, 20),
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        workout.localizedRelativeTime,
-                                        style: const TextStyle(
-                                          fontFamily: 'Kumbh Sans',
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 14,
-                                          color: Colors.black,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    currentWorkoutProvider.addActivities(
+                                      context,
+                                      workout.activities
+                                          .map((activity) =>
+                                              activity.activityType)
+                                          .toList(),
+                                    );
+                                  },
+                                  child: Container(
+                                    width: double.infinity,
+                                    padding: const EdgeInsets.fromLTRB(
+                                        20, 10, 20, 20),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          workout.localizedRelativeTime,
+                                          style: const TextStyle(
+                                            fontFamily: 'Kumbh Sans',
+                                            fontWeight: FontWeight.w400,
+                                            fontSize: 14,
+                                            color: Colors.black,
+                                          ),
                                         ),
-                                      ),
-                                      const SizedBox(height: 10),
-                                      Text(
-                                        workout.formattedActivityNameList,
-                                        style: const TextStyle(
-                                          fontFamily: 'Kumbh Sans',
-                                          fontWeight: FontWeight.w700,
-                                          fontSize: 18,
-                                          color: Colors.black,
-                                        ),
-                                      )
-                                    ],
+                                        const SizedBox(height: 10),
+                                        Text(
+                                          workout.formattedActivityNameList,
+                                          style: const TextStyle(
+                                            fontFamily: 'Kumbh Sans',
+                                            fontWeight: FontWeight.w700,
+                                            fontSize: 18,
+                                            color: Colors.black,
+                                          ),
+                                        )
+                                      ],
+                                    ),
                                   ),
                                 ),
                               )

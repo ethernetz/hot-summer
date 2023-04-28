@@ -56,6 +56,23 @@ class CurrentWorkoutProvider extends ChangeNotifier {
     });
   }
 
+  void addActivities(
+      BuildContext context, List<ActivityType> activityTypes) async {
+    for (var activityType in activityTypes) {
+      activities.add(CurrentActivity(
+        uniqueKey: UniqueKey(),
+        activityType: activityType,
+        previousActivity: _getPreviousActivity(context, activityType),
+      ));
+      _activitiesListKey?.currentState?.insertItem(
+        activities.length - 1,
+        duration: const Duration(milliseconds: 100),
+      );
+    }
+
+    notifyListeners();
+  }
+
   void _removeActivity(int index) {
     final activityCard = _buildActivityCard(index);
     _activitiesListKey?.currentState?.removeItem(
