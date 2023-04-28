@@ -11,9 +11,23 @@ class WorkoutScreen extends StatelessWidget {
   const WorkoutScreen({super.key});
 
   static Route<dynamic> route() {
-    return CupertinoPageRoute(
-      builder: (BuildContext context) {
-        return const WorkoutScreen();
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) =>
+          const WorkoutScreen(),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        return SlideTransition(
+          position: Tween<Offset>(
+            begin: const Offset(1, 0),
+            end: Offset.zero,
+          ).animate(animation),
+          child: SlideTransition(
+            position: Tween<Offset>(
+              begin: Offset.zero,
+              end: const Offset(-1, 0),
+            ).animate(secondaryAnimation),
+            child: child,
+          ),
+        );
       },
       settings: const RouteSettings(name: '/workout'),
     );
@@ -55,7 +69,7 @@ class WorkoutScreen extends StatelessWidget {
           slivers: [
             CupertinoSliverNavigationBar(
               automaticallyImplyLeading: false,
-              backgroundColor: Color(0x01ffffff),
+              backgroundColor: Colors.transparent,
               leading: CupertinoButton(
                 padding: EdgeInsets.zero,
                 child: const Icon(
