@@ -53,85 +53,89 @@ class WorkoutScreen extends StatelessWidget {
     }
 
     route!.animation!.addStatusListener(animationStatusListener);
-    return DefaultTextStyle(
-      style: const TextStyle(),
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        floatingActionButton: HeroWorkoutButton(
-          child: const Icon(
-            CupertinoIcons.add,
-            color: CupertinoColors.black,
-            weight: 100,
-          ),
-          onTap: () =>
-              context.read<CurrentWorkoutProvider>().addActivity(context),
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      floatingActionButton: HeroWorkoutButton(
+        child: const Icon(
+          CupertinoIcons.add,
+          color: CupertinoColors.black,
+          weight: 100,
         ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        body: CustomScrollView(
-          slivers: [
-            CupertinoSliverNavigationBar(
-              automaticallyImplyLeading: false,
-              backgroundColor: Colors.transparent,
-              leading: CupertinoButton(
-                padding: EdgeInsets.zero,
-                child: const Icon(
-                  CupertinoIcons.back,
-                  color: CupertinoColors.white,
+        onTap: () =>
+            context.read<CurrentWorkoutProvider>().addActivity(context),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      body: SafeArea(
+        bottom: false,
+        child: SingleChildScrollView(
+          child: Container(
+            padding: const EdgeInsets.only(top: 20, left: 10, right: 10),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    GestureDetector(
+                      onTap: () => Navigator.pop(context),
+                      child: const Icon(
+                        CupertinoIcons.back,
+                        color: Colors.white,
+                        size: 30,
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () => completeWorkout(context),
+                      child: const Icon(
+                        CupertinoIcons.checkmark_alt,
+                        color: Colors.white,
+                        size: 30,
+                      ),
+                    ),
+                  ],
                 ),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
-              largeTitle: const Text(
-                'Thursday, April 14',
-                style: TextStyle(color: Colors.white),
-              ),
-              trailing: CupertinoButton(
-                padding: EdgeInsets.zero,
-                child: const Icon(
-                  CupertinoIcons.check_mark,
-                  color: CupertinoColors.white,
+                Text(
+                  'Workout',
+                  style: GoogleFonts.barlowCondensed(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 80,
+                    color: Colors.white,
+                  ),
                 ),
-                onPressed: () => completeWorkout(context),
-              ),
-            ),
-            SliverFillRemaining(
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(12, 20, 12, 0),
-                child: Consumer<CurrentWorkoutProvider>(
-                  builder: (
-                    BuildContext context,
-                    CurrentWorkoutProvider currentWorkoutProvider,
-                    Widget? child,
-                  ) {
-                    if (currentWorkoutProvider.activities.isEmpty) {
-                      return Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const SizedBox(height: 20),
-                          Text(
-                            'Use a recent workout',
-                            style: GoogleFonts.kumbhSans(
-                              fontWeight: FontWeight.w400,
-                              fontSize: 20,
-                              color: Colors.white,
-                            ),
-                          ),
-                          const Divider(
-                            color: Colors.white,
-                            thickness: 1,
-                          ),
-                          const RecentWorkouts(),
-                        ],
-                      );
-                    }
+                const SizedBox(height: 20),
+                Consumer<CurrentWorkoutProvider>(builder: (
+                  BuildContext context,
+                  CurrentWorkoutProvider currentWorkout,
+                  Widget? child,
+                ) {
+                  if (currentWorkout.activities.isNotEmpty) {
                     return const CurrentWorkout();
-                  },
-                ),
-              ),
+                  }
+
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Use a recent workout',
+                        style: GoogleFonts.kumbhSans(
+                          fontWeight: FontWeight.w400,
+                          fontSize: 20,
+                          color: Colors.white,
+                        ),
+                      ),
+                      const Divider(
+                        color: Colors.white,
+                        thickness: 1,
+                      ),
+                      const SizedBox(height: 10),
+                      const RecentWorkouts(),
+                    ],
+                  );
+                }),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
