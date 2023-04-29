@@ -41,7 +41,7 @@ jobs:
         subdirectory: app/ios
       env:
         ITC_TEAM_ID: '${{ secrets.ITC_TEAM_ID }}'
-        APPLICATON_ID: '${{ secrets.APPLICATON_ID }}'
+        APPLICATION_ID: '${{ secrets.APPLICATION_ID }}'
         BUNDLE_IDENTIFIER: '${{ secrets.BUNDLE_IDENTIFIER }}'
         DEVELOPER_PORTAL_TEAM_ID: '${{ secrets.DEVELOPER_PORTAL_TEAM_ID }}'
         FASTLANE_APPLE_ID: '${{ secrets.FASTLANE_APPLE_EMAIL_ID }}'
