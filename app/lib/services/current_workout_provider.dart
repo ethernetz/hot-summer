@@ -88,8 +88,8 @@ class CurrentWorkoutProvider extends ChangeNotifier {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       activities[index].dispose();
       activities.removeAt(index);
+      notifyListeners();
     });
-    notifyListeners();
   }
 
   void _removeAllActivities() {

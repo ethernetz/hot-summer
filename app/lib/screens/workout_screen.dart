@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:workspaces/classes/workouts.dart';
 import 'package:workspaces/components/current_workout.dart';
+import 'package:workspaces/components/recent_workouts.dart';
 import 'package:workspaces/components/workout_button.dart';
 import 'package:workspaces/screens/home_screen.dart';
 import 'package:workspaces/services/current_workout_provider.dart';
@@ -104,77 +105,26 @@ class WorkoutScreen extends StatelessWidget {
                     Widget? child,
                   ) {
                     if (currentWorkoutProvider.activities.isEmpty) {
-                      return Consumer<Workouts>(builder: (
-                        BuildContext context,
-                        Workouts workouts,
-                        Widget? child,
-                      ) {
-                        return ListView(
-                          children: [
-                            Text(
-                              'Use a recent workout',
-                              style: GoogleFonts.kumbhSans(
-                                fontWeight: FontWeight.w400,
-                                fontSize: 20,
-                                color: Colors.white,
-                              ),
-                            ),
-                            const Divider(
+                      return Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 20),
+                          Text(
+                            'Use a recent workout',
+                            style: GoogleFonts.kumbhSans(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 20,
                               color: Colors.white,
-                              thickness: 1,
                             ),
-                            const SizedBox(height: 20),
-                            for (var workout
-                                in workouts.getLatestWorkoutsWithActivityLog())
-                              Padding(
-                                padding: const EdgeInsets.only(bottom: 15),
-                                child: GestureDetector(
-                                  onTap: () {
-                                    currentWorkoutProvider.addActivities(
-                                      context,
-                                      workout.activities
-                                          .map((activity) =>
-                                              activity.activityType)
-                                          .toList(),
-                                    );
-                                  },
-                                  child: Container(
-                                    width: double.infinity,
-                                    padding: const EdgeInsets.fromLTRB(
-                                        20, 10, 20, 20),
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(20),
-                                    ),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          workout.localizedRelativeTime,
-                                          style: GoogleFonts.kumbhSans(
-                                            fontWeight: FontWeight.w400,
-                                            fontSize: 14,
-                                            color: Colors.black,
-                                          ),
-                                        ),
-                                        const SizedBox(height: 10),
-                                        Text(
-                                          workout.formattedActivityNameList,
-                                          style: GoogleFonts.kumbhSans(
-                                            fontWeight: FontWeight.w700,
-                                            fontSize: 18,
-                                            color: Colors.black,
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              )
-                          ],
-                        );
-                      });
+                          ),
+                          const Divider(
+                            color: Colors.white,
+                            thickness: 1,
+                          ),
+                          const RecentWorkouts(),
+                        ],
+                      );
                     }
                     return const CurrentWorkout();
                   },
