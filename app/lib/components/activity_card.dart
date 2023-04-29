@@ -26,22 +26,26 @@ class ActivityCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(20),
         ),
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Expanded(
-                  child: Text(activity.activityType.displayName,
-                      overflow: TextOverflow.ellipsis,
-                      style: GoogleFonts.kumbhSans(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 24,
-                      )),
+                  child: Text(
+                    activity.activityType.displayName,
+                    overflow: TextOverflow.ellipsis,
+                    style: GoogleFonts.kumbhSans(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 24,
+                    ),
+                  ),
                 ),
                 IconButton(
                   icon: const Icon(Icons.close),
                   onPressed: onClosePressed,
+                  color: Colors.black,
                 ),
               ],
             ),
@@ -51,84 +55,120 @@ class ActivityCard extends StatelessWidget {
                 fontSize: 16,
                 color: Colors.black,
               ),
-              textAlign: TextAlign.center,
-              child: Table(
-                columnWidths: const {
-                  0: FixedColumnWidth(40),
-                  1: IntrinsicColumnWidth(flex: 2),
-                  2: IntrinsicColumnWidth(flex: 1),
-                  3: IntrinsicColumnWidth(flex: 1),
-                },
+              child: Row(
                 children: [
-                  const TableRow(
-                    children: [
-                      Text('Set'),
-                      Text('Previous'),
-                      Text('lbs'),
-                      Text('Reps'),
-                    ],
+                  const SizedBox(
+                    width: 50,
+                    child: Center(
+                      child: Text(
+                        "Set",
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
                   ),
-                  for (int i = 0; i < activity.sets.length; i++)
-                    TableRow(
+                  const Expanded(
+                    flex: 1,
+                    child: Center(
+                      child: Text(
+                        "Previous",
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: Row(
                       children: [
-                        TableCell(
-                          verticalAlignment: TableCellVerticalAlignment.middle,
+                        for (var measurementType
+                            in activity.activityType.measurementTypes)
+                          Expanded(
+                            child: Center(
+                              child: Text(
+                                measurementType.displayName,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            DefaultTextStyle(
+              style: GoogleFonts.kumbhSans(
+                fontWeight: FontWeight.w600,
+                fontSize: 16,
+                color: Colors.black,
+              ),
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: activity.sets.length,
+                itemBuilder: (context, index) {
+                  return Row(
+                    children: [
+                      SizedBox(
+                        width: 50,
+                        child: Center(
                           child: Text(
-                            (i + 1).toString(),
+                            "${index + 1}",
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ),
-                        TableCell(
-                          verticalAlignment: TableCellVerticalAlignment.middle,
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: Center(
                           child: (() {
                             final previousActivitySets =
                                 activity.previousActivity?.sets;
                             if (previousActivitySets == null ||
-                                previousActivitySets.length <= i) {
+                                previousActivitySets.length <= index) {
                               return Container();
                             }
                             return Text(
-                              '${previousActivitySets[i].weight}lb x ${previousActivitySets[i].reps}',
-                              style: const TextStyle(
-                                color: Colors.black45,
+                              activity.previousActivity?.sets[index]
+                                      .displayMeasurements ??
+                                  '',
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                color: Colors.grey[600],
                               ),
                             );
                           }()),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 10,
-                            vertical: 6,
-                          ),
-                          child: NumberField(
-                            controller: activity.sets[i].weightController,
-                            focusNode: activity.sets[i].weightFocusNode,
-                          ),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: Row(
+                          children: [
+                            for (var measurementType
+                                in activity.activityType.measurementTypes)
+                              Expanded(
+                                child: NumberField(
+                                  focusNode: activity
+                                      .sets[index].focusNodes[measurementType]!,
+                                  controller: activity.sets[index]
+                                      .textEditingControllers[measurementType]!,
+                                ),
+                              ),
+                          ],
                         ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 10,
-                            vertical: 6,
-                          ),
-                          child: NumberField(
-                            controller: activity.sets[i].repsController,
-                            focusNode: activity.sets[i].repsFocusNode,
-                          ),
-                        ),
-                      ],
-                    ),
-                ],
+                      ),
+                    ],
+                  );
+                },
               ),
             ),
             const SizedBox(height: 20),
             Center(
               child: SizedBox(
-                width: 125,
                 child: GestureDetector(
                   onTap: () => activity.addSet(),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Icon(Icons.add, color: Colors.white),
+                      const Icon(Icons.add, color: Colors.black),
                       const SizedBox(width: 4),
                       Text(
                         "Add set",
@@ -155,12 +195,10 @@ class ActivityCard extends StatelessWidget {
       nextFocus: true,
       actions: [
         for (var set in activity.sets) ...[
-          KeyboardActionsItem(
-            focusNode: set.weightFocusNode,
-          ),
-          KeyboardActionsItem(
-            focusNode: set.repsFocusNode,
-          )
+          for (var focusNode in set.focusNodes.entries)
+            KeyboardActionsItem(
+              focusNode: focusNode.value,
+            ),
         ],
       ],
     );
