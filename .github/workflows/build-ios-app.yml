@@ -20,7 +20,8 @@ jobs:
         flutter-version: '3.7.1'
         channel: 'stable'
         architecture: x64
-
+    - run: flutter clean
+      working-directory: ./app
     - run: flutter pub get
       working-directory: ./app
     - run: flutter build ios --release --no-codesign
@@ -33,17 +34,20 @@ jobs:
         echo $CERTIFICATE_BASE64 | base64 --decode > signing-cert.p12
       working-directory: ./app/ios
 
-    - name: Deploy to TestFlight via Fastlane
-      uses: maierj/fastlane-action@v1.4.0
-      with:
-        lane: build_upload_testflight
-        subdirectory: app/ios
-      env:
-        ASC_APP_ID: ${{ secrets.ASC_APP_ID }}
-        ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
-        ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
-        ASC_KEY: ${{ secrets.ASC_PRIVATE_KEY }}
-        DEVELOPER_APP_IDENTIFIER: ${{ secrets.DEVELOPER_APP_IDENTIFIER }}
-        SIGNING_KEY_PASSWORD: ${{ secrets.IOS_DIST_SIGNING_KEY_PASSWORD }}
-        TEAM_ID: ${{ secrets.TEAM_ID }}
-        SIGNING_KEY_FILE_PATH: signing-cert.p12
+      - name: Deploy iOS Beta to TestFlight via Fastlane
+        uses: maierj/fastlane-action@v1.4.0
+        with:
+          lane: closed_beta
+          subdirectory: app/ios
+        env:
+          ITC_TEAM_ID: '${{ secrets.ITC_TEAM_ID }}'
+          APPLICATON_ID: '${{ secrets.APPLICATON_ID }}'
+          BUNDLE_IDENTIFIER: '${{ secrets.BUNDLE_IDENTIFIER }}'
+          DEVELOPER_PORTAL_TEAM_ID: '${{ secrets.DEVELOPER_PORTAL_TEAM_ID }}'
+          FASTLANE_APPLE_ID: '${{ secrets.FASTLANE_APPLE_EMAIL_ID }}'
+          FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: '${{ secrets.APP_SPECIFIC_PASSWORD }}'
+          MATCH_PASSWORD: '${{ secrets.MATCH_PASSWORD }}'
+          GIT_AUTHORIZATION: '${{ secrets.GIT_AUTHORIZATION }}'
+          PROVISIONING_PROFILE_SPECIFIER: '${{ secrets.PROVISIONING_PROFILE_SPECIFIER }}'
+          TEMP_KEYCHAIN_PASSWORD: '${{ secrets.TEMP_KEYCHAIN_PASSWORD }}'
+          TEMP_KEYCHAIN_USER: '${{ secrets.TEMP_KEYCHAIN_USER }}'
