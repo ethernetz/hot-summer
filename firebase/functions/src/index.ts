@@ -8,6 +8,7 @@ export const createUserDocument = functions.auth.user().onCreate((userRecord) =>
 	const user = {
 		uid: userRecord.uid,
 		streak: 0,
+		stars: 0,
 		medals: 0,
 		activityHistory: {},
 	};

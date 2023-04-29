@@ -35,6 +35,8 @@ void main() async {
 
   if (kDebugMode) {
     try {
+      FirebaseFirestore.instance.settings =
+          const Settings(persistenceEnabled: false);
       FirebaseFirestore.instance.useFirestoreEmulator("localhost", 8080);
       await FirebaseAuth.instance.useAuthEmulator("localhost", 9099);
     } catch (exception) {

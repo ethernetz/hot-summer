@@ -3,6 +3,7 @@ import 'package:workspaces/classes/activity_type.dart';
 class HotUser {
   final String uid;
   final int streak;
+  final int stars;
   final int medals;
   final int? sessionsPerWeekGoal;
   final Map<ActivityType, List<String>> activityHistory;
@@ -10,6 +11,7 @@ class HotUser {
   const HotUser({
     required this.uid,
     required this.streak,
+    required this.stars,
     required this.medals,
     required this.sessionsPerWeekGoal,
     required this.activityHistory,
@@ -19,6 +21,7 @@ class HotUser {
     return HotUser(
       uid: json['uid'],
       streak: json['streak'],
+      stars: json['stars'] ?? 0,
       medals: json['medals'],
       sessionsPerWeekGoal: json['sessionsPerWeekGoal'],
       activityHistory: json['activityHistory'] != null
