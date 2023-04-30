@@ -124,8 +124,8 @@ class WorkoutScreen extends StatelessWidget {
                             Text(
                               'Use a recent workout',
                               style: GoogleFonts.kumbhSans(
-                                fontWeight: FontWeight.w400,
-                                fontSize: 20,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 30,
                                 color: Colors.white,
                               ),
                             ),
