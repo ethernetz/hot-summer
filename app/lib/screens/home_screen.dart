@@ -97,6 +97,7 @@ class HomeScreen extends StatelessWidget {
                           color: Colors.white,
                           thickness: 1,
                         ),
+                        const SizedBox(height: 10),
                         const SelfMetrics(),
                       ],
                     ),

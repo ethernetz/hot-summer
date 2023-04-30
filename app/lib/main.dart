@@ -93,7 +93,8 @@ class MyApp extends StatelessWidget {
                       child: PlasmaRenderer(
                         type: PlasmaType.infinity,
                         particles: 4,
-                        color: Theme.of(context).colorScheme.primary,
+                        color:
+                            Theme.of(context).colorScheme.primary.withAlpha(50),
                         blur: 0.9,
                         size: 0.6,
                         speed: 1,
@@ -107,7 +108,10 @@ class MyApp extends StatelessWidget {
                         child: PlasmaRenderer(
                           type: PlasmaType.infinity,
                           particles: 2,
-                          color: Theme.of(context).colorScheme.primary,
+                          color: Theme.of(context)
+                              .colorScheme
+                              .primary
+                              .withAlpha(50),
                           blur: 1.5,
                           size: 0.6,
                           speed: 1,
@@ -166,9 +170,7 @@ class MyApp extends StatelessWidget {
                   foregroundColor: MaterialStateProperty.all(Colors.white),
                 ),
               ),
-              textTheme: Theme.of(context)
-                  .textTheme
-                  .copyWith(
+              textTheme: Theme.of(context).textTheme.copyWith(
                     displayLarge: GoogleFonts.kumbhSans(
                       textStyle: const TextStyle(
                         fontSize: 40,
@@ -189,11 +191,7 @@ class MyApp extends StatelessWidget {
                         color: Colors.black,
                       ),
                     ),
-                  )
-                  .apply(
-                      // bodyColor: Colors.white,
-                      // displayColor: Colors.white,
-                      ),
+                  ),
             ),
           ),
         ),
