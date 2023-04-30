@@ -54,8 +54,8 @@ platform :ios do
     pilot( 
       apple_id: "#{APPLICATION_ID}",
       app_identifier: "#{BUNDLE_IDENTIFIER}",
-      skip_waiting_for_build_processing: true,
-      skip_submission: true,
+      skip_waiting_for_build_processing: false,
+      skip_submission: false,
       distribute_external: false,
       notify_external_testers: false,
       ipa: "./Runner.ipa"
