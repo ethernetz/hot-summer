@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
-    timeDilation = 10;
+    timeDilation = 1;
     return MultiProvider(
       providers: [
         Provider(
