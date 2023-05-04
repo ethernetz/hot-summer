@@ -74,13 +74,16 @@ class CurrentWorkoutProvider extends ChangeNotifier {
   }
 
   void _removeActivity(int index) {
-    final activityCard = _buildActivityCard(index);
+    final activityCard = _buildCurrentActivity(index);
     _activitiesListKey?.currentState?.removeItem(
       index,
       (context, animation) {
-        return SizeTransition(
-          sizeFactor: _getCurvedAnimation(animation),
-          child: activityCard,
+        return FadeTransition(
+          opacity: _getCurvedAnimation(animation),
+          child: SizeTransition(
+            sizeFactor: _getCurvedAnimation(animation),
+            child: activityCard,
+          ),
         );
       },
       duration: const Duration(milliseconds: 100),
@@ -99,15 +102,15 @@ class CurrentWorkoutProvider extends ChangeNotifier {
     }
   }
 
-  Widget buildActivityCardWithAnimation(
+  Widget buildCurrentActivityWithAnimation(
       BuildContext context, int index, Animation<double> animation) {
     return SizeTransition(
       sizeFactor: _getCurvedAnimation(animation),
-      child: _buildActivityCard(index),
+      child: _buildCurrentActivity(index),
     );
   }
 
-  Widget _buildActivityCard(int index) {
+  Widget _buildCurrentActivity(int index) {
     final activity = activities[index];
     return Padding(
       padding: const EdgeInsets.only(bottom: 15),

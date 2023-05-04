@@ -33,7 +33,7 @@ class _CurrentWorkoutState extends State<CurrentWorkout> {
       itemBuilder: (context, index, animation) {
         return context
             .read<CurrentWorkoutProvider>()
-            .buildActivityCardWithAnimation(context, index, animation);
+            .buildCurrentActivityWithAnimation(context, index, animation);
       },
     );
   }
