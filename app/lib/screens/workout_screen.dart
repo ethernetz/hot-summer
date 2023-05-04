@@ -109,7 +109,7 @@ class WorkoutScreen extends StatelessWidget {
           ),
         ),
       ),
-      floatingActionButton: WorkoutButton(
+      floatingActionButton: HeroWorkoutButton(
         onTap: () =>
             context.read<CurrentWorkoutProvider>().addActivity(context),
         child: const Icon(
