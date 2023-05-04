@@ -22,7 +22,7 @@ class ActivityCard extends StatelessWidget {
         width: double.infinity,
         padding: const EdgeInsets.fromLTRB(20, 10, 20, 20),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Theme.of(context).colorScheme.primaryContainer,
           borderRadius: BorderRadius.circular(20),
         ),
         child: Column(
@@ -45,7 +45,7 @@ class ActivityCard extends StatelessWidget {
                 IconButton(
                   icon: const Icon(Icons.close),
                   onPressed: onClosePressed,
-                  color: Colors.black,
+                  color: Colors.white,
                 ),
               ],
             ),
@@ -53,7 +53,7 @@ class ActivityCard extends StatelessWidget {
               style: GoogleFonts.kumbhSans(
                 fontWeight: FontWeight.w600,
                 fontSize: 16,
-                color: Colors.black,
+                color: Colors.white,
               ),
               child: Row(
                 children: [
@@ -99,63 +99,71 @@ class ActivityCard extends StatelessWidget {
               style: GoogleFonts.kumbhSans(
                 fontWeight: FontWeight.w600,
                 fontSize: 16,
-                color: Colors.black,
+                color: Colors.white,
               ),
               child: ListView.builder(
                 shrinkWrap: true,
                 itemCount: activity.sets.length,
                 itemBuilder: (context, index) {
-                  return Row(
-                    children: [
-                      SizedBox(
-                        width: 50,
-                        child: Center(
-                          child: Text(
-                            "${index + 1}",
-                            overflow: TextOverflow.ellipsis,
+                  return Padding(
+                    padding: const EdgeInsets.only(top: 8),
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          width: 50,
+                          child: Center(
+                            child: Text(
+                              "${index + 1}",
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
                         ),
-                      ),
-                      Expanded(
-                        flex: 1,
-                        child: Center(
-                          child: (() {
-                            final previousActivitySets =
-                                activity.previousActivity?.sets;
-                            if (previousActivitySets == null ||
-                                previousActivitySets.length <= index) {
-                              return Container();
-                            }
-                            return Text(
-                              activity.previousActivity?.sets[index]
-                                      .displayMeasurements ??
-                                  '',
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                color: Colors.grey[600],
-                              ),
-                            );
-                          }()),
-                        ),
-                      ),
-                      Expanded(
-                        flex: 1,
-                        child: Row(
-                          children: [
-                            for (var measurementType
-                                in activity.activityType.measurementTypes)
-                              Expanded(
-                                child: NumberField(
-                                  focusNode: activity
-                                      .sets[index].focusNodes[measurementType]!,
-                                  controller: activity.sets[index]
-                                      .textEditingControllers[measurementType]!,
+                        Expanded(
+                          flex: 1,
+                          child: Center(
+                            child: (() {
+                              final previousActivitySets =
+                                  activity.previousActivity?.sets;
+                              if (previousActivitySets == null ||
+                                  previousActivitySets.length <= index) {
+                                return Container();
+                              }
+                              return Text(
+                                activity.previousActivity?.sets[index]
+                                        .displayMeasurements ??
+                                    '',
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                  color: Colors.white60,
                                 ),
-                              ),
-                          ],
+                              );
+                            }()),
+                          ),
                         ),
-                      ),
-                    ],
+                        Expanded(
+                          flex: 1,
+                          child: Row(
+                            children: [
+                              for (var measurementType
+                                  in activity.activityType.measurementTypes)
+                                Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 4),
+                                    child: NumberField(
+                                      focusNode: activity.sets[index]
+                                          .focusNodes[measurementType]!,
+                                      controller: activity.sets[index]
+                                              .textEditingControllers[
+                                          measurementType]!,
+                                    ),
+                                  ),
+                                ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   );
                 },
               ),
@@ -168,7 +176,7 @@ class ActivityCard extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Icon(Icons.add, color: Colors.black),
+                      const Icon(Icons.add, color: Colors.white),
                       const SizedBox(width: 4),
                       Text(
                         "Add set",

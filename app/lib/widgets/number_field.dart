@@ -25,15 +25,18 @@ class NumberField extends StatelessWidget {
         counterText: "",
         isDense: true,
         contentPadding: const EdgeInsets.symmetric(vertical: 6, horizontal: 4),
-        enabledBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(
-            color: Colors.black,
-          ),
+        filled: true,
+        fillColor: Colors.white10,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
         ),
-        focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(
-            color: Theme.of(context).colorScheme.primary,
-          ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: BorderSide.none,
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: BorderSide.none,
         ),
       ),
     );

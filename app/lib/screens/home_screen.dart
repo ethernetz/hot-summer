@@ -12,24 +12,8 @@ class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   static Route<dynamic> route() {
-    return PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) =>
-          const HomeScreen(),
-      transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        return SlideTransition(
-          position: Tween<Offset>(
-            begin: const Offset(1, 0),
-            end: Offset.zero,
-          ).animate(animation),
-          child: SlideTransition(
-            position: Tween<Offset>(
-              begin: Offset.zero,
-              end: const Offset(-1, 0),
-            ).animate(secondaryAnimation),
-            child: child,
-          ),
-        );
-      },
+    return CupertinoPageRoute(
+      builder: (context) => const HomeScreen(),
       settings: const RouteSettings(name: '/home'),
     );
   }
@@ -37,73 +21,49 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final currentWorkoutProvider = context.read<CurrentWorkoutProvider>();
+    final hotUser = context.read<HotUser?>();
+    if (hotUser == null) {
+      return const Text('You are signed out');
+    }
     return Scaffold(
       body: SafeArea(
         bottom: false,
-        child: Expanded(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12),
           child: SingleChildScrollView(
-            child: Consumer<HotUser?>(
-              builder: (
-                BuildContext context,
-                HotUser? hotUser,
-                Widget? child,
-              ) {
-                if (hotUser == null) {
-                  return const Text('You are signed out');
-                }
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
-                  child: SizedBox(
-                    width: double.infinity,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        const SizedBox(height: 50),
-                        Text(
-                          'Home',
-                          style: GoogleFonts.barlowCondensed(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 80,
-                            color: Colors.white,
+                        IconButton(
+                          onPressed: () => Navigator.pop(context),
+                          icon: const Icon(
+                            Icons.settings,
+                            color: Colors.white60,
+                            size: 30,
                           ),
                         ),
-                        const SizedBox(height: 20),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'You',
-                              style: GoogleFonts.kumbhSans(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 30,
-                                color: Colors.white,
-                              ),
-                            ),
-                            Container(
-                              padding: const EdgeInsets.all(10),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                                color: const Color(0xff1c1c1c),
-                              ),
-                              child: Icon(
-                                Icons.settings,
-                                color: Theme.of(context).colorScheme.primary,
-                                size: 24,
-                              ),
-                            ),
-                          ],
-                        ),
-                        const Divider(
-                          color: Colors.white,
-                          thickness: 1,
-                        ),
-                        const SizedBox(height: 10),
-                        const SelfMetrics(),
                       ],
                     ),
                   ),
-                );
-              },
+                  Text(
+                    'Hey hey',
+                    style: GoogleFonts.kumbhSans(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 40,
+                      color: Colors.white,
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  const SelfMetrics(),
+                ],
+              ),
             ),
           ),
         ),
@@ -113,10 +73,14 @@ class HomeScreen extends StatelessWidget {
           (currentWorkoutProvider.isWorkingOut ? 'Back to workout' : 'Workout')
               .split('')
               .join('\u200B'),
-          key: ValueKey<String>(currentWorkoutProvider.isWorkingOut
-              ? 'Back to workout'
-              : 'Workout'),
-          style: Theme.of(context).textTheme.displayMedium,
+          key: ValueKey<String>(
+            currentWorkoutProvider.isWorkingOut ? 'Back to workout' : 'Workout',
+          ),
+          style: GoogleFonts.kumbhSans(
+            fontWeight: FontWeight.w600,
+            fontSize: 30,
+            color: Colors.white,
+          ),
           maxLines: 1,
         ),
         onTap: () {

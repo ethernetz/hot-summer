@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:workspaces/classes/hot_user.dart';
-import 'package:workspaces/classes/workouts.dart';
-import 'package:workspaces/widgets/frosted.dart';
-import 'package:workspaces/widgets/activity_ring.dart';
 
 class SelfMetrics extends StatelessWidget {
   const SelfMetrics({
@@ -13,163 +11,142 @@ class SelfMetrics extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var hotuser = context.watch<HotUser?>();
-    var workouts = context.watch<Workouts>();
     if (hotuser == null) {
       return const SizedBox();
     }
-    final numWorkoutsSinceMonday = workouts.getNumWorkoutsSinceMonday();
-    return Column(
-      children: [
-        Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Expanded(
-              flex: 1,
-              child: Frosted(
-                child: Container(
-                  height: 125,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.white,
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
+    return SizedBox(
+      height: 100,
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Expanded(
+            child: Container(
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: Theme.of(context).colorScheme.primaryContainer,
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            hotuser.streak.toString(),
-                            style: Theme.of(context).textTheme.displayLarge,
-                          ),
-                          const Image(
-                            image: AssetImage("assets/fire_3d.png"),
-                            height: 40,
-                            width: 40,
-                          ),
-                        ],
-                      ),
                       Text(
-                        'Streak',
-                        style: Theme.of(context).textTheme.bodyMedium,
+                        hotuser.streak.toString(),
+                        style: GoogleFonts.kumbhSans(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 30,
+                          color: Colors.white,
+                        ),
+                      ),
+                      const SizedBox(width: 4),
+                      const Image(
+                        image: AssetImage("assets/fire_3d.png"),
+                        height: 24,
+                        width: 24,
                       ),
                     ],
                   ),
-                ),
+                  Text(
+                    'Streak',
+                    style: GoogleFonts.kumbhSans(
+                      fontWeight: FontWeight.w200,
+                      fontSize: 12,
+                      color: Colors.white60,
+                    ),
+                  ),
+                ],
               ),
             ),
-            const SizedBox(width: 12),
-            Expanded(
-              flex: 1,
-              child: Frosted(
-                child: Container(
-                  height: 125,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.white,
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Container(
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: Theme.of(context).colorScheme.primaryContainer,
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            hotuser.stars.toString(),
-                            style: Theme.of(context).textTheme.displayLarge,
-                          ),
-                          const Image(
-                            image: AssetImage("assets/star_3d.png"),
-                            height: 40,
-                            width: 40,
-                          ),
-                        ],
-                      ),
                       Text(
-                        'Stars',
-                        style: Theme.of(context).textTheme.bodyMedium,
+                        hotuser.streak.toString(),
+                        style: GoogleFonts.kumbhSans(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 30,
+                          color: Colors.white,
+                        ),
+                      ),
+                      const SizedBox(width: 4),
+                      const Image(
+                        image: AssetImage("assets/star_3d.png"),
+                        height: 24,
+                        width: 24,
                       ),
                     ],
                   ),
-                ),
+                  Text(
+                    'Stars',
+                    style: GoogleFonts.kumbhSans(
+                      fontWeight: FontWeight.w200,
+                      fontSize: 12,
+                      color: Colors.white60,
+                    ),
+                  ),
+                ],
               ),
             ),
-          ],
-        ),
-        const SizedBox(height: 12),
-        Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Expanded(
-              flex: 1,
-              child: Frosted(
-                child: Container(
-                  height: 125,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.white,
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Container(
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: Theme.of(context).colorScheme.primaryContainer,
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      ActivityRing(
-                        currentValue: numWorkoutsSinceMonday,
-                        maxValue: hotuser.sessionsPerWeekGoal!,
-                      ),
                       Text(
-                        'Weekly sessions',
-                        style: Theme.of(context).textTheme.bodyMedium,
+                        hotuser.medals.toString(),
+                        style: GoogleFonts.kumbhSans(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 30,
+                          color: Colors.white,
+                        ),
+                      ),
+                      const SizedBox(width: 4),
+                      const Image(
+                        image: AssetImage("assets/1st_place_medal_3d.png"),
+                        height: 24,
+                        width: 24,
                       ),
                     ],
                   ),
-                ),
+                  Text(
+                    'Medals',
+                    style: GoogleFonts.kumbhSans(
+                      fontWeight: FontWeight.w200,
+                      fontSize: 12,
+                      color: Colors.white60,
+                    ),
+                  ),
+                ],
               ),
             ),
-            const SizedBox(width: 12),
-            Expanded(
-              flex: 1,
-              child: Frosted(
-                child: Container(
-                  height: 125,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.white,
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            hotuser.medals.toString(),
-                            style: Theme.of(context).textTheme.displayLarge,
-                          ),
-                          const Image(
-                            image: AssetImage("assets/1st_place_medal_3d.png"),
-                            height: 40,
-                            width: 40,
-                          ),
-                        ],
-                      ),
-                      Text(
-                        'Medals',
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ],
+          ),
+        ],
+      ),
     );
   }
 }

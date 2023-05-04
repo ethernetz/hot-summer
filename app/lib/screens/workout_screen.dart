@@ -12,24 +12,8 @@ class WorkoutScreen extends StatelessWidget {
   const WorkoutScreen({super.key});
 
   static Route<dynamic> route() {
-    return PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) =>
-          const WorkoutScreen(),
-      transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        return SlideTransition(
-          position: Tween<Offset>(
-            begin: const Offset(1, 0),
-            end: Offset.zero,
-          ).animate(animation),
-          child: SlideTransition(
-            position: Tween<Offset>(
-              begin: Offset.zero,
-              end: const Offset(-1, 0),
-            ).animate(secondaryAnimation),
-            child: child,
-          ),
-        );
-      },
+    return CupertinoPageRoute(
+      builder: (context) => const WorkoutScreen(),
       settings: const RouteSettings(name: '/workout'),
     );
   }
@@ -53,58 +37,48 @@ class WorkoutScreen extends StatelessWidget {
 
     route!.animation!.addStatusListener(animationStatusListener);
     return Scaffold(
-      backgroundColor: Colors.transparent,
-      floatingActionButton: HeroWorkoutButton(
-        child: const Icon(
-          CupertinoIcons.add,
-          color: CupertinoColors.black,
-          weight: 100,
-        ),
-        onTap: () =>
-            context.read<CurrentWorkoutProvider>().addActivity(context),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: SafeArea(
         bottom: false,
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  GestureDetector(
-                    onTap: () => Navigator.pop(context),
-                    child: const Icon(
-                      CupertinoIcons.back,
-                      color: Colors.white,
-                      size: 30,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12),
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    IconButton(
+                      onPressed: () => Navigator.pop(context),
+                      icon: const Icon(
+                        CupertinoIcons.back,
+                        color: Colors.white,
+                        size: 30,
+                      ),
                     ),
-                  ),
-                  GestureDetector(
-                    onTap: () => completeWorkout(context),
-                    child: const Icon(
-                      CupertinoIcons.checkmark_alt,
-                      color: Colors.white,
-                      size: 30,
+                    IconButton(
+                      onPressed: () => completeWorkout(context),
+                      icon: const Icon(
+                        CupertinoIcons.checkmark_alt,
+                        color: Colors.white,
+                        size: 30,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Container(
-                  padding: const EdgeInsets.only(left: 10, right: 10),
+              SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         'Workout',
-                        style: GoogleFonts.barlowCondensed(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 80,
+                        style: GoogleFonts.kumbhSans(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 40,
                           color: Colors.white,
                         ),
                       ),
@@ -121,19 +95,6 @@ class WorkoutScreen extends StatelessWidget {
                         return Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              'Use a recent workout',
-                              style: GoogleFonts.kumbhSans(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 30,
-                                color: Colors.white,
-                              ),
-                            ),
-                            const Divider(
-                              color: Colors.white,
-                              thickness: 1,
-                            ),
-                            const SizedBox(height: 10),
                             const RecentWorkouts(),
                           ],
                         );
@@ -142,8 +103,8 @@ class WorkoutScreen extends StatelessWidget {
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

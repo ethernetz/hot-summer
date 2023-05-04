@@ -34,9 +34,9 @@ class RecentWorkouts extends StatelessWidget {
                 },
                 child: Container(
                   width: double.infinity,
-                  padding: const EdgeInsets.fromLTRB(20, 10, 20, 20),
+                  padding: const EdgeInsets.fromLTRB(20, 15, 20, 20),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.primaryContainer,
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Column(
@@ -47,7 +47,7 @@ class RecentWorkouts extends StatelessWidget {
                         style: GoogleFonts.kumbhSans(
                           fontWeight: FontWeight.w400,
                           fontSize: 14,
-                          color: Colors.black,
+                          color: Colors.white60,
                         ),
                       ),
                       const SizedBox(height: 10),
@@ -56,7 +56,7 @@ class RecentWorkouts extends StatelessWidget {
                         style: GoogleFonts.kumbhSans(
                           fontWeight: FontWeight.w700,
                           fontSize: 18,
-                          color: Colors.black,
+                          color: Colors.white,
                         ),
                       )
                     ],

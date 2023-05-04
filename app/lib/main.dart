@@ -2,11 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:sa3_liquid/liquid/plasma/plasma.dart';
 import 'package:workspaces/screens/auth_screen.dart';
 import 'package:workspaces/screens/home_screen.dart';
 import 'package:workspaces/services/auth_service.dart';
@@ -38,6 +38,7 @@ void main() async {
       FirebaseFirestore.instance.settings =
           const Settings(persistenceEnabled: false);
       FirebaseFirestore.instance.useFirestoreEmulator("localhost", 8080);
+      // FirebaseAuth.instance.signOut();
       await FirebaseAuth.instance.useAuthEmulator("localhost", 9099);
     } catch (exception) {
       print(exception);
@@ -72,126 +73,36 @@ class MyApp extends StatelessWidget {
       ],
       child: HotUserProxy(
         child: WorkoutsProxy(
-          child: MaterialApp(
-            initialRoute: '/',
-            onGenerateRoute: (RouteSettings settings) {
-              switch (settings.name) {
-                case '/':
-                  return AuthScreen.route();
-                case '/home':
-                  return HomeScreen.route();
-                default:
-                  throw Exception('Invalid route: ${settings.name}');
-              }
-            },
-            builder: (BuildContext context, Widget? child) {
-              return Stack(
-                children: [
-                  SizedBox.expand(
-                    child: Container(
-                      color: const Color(0xff1c1c1c),
-                      child: PlasmaRenderer(
-                        type: PlasmaType.infinity,
-                        particles: 4,
-                        color:
-                            Theme.of(context).colorScheme.primary.withAlpha(50),
-                        blur: 0.9,
-                        size: 0.6,
-                        speed: 1,
-                        offset: 0,
-                        blendMode: BlendMode.screen,
-                        particleType: ParticleType.atlas,
-                        variation1: 0,
-                        variation2: 0,
-                        variation3: 0,
-                        rotation: 0,
-                        child: PlasmaRenderer(
-                          type: PlasmaType.infinity,
-                          particles: 2,
-                          color: Theme.of(context)
-                              .colorScheme
-                              .primary
-                              .withAlpha(50),
-                          blur: 1.5,
-                          size: 0.6,
-                          speed: 1,
-                          offset: 0,
-                          blendMode: BlendMode.screen,
-                          particleType: ParticleType.atlas,
-                          variation1: 0,
-                          variation2: 0,
-                          variation3: 0,
-                          rotation: 0,
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox.expand(
-                    child: Container(
-                      decoration: const BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage('assets/noise.png'),
-                          fit: BoxFit.cover,
-                          opacity: 0.1,
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox.expand(
-                    child: Container(
-                      decoration: const BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          stops: [0, 0.2, 0.8, 1],
-                          colors: [
-                            Color(0xcc1c1c1c),
-                            Colors.transparent,
-                            Colors.transparent,
-                            Color(0xcc1c1c1c),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  child!,
-                ],
-              );
-            },
-            theme: ThemeData(
-              brightness: Brightness.dark,
-              colorScheme: const ColorScheme.dark().copyWith(
-                primary: const Color(0xff82fffe),
-              ),
-              scaffoldBackgroundColor: Colors.transparent,
-              outlinedButtonTheme: OutlinedButtonThemeData(
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.grey[900]),
-                  foregroundColor: MaterialStateProperty.all(Colors.white),
+          child: CupertinoTheme(
+            data: const CupertinoThemeData(
+              primaryColor: CupertinoColors.activeBlue,
+              textTheme: CupertinoTextThemeData(
+                textStyle: TextStyle(
+                  color: CupertinoColors.white,
                 ),
               ),
-              textTheme: Theme.of(context).textTheme.copyWith(
-                    displayLarge: GoogleFonts.kumbhSans(
-                      textStyle: const TextStyle(
-                        fontSize: 40,
-                        color: Colors.black,
-                      ),
-                      fontWeight: FontWeight.w500,
-                    ),
-                    displayMedium: GoogleFonts.kumbhSans(
-                      textStyle: const TextStyle(
-                        fontSize: 22,
-                        color: Colors.black,
-                      ),
-                      fontWeight: FontWeight.w700,
-                    ),
-                    bodyMedium: GoogleFonts.kumbhSans(
-                      textStyle: const TextStyle(
-                        fontSize: 15,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
+              brightness: Brightness.dark,
+            ),
+            child: MaterialApp(
+              initialRoute: '/',
+              onGenerateRoute: (RouteSettings settings) {
+                switch (settings.name) {
+                  case '/':
+                    return AuthScreen.route();
+                  case '/home':
+                    return HomeScreen.route();
+                  default:
+                    throw Exception('Invalid route: ${settings.name}');
+                }
+              },
+              theme: ThemeData(
+                brightness: Brightness.dark,
+                colorScheme: const ColorScheme.dark().copyWith(
+                  primary: const Color(0xfff14647),
+                  primaryContainer: const Color(0xff292C2D),
+                ),
+                scaffoldBackgroundColor: const Color(0xff151718),
+              ),
             ),
           ),
         ),

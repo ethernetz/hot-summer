@@ -66,17 +66,10 @@ class WorkoutButton extends StatelessWidget {
             child: Container(
               height: 60,
               alignment: Alignment.center,
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 40),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(40),
                 color: Theme.of(context).colorScheme.primary,
-                boxShadow: [
-                  BoxShadow(
-                    color: Theme.of(context).colorScheme.primary,
-                    blurRadius: 10,
-                    spreadRadius: 2,
-                  ),
-                ],
               ),
               child: child,
             ),
