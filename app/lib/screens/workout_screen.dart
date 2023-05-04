@@ -107,6 +107,16 @@ class WorkoutScreen extends StatelessWidget {
           ),
         ),
       ),
+      floatingActionButton: WorkoutButton(
+        onTap: () =>
+            context.read<CurrentWorkoutProvider>().addActivity(context),
+        child: const Icon(
+          CupertinoIcons.plus,
+          color: Colors.white,
+          size: 30,
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 
