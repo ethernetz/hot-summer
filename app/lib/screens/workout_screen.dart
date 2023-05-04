@@ -67,39 +67,41 @@ class WorkoutScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Workout',
-                        style: GoogleFonts.kumbhSans(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 40,
-                          color: Colors.white,
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Workout',
+                          style: GoogleFonts.kumbhSans(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 40,
+                            color: Colors.white,
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 20),
-                      Consumer<CurrentWorkoutProvider>(builder: (
-                        BuildContext context,
-                        CurrentWorkoutProvider currentWorkout,
-                        Widget? child,
-                      ) {
-                        if (currentWorkout.activities.isNotEmpty) {
-                          return const CurrentWorkout();
-                        }
+                        const SizedBox(height: 20),
+                        Consumer<CurrentWorkoutProvider>(builder: (
+                          BuildContext context,
+                          CurrentWorkoutProvider currentWorkout,
+                          Widget? child,
+                        ) {
+                          if (currentWorkout.activities.isNotEmpty) {
+                            return const CurrentWorkout();
+                          }
 
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const RecentWorkouts(),
-                          ],
-                        );
-                      }),
-                    ],
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const RecentWorkouts(),
+                            ],
+                          );
+                        }),
+                      ],
+                    ),
                   ),
                 ),
               ),
