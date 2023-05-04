@@ -2,21 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:workspaces/classes/activity_type.dart';
 import 'package:workspaces/classes/workout.dart';
 
-class CurrentSet {
+class CurrentSetProvider extends ChangeNotifier {
   final List<ActivityMeasurementType> activityMeasurementTypes;
   final Map<ActivityMeasurementType, FocusNode> focusNodes;
   final Map<ActivityMeasurementType, TextEditingController>
       textEditingControllers;
+  final Set? previousSet;
 
-  CurrentSet({
+  CurrentSetProvider({
     required this.activityMeasurementTypes,
     required this.focusNodes,
     required this.textEditingControllers,
+    this.previousSet,
   });
 
-  factory CurrentSet.fromPreviousSet(
+  factory CurrentSetProvider.fromPreviousSet(
       List<ActivityMeasurementType> activityMeasurementTypes, Set previousSet) {
-    return CurrentSet(
+    return CurrentSetProvider(
       activityMeasurementTypes: activityMeasurementTypes,
       focusNodes: activityMeasurementTypes.asMap().map(
             (index, measurementType) => MapEntry(
@@ -32,12 +34,13 @@ class CurrentSet {
               ),
             ),
           ),
+      previousSet: previousSet,
     );
   }
 
-  factory CurrentSet.empty(
+  factory CurrentSetProvider.empty(
       List<ActivityMeasurementType> activityMeasurementTypes) {
-    return CurrentSet(
+    return CurrentSetProvider(
       activityMeasurementTypes: activityMeasurementTypes,
       focusNodes: activityMeasurementTypes.asMap().map(
             (index, measurementType) => MapEntry(
@@ -54,44 +57,5 @@ class CurrentSet {
             ),
           ),
     );
-  }
-}
-
-class CurrentActivity extends ChangeNotifier {
-  final UniqueKey uniqueKey;
-  final ActivityType activityType;
-  final Activity? previousActivity;
-  final List<CurrentSet> sets;
-
-  CurrentActivity({
-    required this.uniqueKey,
-    required this.activityType,
-    this.previousActivity,
-  }) : sets = previousActivity?.sets
-                .map(
-                  (previousSet) => CurrentSet.fromPreviousSet(
-                    activityType.measurementTypes,
-                    previousSet,
-                  ),
-                )
-                .toList() ??
-            [CurrentSet.empty(activityType.measurementTypes)];
-
-  void addSet() {
-    sets.add(CurrentSet.empty(activityType.measurementTypes));
-    notifyListeners();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    for (var set in sets) {
-      for (var focusNode in set.focusNodes.values) {
-        focusNode.dispose();
-      }
-      for (var textEditingController in set.textEditingControllers.values) {
-        textEditingController.dispose();
-      }
-    }
   }
 }

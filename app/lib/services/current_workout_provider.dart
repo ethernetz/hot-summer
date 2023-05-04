@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'package:workspaces/classes/activity_type.dart';
-import 'package:workspaces/classes/current_activity.dart';
+import 'package:workspaces/services/current_activity_provider.dart';
 import 'package:workspaces/classes/hot_user.dart';
 import 'package:workspaces/classes/workout.dart';
 import 'package:workspaces/classes/workouts.dart';
-import 'package:workspaces/components/activity_card.dart';
+import 'package:workspaces/components/current_activity.dart';
 import 'package:workspaces/components/select_activity.dart';
 import 'package:workspaces/services/firestore_service.dart';
 
@@ -13,7 +13,7 @@ class CurrentWorkoutProvider extends ChangeNotifier {
   bool _isWorkingOut = false;
   bool get isWorkingOut => _isWorkingOut;
   GlobalKey<AnimatedListState>? _activitiesListKey;
-  final List<CurrentActivity> activities = [];
+  final List<CurrentActivityProvider> activities = [];
 
   void startWorkout() {
     _isWorkingOut = true;
@@ -43,7 +43,7 @@ class CurrentWorkoutProvider extends ChangeNotifier {
       ),
     ).then((activityType) {
       if (activityType == null) return;
-      activities.add(CurrentActivity(
+      activities.add(CurrentActivityProvider(
         uniqueKey: UniqueKey(),
         activityType: activityType,
         previousActivity: _getPreviousActivity(context, activityType),
@@ -59,7 +59,7 @@ class CurrentWorkoutProvider extends ChangeNotifier {
   void addActivities(
       BuildContext context, List<ActivityType> activityTypes) async {
     for (var activityType in activityTypes) {
-      activities.add(CurrentActivity(
+      activities.add(CurrentActivityProvider(
         uniqueKey: UniqueKey(),
         activityType: activityType,
         previousActivity: _getPreviousActivity(context, activityType),
@@ -111,9 +111,9 @@ class CurrentWorkoutProvider extends ChangeNotifier {
     final activity = activities[index];
     return Padding(
       padding: const EdgeInsets.only(bottom: 15),
-      child: ChangeNotifierProvider<CurrentActivity>.value(
+      child: ChangeNotifierProvider<CurrentActivityProvider>.value(
         value: activity,
-        child: ActivityCard(
+        child: CurrentActivity(
           key: activity.uniqueKey,
           onClosePressed: () => _removeActivity(index),
         ),

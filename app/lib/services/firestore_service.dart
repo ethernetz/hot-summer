@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:workspaces/classes/current_activity.dart';
+import 'package:workspaces/services/current_activity_provider.dart';
 import 'package:workspaces/classes/hot_user.dart';
 import 'package:workspaces/classes/onboarding_question.dart';
 import 'package:workspaces/classes/workout.dart';
@@ -26,7 +26,7 @@ class FirestoreService {
   }
 
   Future<void> logWorkout(
-      BuildContext context, List<CurrentActivity> currentActivities) {
+      BuildContext context, List<CurrentActivityProvider> currentActivities) {
     var hotuser = context.read<HotUser?>();
     var workouts = context.read<Workouts>();
     if (hotuser == null) {

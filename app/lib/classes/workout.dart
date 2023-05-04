@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 import 'package:workspaces/classes/activity_type.dart';
-import 'package:workspaces/classes/current_activity.dart';
+import 'package:workspaces/services/current_activity_provider.dart';
 
 class Set {
   Map<ActivityMeasurementType, num> measurements;
@@ -100,26 +100,28 @@ class Workout {
   }
 
   factory Workout.fromCurrentActivities(
-      List<CurrentActivity> json, String documentId) {
+      List<CurrentActivityProvider> currentActivities, String documentId) {
     return Workout(
-        timestamp: Timestamp.now(),
-        documentId: documentId,
-        activities: json.map((activity) {
-          return Activity(
-              activityType: activity.activityType,
-              sets: activity.sets.map((set) {
-                return Set(
-                  measurements: set.activityMeasurementTypes.asMap().map(
-                        (_, measurement) => MapEntry(
-                          measurement,
-                          num.tryParse(set
-                                  .textEditingControllers[measurement]!.text) ??
-                              0,
-                        ),
-                      ),
-                );
-              }).toList());
-        }).toList());
+      timestamp: Timestamp.now(),
+      documentId: documentId,
+      activities: currentActivities.map((activity) {
+        return Activity(
+          activityType: activity.activityType,
+          sets: activity.sets.map((set) {
+            return Set(
+              measurements: set.activityMeasurementTypes.asMap().map(
+                    (_, measurement) => MapEntry(
+                      measurement,
+                      num.tryParse(
+                              set.textEditingControllers[measurement]!.text) ??
+                          0,
+                    ),
+                  ),
+            );
+          }).toList(),
+        );
+      }).toList(),
+    );
   }
 
   factory Workout.fromJson(Map<String, dynamic>? json) {

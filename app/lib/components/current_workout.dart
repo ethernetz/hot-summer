@@ -13,17 +13,13 @@ class CurrentWorkout extends StatefulWidget {
 class _CurrentWorkoutState extends State<CurrentWorkout> {
   GlobalKey<AnimatedListState> activitiesListKey =
       GlobalKey<AnimatedListState>();
-  bool _keyAssigned = false;
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (!_keyAssigned) {
-      context
-          .read<CurrentWorkoutProvider>()
-          .setActivitiesListKey(activitiesListKey);
-      _keyAssigned = true;
-    }
+  void initState() {
+    super.initState();
+    context
+        .read<CurrentWorkoutProvider>()
+        .setActivitiesListKey(activitiesListKey);
   }
 
   @override

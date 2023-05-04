@@ -2,19 +2,32 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:keyboard_actions/keyboard_actions.dart';
 import 'package:provider/provider.dart';
-import 'package:workspaces/classes/current_activity.dart';
-import 'package:workspaces/widgets/number_field.dart';
+import 'package:workspaces/services/current_activity_provider.dart';
 
-class ActivityCard extends StatelessWidget {
+class CurrentActivity extends StatefulWidget {
   final void Function() onClosePressed;
-  const ActivityCard({
+  const CurrentActivity({
     required this.onClosePressed,
     super.key,
   });
 
   @override
+  State<CurrentActivity> createState() => _CurrentActivityState();
+}
+
+class _CurrentActivityState extends State<CurrentActivity> {
+  GlobalKey<AnimatedListState> setsListKey = GlobalKey<AnimatedListState>();
+
+  @override
+  void initState() {
+    super.initState();
+    setsListKey = GlobalKey<AnimatedListState>();
+    context.read<CurrentActivityProvider>().setSetsListKey(setsListKey);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final activity = context.watch<CurrentActivity>();
+    final activity = context.watch<CurrentActivityProvider>();
     return KeyboardActions(
       autoScroll: false,
       config: _buildKeyboardActionsConfig(activity),
@@ -44,7 +57,7 @@ class ActivityCard extends StatelessWidget {
                 ),
                 IconButton(
                   icon: const Icon(Icons.close),
-                  onPressed: onClosePressed,
+                  onPressed: widget.onClosePressed,
                   color: Colors.white,
                 ),
               ],
@@ -101,70 +114,14 @@ class ActivityCard extends StatelessWidget {
                 fontSize: 16,
                 color: Colors.white,
               ),
-              child: ListView.builder(
+              child: AnimatedList(
                 shrinkWrap: true,
-                itemCount: activity.sets.length,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.only(top: 8),
-                    child: Row(
-                      children: [
-                        SizedBox(
-                          width: 50,
-                          child: Center(
-                            child: Text(
-                              "${index + 1}",
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 1,
-                          child: Center(
-                            child: (() {
-                              final previousActivitySets =
-                                  activity.previousActivity?.sets;
-                              if (previousActivitySets == null ||
-                                  previousActivitySets.length <= index) {
-                                return Container();
-                              }
-                              return Text(
-                                activity.previousActivity?.sets[index]
-                                        .displayMeasurements ??
-                                    '',
-                                overflow: TextOverflow.ellipsis,
-                                style: const TextStyle(
-                                  color: Colors.white60,
-                                ),
-                              );
-                            }()),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 1,
-                          child: Row(
-                            children: [
-                              for (var measurementType
-                                  in activity.activityType.measurementTypes)
-                                Expanded(
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 4),
-                                    child: NumberField(
-                                      focusNode: activity.sets[index]
-                                          .focusNodes[measurementType]!,
-                                      controller: activity.sets[index]
-                                              .textEditingControllers[
-                                          measurementType]!,
-                                    ),
-                                  ),
-                                ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
+                physics: const NeverScrollableScrollPhysics(),
+                key: setsListKey,
+                initialItemCount: activity.sets.length,
+                itemBuilder: (context, index, animation) {
+                  return activity.buildCurrentSetWithAnimation(
+                      index, animation);
                 },
               ),
             ),
@@ -196,7 +153,8 @@ class ActivityCard extends StatelessWidget {
     );
   }
 
-  KeyboardActionsConfig _buildKeyboardActionsConfig(CurrentActivity activity) {
+  KeyboardActionsConfig _buildKeyboardActionsConfig(
+      CurrentActivityProvider activity) {
     return KeyboardActionsConfig(
       keyboardActionsPlatform: KeyboardActionsPlatform.ALL,
       keyboardBarColor: Colors.grey[900],

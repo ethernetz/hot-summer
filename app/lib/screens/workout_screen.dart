@@ -95,8 +95,8 @@ class WorkoutScreen extends StatelessWidget {
 
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const RecentWorkouts(),
+                            children: const [
+                              RecentWorkouts(),
                             ],
                           );
                         }),
