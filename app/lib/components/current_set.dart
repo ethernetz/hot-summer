@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:workspaces/services/current_activity_provider.dart';
+import 'package:workspaces/services/current_set_provider.dart';
 import 'package:workspaces/widgets/number_field.dart';
 
 class CurrentSet extends StatelessWidget {
