@@ -30,41 +30,39 @@ class HomeScreen extends StatelessWidget {
         bottom: false,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12),
-          child: Expanded(
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          IconButton(
-                            onPressed: () => Navigator.pop(context),
-                            icon: const Icon(
-                              Icons.settings,
-                              color: Colors.white60,
-                              size: 30,
-                            ),
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        IconButton(
+                          onPressed: () => Navigator.pop(context),
+                          icon: const Icon(
+                            Icons.settings,
+                            color: Colors.white60,
+                            size: 30,
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                    Text(
-                      'Hey hey',
-                      style: GoogleFonts.kumbhSans(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 40,
-                        color: Colors.white,
-                      ),
+                  ),
+                  Text(
+                    'Hey hey',
+                    style: GoogleFonts.kumbhSans(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 40,
+                      color: Colors.white,
                     ),
-                    const SizedBox(height: 20),
-                    const SelfMetrics(),
-                  ],
-                ),
+                  ),
+                  const SizedBox(height: 20),
+                  const SelfMetrics(),
+                ],
               ),
             ),
           ),
