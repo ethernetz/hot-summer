@@ -10,7 +10,7 @@ class SelectActivity extends StatefulWidget {
 }
 
 class _SelectActivityState extends State<SelectActivity> {
-  List<ActivityType> filteredActivites = ActivityType.values;
+  List<ActivityType> filteredActivites = activities;
 
   @override
   Widget build(BuildContext context) {
@@ -104,7 +104,7 @@ class _SelectActivityState extends State<SelectActivity> {
 
   void _filterActivities(String text) {
     setState(() {
-      filteredActivites = ActivityType.values
+      filteredActivites = activities
           .where((activity) =>
               activity.displayName.toLowerCase().contains(text.toLowerCase()))
           .toList();

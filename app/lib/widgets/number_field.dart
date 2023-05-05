@@ -20,7 +20,7 @@ class NumberField extends StatelessWidget {
       keyboardType:
           const TextInputType.numberWithOptions(signed: true, decimal: true),
       textInputAction: TextInputAction.next,
-      maxLength: 3,
+      maxLength: 4,
       style: DefaultTextStyle.of(context).style,
       decoration: InputDecoration(
         counterText: "",

@@ -132,21 +132,19 @@ class Workout {
           ? List.from(json['activities'])
               .map(
                 (activity) => Activity(
-                  activityType:
-                      ActivityType.fromNumber(activity['activityType']),
+                  activityType: activityMap[activity['activityName']]!,
                   sets: List.from(activity['sets'])
                       .map(
                         (set) => Set(
-                          measurements:
-                              ActivityType.fromNumber(activity['activityType'])
-                                  .measurementTypes
-                                  .asMap()
-                                  .map(
-                                    (_, measurement) => MapEntry(
-                                      measurement,
-                                      set[measurement.name] ?? 0,
-                                    ),
-                                  ),
+                          measurements: activityMap[activity['activityName']]!
+                              .measurementTypes
+                              .asMap()
+                              .map(
+                                (_, measurement) => MapEntry(
+                                  measurement,
+                                  set[measurement.name] ?? 0,
+                                ),
+                              ),
                         ),
                       )
                       .toList(),
@@ -164,7 +162,7 @@ class Workout {
       "activities": [
         for (var activity in activities)
           {
-            "activityType": activity.activityType.number,
+            "activityName": activity.activityType.name,
             "sets": [
               for (var set in activity.sets)
                 {

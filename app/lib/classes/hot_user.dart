@@ -26,8 +26,8 @@ class HotUser {
       sessionsPerWeekGoal: json['sessionsPerWeekGoal'],
       activityHistory: json['activityHistory'] != null
           ? (json['activityHistory'] as Map<String, dynamic>).map(
-              (activityTypeNumber, workoutIdList) => MapEntry(
-                ActivityType.fromNumber(int.parse(activityTypeNumber)),
+              (activityName, workoutIdList) => MapEntry(
+                activityMap[activityName]!,
                 List<String>.from(workoutIdList),
               ),
             )

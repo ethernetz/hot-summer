@@ -44,7 +44,7 @@ class FirestoreService {
         "streak": _shouldContinueStreak(workouts) ? hotuser.streak + 1 : 1,
         "stars": hotuser.stars + 1,
         for (var activity in currentActivities)
-          "activityHistory.${activity.activityType.number}":
+          "activityHistory.${activity.activityType.name}":
               FieldValue.arrayUnion(
             [userNewWorkoutRef.id],
           ),
