@@ -17,7 +17,8 @@ class NumberField extends StatelessWidget {
       onTap: () => controller.selection = TextSelection(
           baseOffset: 0, extentOffset: controller.value.text.length),
       textAlign: TextAlign.center,
-      keyboardType: TextInputType.number,
+      keyboardType:
+          const TextInputType.numberWithOptions(signed: true, decimal: true),
       textInputAction: TextInputAction.next,
       maxLength: 3,
       style: DefaultTextStyle.of(context).style,
