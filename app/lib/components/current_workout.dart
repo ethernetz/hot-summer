@@ -28,6 +28,7 @@ class _CurrentWorkoutState extends State<CurrentWorkout> {
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       key: activitiesListKey,
+      padding: const EdgeInsets.only(bottom: 150),
       initialItemCount:
           context.read<CurrentWorkoutProvider>().activities.length,
       itemBuilder: (context, index, animation) {
