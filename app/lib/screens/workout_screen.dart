@@ -7,6 +7,7 @@ import 'package:workspaces/components/recent_workouts.dart';
 import 'package:workspaces/components/workout_button.dart';
 import 'package:workspaces/screens/home_screen.dart';
 import 'package:workspaces/services/current_workout_provider.dart';
+import 'package:animations/animations.dart';
 
 class WorkoutScreen extends StatelessWidget {
   const WorkoutScreen({super.key});
@@ -89,15 +90,29 @@ class WorkoutScreen extends StatelessWidget {
                           CurrentWorkoutProvider currentWorkout,
                           Widget? child,
                         ) {
-                          if (currentWorkout.activities.isNotEmpty) {
-                            return const CurrentWorkout();
-                          }
-
-                          return Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: const [
-                              RecentWorkouts(),
-                            ],
+                          return PageTransitionSwitcher(
+                            duration: const Duration(milliseconds: 300),
+                            reverse: currentWorkout.activities.isEmpty,
+                            layoutBuilder: (List<Widget> entries) => Stack(
+                              children: entries,
+                            ),
+                            transitionBuilder: (
+                              Widget child,
+                              Animation<double> animation,
+                              Animation<double> secondaryAnimation,
+                            ) {
+                              return SharedAxisTransition(
+                                animation: animation,
+                                secondaryAnimation: secondaryAnimation,
+                                transitionType:
+                                    SharedAxisTransitionType.horizontal,
+                                fillColor: Colors.transparent,
+                                child: child,
+                              );
+                            },
+                            child: currentWorkout.activities.isNotEmpty
+                                ? const CurrentWorkout()
+                                : const RecentWorkouts(),
                           );
                         }),
                       ],
