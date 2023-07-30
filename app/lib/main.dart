@@ -97,10 +97,10 @@ class MyApp extends StatelessWidget {
               theme: ThemeData(
                 brightness: Brightness.dark,
                 colorScheme: const ColorScheme.dark().copyWith(
-                  primary: const Color(0xfff14647),
+                  primary: const Color(0xfffff21a),
                   primaryContainer: const Color(0xff292C2D),
                 ),
-                scaffoldBackgroundColor: const Color(0xff151718),
+                scaffoldBackgroundColor: const Color(0xff000000),
               ),
             ),
           ),

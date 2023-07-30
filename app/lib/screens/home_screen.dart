@@ -79,7 +79,7 @@ class HomeScreen extends StatelessWidget {
           style: GoogleFonts.kumbhSans(
             fontWeight: FontWeight.w600,
             fontSize: 30,
-            color: Colors.white,
+            color: Colors.black,
           ),
           maxLines: 1,
         ),

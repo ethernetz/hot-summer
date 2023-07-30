@@ -129,7 +129,7 @@ class WorkoutScreen extends StatelessWidget {
             context.read<CurrentWorkoutProvider>().addActivity(context),
         child: const Icon(
           CupertinoIcons.plus,
-          color: Colors.white,
+          color: Colors.black,
           size: 30,
         ),
       ),
