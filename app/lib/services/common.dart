@@ -7,7 +7,7 @@ CollectionReference<HotUser?> usersCollectionRef =
   fromFirestore: (docSnapshot, options) {
     final json = docSnapshot.data();
     if (json == null) return null;
-    return HotUser.fromJson(json);
+    return HotUser.fromMap(json);
   },
   toFirestore: (HotUser? user, options) {
     if (user == null) return {};
@@ -23,7 +23,7 @@ CollectionReference<Workout> userWorkoutsCollectionRef(String uid) {
       .withConverter(
     fromFirestore: (docSnapshot, options) {
       final json = docSnapshot.data();
-      return Workout.fromJson(json);
+      return Workout.fromMap(json);
     },
     toFirestore: (Workout? workout, options) {
       if (workout == null) return {};

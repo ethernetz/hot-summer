@@ -38,6 +38,7 @@ void main() async {
           const Settings(persistenceEnabled: false);
       FirebaseFirestore.instance.useFirestoreEmulator("localhost", 8080);
       // FirebaseAuth.instance.signOut();
+      // FirebaseFirestore.instance.clearPersistence();
       await FirebaseAuth.instance.useAuthEmulator("localhost", 9099);
     } catch (exception) {
       print(exception);

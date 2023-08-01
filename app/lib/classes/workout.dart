@@ -124,25 +124,25 @@ class Workout {
     );
   }
 
-  factory Workout.fromJson(Map<String, dynamic>? json) {
+  factory Workout.fromMap(Map<String, dynamic>? map) {
     return Workout(
-      timestamp: json!['timestamp'],
-      documentId: json['documentId'],
-      activities: json['activities'] is Iterable
-          ? List.from(json['activities'])
+      timestamp: map!['timestamp'],
+      documentId: map['documentId'],
+      activities: map['activities'] is Iterable
+          ? List.from(map['activities'])
               .map(
                 (activity) => Activity(
-                  activityType: activityMap[activity['activityName']]!,
+                  activityType: activityMap[activity['activityId']]!,
                   sets: List.from(activity['sets'])
                       .map(
                         (set) => Set(
-                          measurements: activityMap[activity['activityName']]!
+                          measurements: activityMap[activity['activityId']]!
                               .measurementTypes
                               .asMap()
                               .map(
                                 (_, measurement) => MapEntry(
                                   measurement,
-                                  set[measurement.name] ?? 0,
+                                  set[measurement.id] ?? 0,
                                 ),
                               ),
                         ),
@@ -162,12 +162,12 @@ class Workout {
       "activities": [
         for (var activity in activities)
           {
-            "activityName": activity.activityType.name,
+            "activityId": activity.activityType.id,
             "sets": [
               for (var set in activity.sets)
                 {
                   for (var measurement in set.measurements.entries)
-                    measurement.key.name: measurement.value
+                    measurement.key.id: measurement.value
                 }
             ]
           }

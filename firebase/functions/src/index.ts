@@ -11,6 +11,7 @@ export const createUserDocument = functions.auth.user().onCreate((userRecord) =>
 		stars: 0,
 		medals: 0,
 		activityHistory: {},
+		customActivities: {},
 	};
 	return admin.firestore().collection('users').doc(userRecord.uid).set(user);
 });

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:workspaces/classes/activity_type.dart';
 import 'package:workspaces/services/current_activity_provider.dart';
 import 'package:workspaces/classes/hot_user.dart';
 import 'package:workspaces/classes/onboarding_question.dart';
@@ -44,8 +45,7 @@ class FirestoreService {
         "streak": _shouldContinueStreak(workouts) ? hotuser.streak + 1 : 1,
         "stars": hotuser.stars + 1,
         for (var activity in currentActivities)
-          "activityHistory.${activity.activityType.name}":
-              FieldValue.arrayUnion(
+          "activityHistory.${activity.activityType.id}": FieldValue.arrayUnion(
             [userNewWorkoutRef.id],
           ),
       }),
@@ -53,6 +53,27 @@ class FirestoreService {
         Workout.fromCurrentActivities(currentActivities, userNewWorkoutRef.id),
       )
     ]);
+  }
+
+  Future<void> addCustomActivity(
+      BuildContext context, ActivityType activityType) {
+    var hotuser = context.read<HotUser?>();
+    if (hotuser == null) {
+      return Future.value();
+    }
+
+    final userRef = usersCollectionRef.doc(hotuser.uid);
+
+    return userRef.update({
+      "customActivities.${activityType.id}": {
+        'id': activityType.id,
+        'displayName': activityType.displayName,
+        'measurementTypes': activityType.measurementTypes
+            .map((measurementType) =>
+                ActivityMeasurementType.toMap(measurementType))
+            .toList(),
+      },
+    });
   }
 
   bool _shouldContinueStreak(Workouts workouts) {

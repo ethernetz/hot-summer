@@ -1,6 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:workspaces/classes/activity_type.dart';
+import 'package:workspaces/classes/hot_user.dart';
+import 'package:provider/provider.dart';
+import 'package:workspaces/components/create_custom_activity.dart';
+import 'package:workspaces/services/firestore_service.dart';
 
 class SelectActivity extends StatefulWidget {
   const SelectActivity({super.key});
@@ -10,7 +14,16 @@ class SelectActivity extends StatefulWidget {
 }
 
 class _SelectActivityState extends State<SelectActivity> {
-  List<ActivityType> filteredActivites = activities;
+  List<ActivityType> filteredActivities = activities;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final customActivities = Provider.of<HotUser>(context).customActivities;
+    filteredActivities = [...activities, ...customActivities];
+    filteredActivities.sort((a, b) =>
+        a.displayName.toLowerCase().compareTo(b.displayName.toLowerCase()));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,13 +36,30 @@ class _SelectActivityState extends State<SelectActivity> {
               // backgroundColor: CupertinoColors.systemGrey6,
               automaticallyImplyLeading: false,
               trailing: CupertinoButton(
-                padding: EdgeInsets.zero,
-                child: const Icon(
-                  CupertinoIcons.xmark_circle_fill,
-                  color: CupertinoColors.systemGrey2,
-                ),
-                onPressed: () => Navigator.pop(context, null),
-              ),
+                  padding: EdgeInsets.zero,
+                  child: const Text(
+                    'Custom',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  onPressed: () => {
+                        showCupertinoModalPopup<ActivityType>(
+                          context: context,
+                          builder: (context) => SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.8,
+                            child: const CupertinoPopupSurface(
+                              child: CreateCustomActivity(),
+                            ),
+                          ),
+                        ).then(
+                          (customActivity) {
+                            if (customActivity == null) return;
+                            context
+                                .read<FirestoreService>()
+                                .addCustomActivity(context, customActivity);
+                            Navigator.pop(context, customActivity);
+                          },
+                        )
+                      }),
               largeTitle: const Text(
                 'Select Activity',
                 style: TextStyle(color: Colors.white),
@@ -56,12 +86,12 @@ class _SelectActivityState extends State<SelectActivity> {
           padding: const EdgeInsets.symmetric(horizontal: 15),
           child: ListView.separated(
             padding: const EdgeInsets.all(0),
-            itemCount: filteredActivites.length + 1,
+            itemCount: filteredActivities.length + 1,
             itemBuilder: (BuildContext context, int index) {
               if (index == 0) {
                 return Container();
               }
-              var activity = filteredActivites[index - 1];
+              var activity = filteredActivities[index - 1];
               return CupertinoListTile(
                 title: Text(
                   activity.displayName,
@@ -74,10 +104,11 @@ class _SelectActivityState extends State<SelectActivity> {
             },
             separatorBuilder: (BuildContext context, int index) {
               if (index == 0) {
-                return const TextWithDivider('A');
+                return TextWithDivider(
+                    filteredActivities[index].displayName[0]);
               }
-              var activity = filteredActivites[index - 1];
-              var nextActivity = filteredActivites[index];
+              var activity = filteredActivities[index - 1];
+              var nextActivity = filteredActivities[index];
               if (activity.displayName[0] != nextActivity.displayName[0]) {
                 return Column(
                   children: [
@@ -104,7 +135,7 @@ class _SelectActivityState extends State<SelectActivity> {
 
   void _filterActivities(String text) {
     setState(() {
-      filteredActivites = activities
+      filteredActivities = activities
           .where((activity) =>
               activity.displayName.toLowerCase().contains(text.toLowerCase()))
           .toList();

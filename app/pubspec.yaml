@@ -48,6 +48,7 @@ dependencies:
   keyboard_actions: ^4.2.0
   intl: ^0.17.0
   animations: ^2.0.7
+  uuid: ^3.0.7
 
 dev_dependencies:
   flutter_test:
