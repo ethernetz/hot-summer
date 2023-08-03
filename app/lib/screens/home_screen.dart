@@ -26,6 +26,7 @@ class HomeScreen extends StatelessWidget {
       return const Text('You are signed out');
     }
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         bottom: false,
         child: Padding(

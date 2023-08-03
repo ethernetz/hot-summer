@@ -38,6 +38,7 @@ class WorkoutScreen extends StatelessWidget {
 
     route!.animation!.addStatusListener(animationStatusListener);
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         bottom: false,
         child: Padding(

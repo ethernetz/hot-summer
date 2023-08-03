@@ -74,24 +74,59 @@ class ActivityType {
 
 final List<ActivityType> activities = [
   ActivityType(
-    id: "pushups",
-    displayName: "Pushups",
+    id: "barbellRows",
+    displayName: "Barbell Rows",
     measurementTypes: [
       ActivityMeasurementType.reps,
+      ActivityMeasurementType.pounds,
     ],
   ),
   ActivityType(
-    id: "pullups",
-    displayName: "Pullups",
+    id: "benchPress",
+    displayName: "Bench Press",
     measurementTypes: [
       ActivityMeasurementType.reps,
+      ActivityMeasurementType.pounds,
     ],
   ),
   ActivityType(
-    id: "squats",
-    displayName: "Squats",
+    id: "bentOverRows",
+    displayName: "Bent Over Rows",
     measurementTypes: [
       ActivityMeasurementType.reps,
+      ActivityMeasurementType.pounds,
+    ],
+  ),
+  ActivityType(
+    id: "bicepCurls",
+    displayName: "Bicep Curls",
+    measurementTypes: [
+      ActivityMeasurementType.reps,
+      ActivityMeasurementType.pounds,
+    ],
+  ),
+  ActivityType(
+    id: "cableCrossovers",
+    displayName: "Cable Crossovers",
+    measurementTypes: [
+      ActivityMeasurementType.reps,
+      ActivityMeasurementType.pounds,
+    ],
+  ),
+  ActivityType(
+    id: "calfRaises",
+    displayName: "Calf Raises",
+    measurementTypes: [
+      ActivityMeasurementType.reps,
+      ActivityMeasurementType.pounds,
+    ],
+  ),
+  ActivityType(
+    id: "deadlift",
+    displayName: "Deadlift",
+    measurementTypes: [
+      ActivityMeasurementType.reps,
+      ActivityMeasurementType.pounds,
     ],
   ),
   ActivityType(
@@ -102,17 +137,177 @@ final List<ActivityType> activities = [
     ],
   ),
   ActivityType(
-    id: "situps",
-    displayName: "Situps",
+    id: "dumbbellFlyes",
+    displayName: "Dumbbell Flyes",
+    measurementTypes: [
+      ActivityMeasurementType.reps,
+      ActivityMeasurementType.pounds,
+    ],
+  ),
+  ActivityType(
+    id: "frontSquats",
+    displayName: "Front Squats",
+    measurementTypes: [
+      ActivityMeasurementType.reps,
+      ActivityMeasurementType.pounds,
+    ],
+  ),
+  ActivityType(
+    id: "hammerCurls",
+    displayName: "Hammer Curls",
+    measurementTypes: [
+      ActivityMeasurementType.reps,
+      ActivityMeasurementType.pounds,
+    ],
+  ),
+  ActivityType(
+    id: "hipThrusts",
+    displayName: "Hip Thrusts",
+    measurementTypes: [
+      ActivityMeasurementType.reps,
+      ActivityMeasurementType.pounds,
+    ],
+  ),
+  ActivityType(
+    id: "inclineBenchPress",
+    displayName: "Incline Bench Press",
+    measurementTypes: [
+      ActivityMeasurementType.reps,
+      ActivityMeasurementType.pounds,
+    ],
+  ),
+  ActivityType(
+    id: "latPulldowns",
+    displayName: "Lat Pulldowns",
+    measurementTypes: [
+      ActivityMeasurementType.reps,
+      ActivityMeasurementType.pounds,
+    ],
+  ),
+  ActivityType(
+    id: "legCurls",
+    displayName: "Leg Curls",
+    measurementTypes: [
+      ActivityMeasurementType.reps,
+      ActivityMeasurementType.pounds,
+    ],
+  ),
+  ActivityType(
+    id: "legExtensions",
+    displayName: "Leg Extensions",
+    measurementTypes: [
+      ActivityMeasurementType.reps,
+      ActivityMeasurementType.pounds,
+    ],
+  ),
+  ActivityType(
+    id: "legPress",
+    displayName: "Leg Press",
+    measurementTypes: [
+      ActivityMeasurementType.reps,
+      ActivityMeasurementType.pounds,
+    ],
+  ),
+  ActivityType(
+    id: "lunges",
+    displayName: "Lunges",
+    measurementTypes: [
+      ActivityMeasurementType.reps,
+      ActivityMeasurementType.pounds,
+    ],
+  ),
+  ActivityType(
+    id: "overheadPress",
+    displayName: "Overhead Press",
+    measurementTypes: [
+      ActivityMeasurementType.reps,
+      ActivityMeasurementType.pounds,
+    ],
+  ),
+  ActivityType(
+    id: "preacherCurls",
+    displayName: "Preacher Curls",
+    measurementTypes: [
+      ActivityMeasurementType.reps,
+      ActivityMeasurementType.pounds,
+    ],
+  ),
+  ActivityType(
+    id: "pullUps",
+    displayName: "Pull-Ups",
     measurementTypes: [
       ActivityMeasurementType.reps,
     ],
   ),
   ActivityType(
-    id: "plank",
-    displayName: "Plank",
+    id: "pushUps",
+    displayName: "Push-Ups",
     measurementTypes: [
-      ActivityMeasurementType.time,
+      ActivityMeasurementType.reps,
+    ],
+  ),
+  ActivityType(
+    id: "romanianDeadlifts",
+    displayName: "Romanian Deadlifts",
+    measurementTypes: [
+      ActivityMeasurementType.reps,
+      ActivityMeasurementType.pounds,
+    ],
+  ),
+  ActivityType(
+    id: "seatedRow",
+    displayName: "Seated Row",
+    measurementTypes: [
+      ActivityMeasurementType.reps,
+      ActivityMeasurementType.pounds,
+    ],
+  ),
+  ActivityType(
+    id: "seatedShoulderPress",
+    displayName: "Seated Shoulder Press",
+    measurementTypes: [
+      ActivityMeasurementType.reps,
+      ActivityMeasurementType.pounds,
+    ],
+  ),
+  ActivityType(
+    id: "shrugs",
+    displayName: "Shrugs",
+    measurementTypes: [
+      ActivityMeasurementType.reps,
+      ActivityMeasurementType.pounds,
+    ],
+  ),
+  ActivityType(
+    id: "squats",
+    displayName: "Squats",
+    measurementTypes: [
+      ActivityMeasurementType.reps,
+      ActivityMeasurementType.pounds,
+    ],
+  ),
+  ActivityType(
+    id: "sumoDeadlift",
+    displayName: "Sumo Deadlift",
+    measurementTypes: [
+      ActivityMeasurementType.reps,
+      ActivityMeasurementType.pounds,
+    ],
+  ),
+  ActivityType(
+    id: "tricepPushdown",
+    displayName: "Tricep Pushdown",
+    measurementTypes: [
+      ActivityMeasurementType.reps,
+      ActivityMeasurementType.pounds,
+    ],
+  ),
+  ActivityType(
+    id: "lyingTricepExtensions",
+    displayName: "Lying Tricep Extensions",
+    measurementTypes: [
+      ActivityMeasurementType.reps,
+      ActivityMeasurementType.pounds,
     ],
   ),
 ];
