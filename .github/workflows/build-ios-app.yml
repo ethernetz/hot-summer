@@ -4,54 +4,54 @@ on:
   workflow_dispatch:
   push:
     branches:
-    - main
+      - main
     paths:
-    - app/**
+      - app/**
 
 jobs:
   deploy:
     runs-on: macos-latest
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-    - name: Set up flutter env
-      uses: subosito/flutter-action@v2
-      with:
-        flutter-version: '3.7.1'
-        channel: 'stable'
-        architecture: x64
-    - run: flutter clean
-      working-directory: ./app
-    - run: flutter pub get
-      working-directory: ./app
-    - run: flutter build ios --release --no-codesign
-      working-directory: ./app
+      - name: Set up flutter env
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.10.6"
+          channel: "stable"
+          architecture: x64
+      - run: flutter clean
+        working-directory: ./app
+      - run: flutter pub get
+        working-directory: ./app
+      - run: flutter build ios --release --no-codesign
+        working-directory: ./app
 
-    - name: Decode signing certificate into a file
-      env:
-        CERTIFICATE_BASE64: ${{ secrets.IOS_DIST_SIGNING_KEY }}
-      run: |
-        echo $CERTIFICATE_BASE64 | base64 --decode > signing-cert.p12
-      working-directory: ./app/ios
+      - name: Decode signing certificate into a file
+        env:
+          CERTIFICATE_BASE64: ${{ secrets.IOS_DIST_SIGNING_KEY }}
+        run: |
+          echo $CERTIFICATE_BASE64 | base64 --decode > signing-cert.p12
+        working-directory: ./app/ios
 
-    - name: Deploy iOS Beta to TestFlight via Fastlane
-      uses: maierj/fastlane-action@v1.4.0
-      with:
-        lane: closed_beta
-        subdirectory: app/ios
-      env:
-        ITC_TEAM_ID: '${{ secrets.ITC_TEAM_ID }}'
-        APPLICATION_ID: '${{ secrets.APPLICATION_ID }}'
-        BUNDLE_IDENTIFIER: '${{ secrets.BUNDLE_IDENTIFIER }}'
-        DEVELOPER_PORTAL_TEAM_ID: '${{ secrets.DEVELOPER_PORTAL_TEAM_ID }}'
-        FASTLANE_APPLE_ID: '${{ secrets.FASTLANE_APPLE_EMAIL_ID }}'
-        FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: '${{ secrets.APP_SPECIFIC_PASSWORD }}'
-        MATCH_PASSWORD: '${{ secrets.MATCH_PASSWORD }}'
-        FASTLANE_PASSWORD: '${{ secrets.FASTLANE_PASSWORD }}'
-        GIT_AUTHORIZATION: '${{ secrets.GIT_AUTHORIZATION }}'
-        PROVISIONING_PROFILE_SPECIFIER: '${{ secrets.PROVISIONING_PROFILE_SPECIFIER }}'
-        TEMP_KEYCHAIN_PASSWORD: '${{ secrets.TEMP_KEYCHAIN_PASSWORD }}'
-        TEMP_KEYCHAIN_USER: '${{ secrets.TEMP_KEYCHAIN_USER }}'
-        ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
-        ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
-        ASC_PRIVATE_KEY: ${{ secrets.ASC_PRIVATE_KEY }}
+      - name: Deploy iOS Beta to TestFlight via Fastlane
+        uses: maierj/fastlane-action@v1.4.0
+        with:
+          lane: closed_beta
+          subdirectory: app/ios
+        env:
+          ITC_TEAM_ID: "${{ secrets.ITC_TEAM_ID }}"
+          APPLICATION_ID: "${{ secrets.APPLICATION_ID }}"
+          BUNDLE_IDENTIFIER: "${{ secrets.BUNDLE_IDENTIFIER }}"
+          DEVELOPER_PORTAL_TEAM_ID: "${{ secrets.DEVELOPER_PORTAL_TEAM_ID }}"
+          FASTLANE_APPLE_ID: "${{ secrets.FASTLANE_APPLE_EMAIL_ID }}"
+          FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: "${{ secrets.APP_SPECIFIC_PASSWORD }}"
+          MATCH_PASSWORD: "${{ secrets.MATCH_PASSWORD }}"
+          FASTLANE_PASSWORD: "${{ secrets.FASTLANE_PASSWORD }}"
+          GIT_AUTHORIZATION: "${{ secrets.GIT_AUTHORIZATION }}"
+          PROVISIONING_PROFILE_SPECIFIER: "${{ secrets.PROVISIONING_PROFILE_SPECIFIER }}"
+          TEMP_KEYCHAIN_PASSWORD: "${{ secrets.TEMP_KEYCHAIN_PASSWORD }}"
+          TEMP_KEYCHAIN_USER: "${{ secrets.TEMP_KEYCHAIN_USER }}"
+          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+          ASC_PRIVATE_KEY: ${{ secrets.ASC_PRIVATE_KEY }}
