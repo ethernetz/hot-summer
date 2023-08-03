@@ -39,36 +39,34 @@ class WorkoutScreen extends StatelessWidget {
     route!.animation!.addStatusListener(animationStatusListener);
     return Scaffold(
       resizeToAvoidBottomInset: false,
+      appBar: AppBar(
+        leading: IconButton(
+          onPressed: () => Navigator.pop(context),
+          icon: const Icon(
+            CupertinoIcons.back,
+            color: Colors.white,
+            size: 30,
+          ),
+        ),
+        actions: [
+          IconButton(
+            onPressed: () => completeWorkout(context),
+            icon: const Icon(
+              CupertinoIcons.checkmark_alt,
+              color: Colors.white,
+              size: 30,
+            ),
+          ),
+        ],
+        backgroundColor: Colors.transparent,
+        elevation: 0.0,
+      ),
       body: SafeArea(
         bottom: false,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12),
           child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    IconButton(
-                      onPressed: () => Navigator.pop(context),
-                      icon: const Icon(
-                        CupertinoIcons.back,
-                        color: Colors.white,
-                        size: 30,
-                      ),
-                    ),
-                    IconButton(
-                      onPressed: () => completeWorkout(context),
-                      icon: const Icon(
-                        CupertinoIcons.checkmark_alt,
-                        color: Colors.white,
-                        size: 30,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
               Expanded(
                 child: SingleChildScrollView(
                   child: Padding(

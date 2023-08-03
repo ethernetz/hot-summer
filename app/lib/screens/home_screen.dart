@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:workspaces/classes/hot_user.dart';
 import 'package:workspaces/components/self_metrics.dart';
 import 'package:workspaces/components/workout_button.dart';
+import 'package:workspaces/screens/settings_screen.dart';
 import 'package:workspaces/screens/workout_screen.dart';
 import 'package:workspaces/services/current_workout_provider.dart';
 
@@ -27,42 +27,41 @@ class HomeScreen extends StatelessWidget {
     }
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: SafeArea(
+      appBar: AppBar(
+        actions: [
+          CupertinoButton(
+            padding: EdgeInsets.zero,
+            onPressed: () => Navigator.push(context, SettingsScreen.route()),
+            child: const Icon(
+              Icons.settings,
+              color: CupertinoColors.white,
+              size: 30,
+            ),
+          ),
+        ],
+        backgroundColor: Colors.transparent,
+        elevation: 0.0,
+      ),
+      body: const SafeArea(
         bottom: false,
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12),
+          padding: EdgeInsets.symmetric(horizontal: 12),
           child: SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
+              padding: EdgeInsets.symmetric(horizontal: 12),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        IconButton(
-                          onPressed: () => Navigator.pop(context),
-                          icon: const Icon(
-                            Icons.settings,
-                            color: Colors.white60,
-                            size: 30,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
                   Text(
                     'Hey hey',
-                    style: GoogleFonts.kumbhSans(
+                    style: TextStyle(
                       fontWeight: FontWeight.w600,
                       fontSize: 40,
-                      color: Colors.white,
+                      color: CupertinoColors.white,
                     ),
                   ),
-                  const SizedBox(height: 20),
-                  const SelfMetrics(),
+                  SizedBox(height: 20),
+                  SelfMetrics(),
                 ],
               ),
             ),
@@ -77,10 +76,10 @@ class HomeScreen extends StatelessWidget {
           key: ValueKey<String>(
             currentWorkoutProvider.isWorkingOut ? 'Back to workout' : 'Workout',
           ),
-          style: GoogleFonts.kumbhSans(
+          style: const TextStyle(
             fontWeight: FontWeight.w600,
             fontSize: 30,
-            color: Colors.black,
+            color: CupertinoColors.black,
           ),
           maxLines: 1,
         ),
