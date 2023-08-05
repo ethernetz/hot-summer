@@ -72,7 +72,18 @@ class _AuthGuardState extends State<AuthGuard> {
     }
 
     if (hotUser == null) {
-      return const Text("loading your profile...");
+      // return const Text("loading your profile...");
+      return Column(
+        children: [
+          const Text("loading your profile..."),
+          CupertinoButton(
+            child: const Text("sign out"),
+            onPressed: () async {
+              await FirebaseAuth.instance.signOut();
+            },
+          ),
+        ],
+      );
     }
 
     if (!hotUser.isOnboarded()) {

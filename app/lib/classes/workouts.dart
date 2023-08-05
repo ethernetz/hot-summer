@@ -33,6 +33,19 @@ class Workouts {
         .firstWhere((activity) => activity.activityType == activityType);
   }
 
+  List<TimestampedActivity> getAllActivityLogsWithTimestamp(
+      ActivityType activityType) {
+    return workouts
+        .map((workout) => workout.activities
+            .map((activity) => TimestampedActivity(
+                timestamp: workout.timestamp.toDate(), activity: activity))
+            .toList())
+        .expand((timestampedActivity) => timestampedActivity)
+        .where((timestampedActivity) =>
+            timestampedActivity.activity.activityType == activityType)
+        .toList();
+  }
+
   List<Workout> getLatestWorkoutsWithActivityLog() {
     return workouts
         .where((workout) => workout.activities.isNotEmpty)

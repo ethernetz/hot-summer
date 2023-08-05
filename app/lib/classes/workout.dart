@@ -47,6 +47,13 @@ class Activity {
   Activity({required this.activityType, required this.sets});
 }
 
+class TimestampedActivity {
+  final DateTime timestamp;
+  final Activity activity;
+
+  TimestampedActivity({required this.timestamp, required this.activity});
+}
+
 class Workout {
   final Timestamp timestamp;
   final List<Activity> activities;

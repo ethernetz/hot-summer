@@ -16,11 +16,11 @@ class SignInWithAppleButton extends StatelessWidget {
       onPressed: () {
         context.read<AuthService>().signInWithApple();
       },
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
+      child: const Padding(
+        padding: EdgeInsets.fromLTRB(0, 8, 0, 8),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
-          children: const [
+          children: [
             Expanded(
               flex: 3,
               child: Image(
